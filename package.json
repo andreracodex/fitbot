@@ -1,0 +1,28 @@
+{
+  "name": "fitbot-ai",
+  "version": "1.0.0",
+  "description": "Smart Gym Assistant Chatbot powered by Google Gemini and Node.js",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test tests/**/*.test.js"
+  },
+  "keywords": [
+    "chatbot",
+    "gemini-api",
+    "fitness",
+    "gym",
+    "express"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "dotenv": "^18.0.7",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.1",
+    "helmet": "^8.3.0"
+  }
+}

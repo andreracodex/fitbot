@@ -1,0 +1,133 @@
+{
+  "gymInfo": {
+    "name": "FitLife Arena",
+    "tagline": "Your Ultimate Fitness & Wellness Community",
+    "contact": {
+      "phone": "+62 812-3456-7890",
+      "email": "support@fitlifearena.demo",
+      "instagram": "@fitlifearena.demo",
+      "customerServiceHours": "Senin - Minggu: 08:00 - 20:00 WIB"
+    },
+    "note": "Ini adalah data demo untuk keperluan final project FitBot AI."
+  },
+  "branches": [
+    {
+      "id": "cabang-jaksel",
+      "name": "FitLife Arena Senopati",
+      "address": "Jl. Senopati No. 88, Kebayoran Baru, Jakarta Selatan",
+      "phone": "+62 21-555-0101",
+      "facilitiesHighlight": ["Sauna", "Studio Yoga", "Area Free Weights", "Locker Room Premium", "Shower Air Hangat"]
+    },
+    {
+      "id": "cabang-jakbar",
+      "name": "FitLife Arena Puri Indah",
+      "address": "Jl. Puri Indah Raya No. 12, Kembangan, Jakarta Barat",
+      "phone": "+62 21-555-0102",
+      "facilitiesHighlight": ["Kolam Renang Semi-Olympic", "Studio Spinning", "Functional Training Ground", "Sauna"]
+    },
+    {
+      "id": "cabang-jakpus",
+      "name": "FitLife Arena Sudirman",
+      "address": "Gedung Sentral Sudirman Lt. 3, Jl. Jend. Sudirman Kav. 25, Jakarta Pusat",
+      "phone": "+62 21-555-0103",
+      "facilitiesHighlight": ["Cardio Theatre", "Olympic Lifting Platform", "Shower & Loker", "Juice & Protein Bar"]
+    }
+  ],
+  "operatingHours": {
+    "weekdays": "Senin - Jumat: 06:00 - 22:00 WIB",
+    "weekends": "Sabtu - Minggu: 07:00 - 20:00 WIB",
+    "holidays": "Hari Libur Nasional: 08:00 - 18:00 WIB (kecuali diumumkan khusus)"
+  },
+  "facilities": [
+    {
+      "category": "Area Latihan",
+      "items": [
+        "Cardio Zone (Treadmill, Elliptical, StairMaster, Stationary Bike)",
+        "Free Weights Zone (Dumbbell hingga 50kg, Barbell, Olympic Benches)",
+        "Strength Machine Zone (Pin-loaded & Plate-loaded machines)",
+        "Functional & Cross Training Area (Kettlebell, Battle Rope, Plyo Box, TRX)"
+      ]
+    },
+    {
+      "category": "Studio & Relaksasi",
+      "items": [
+        "Studio Kelas Group Fitness (Yoga, Pilates, Zumba, Body Combat)",
+        "Studio Cycling / Spinning",
+        "Dry Sauna (tersedia di ruang bilas pria dan wanita)",
+        "Ruang Shower dengan air panas/dingin dan sabun mandi"
+      ]
+    },
+    {
+      "category": "Kenyamanan & Keamanan",
+      "items": [
+        "Locker digital gratis selama sesi latihan berlangsung",
+        "Wi-Fi berkecepatan tinggi gratis",
+        "Dispenser air minum isi ulang (wajib bawa tumbler sendiri)",
+        "Area parkir luas"
+      ]
+    }
+  ],
+  "memberships": [
+    {
+      "name": "Single Club Membership",
+      "description": "Akses tak terbatas ke satu cabang pilihan selama jam operasional.",
+      "benefits": [
+        "Akses penuh ke semua alat gym dan fasilitas di cabang terdaftar",
+        "Free akses kelas reguler mingguan",
+        "Loker harian dan shower"
+      ],
+      "pricingNote": "Informasi tarif resmi dan promo diskon bulanan saat ini belum tercantum di sistem data demo. Silakan hubungi Customer Service untuk penawaran terbaru."
+    },
+    {
+      "name": "All Club Passport",
+      "description": "Akses fleksibel ke seluruh cabang FitLife Arena di Indonesia.",
+      "benefits": [
+        "Akses tanpa batas ke seluruh cabang FitLife Arena",
+        "Termasuk akses fasilitas kolam renang di cabang Puri Indah",
+        "Hak mengundang 1 tamu per bulan (Guest Pass)",
+        "Diskon merchandise & Protein Bar"
+      ],
+      "pricingNote": "Informasi tarif resmi dan promo diskon paket tahunan saat ini belum tercantum di sistem data demo. Silakan hubungi Customer Service untuk penawaran terbaru."
+    },
+    {
+      "name": "Student / Pelajar",
+      "description": "Paket khusus pelajar dan mahasiswa dengan menunjukkan kartu identitas aktif.",
+      "benefits": [
+        "Akses penuh di cabang pilihan pada jam off-peak (08:00 - 16:00 WIB)",
+        "Akses kelas studio group"
+      ],
+      "pricingNote": "Informasi tarif resmi paket pelajar saat ini belum tercantum di sistem data demo. Silakan hubungi Customer Service untuk verifikasi kartu pelajar dan promo aktif."
+    }
+  ],
+  "classSchedules": {
+    "status": "Jadwal kelas mingguan berganti setiap periode dan dipublikasikan via papan pengumuman cabang atau Instagram resmi.",
+    "popularClasses": ["Vinyasa Yoga", "Les Mills Body Combat", "Spinning Rush", "Core & HIIT Blast", "Zumba Dance"],
+    "scheduleNote": "Untuk jadwal jam kelas harian yang terperinci dan booking sesi, silakan hubungi tim resepsionis cabang terkait atau Customer Service."
+  },
+  "faqs": [
+    {
+      "question": "Apakah tersedia sesi latihan uji coba (Free Trial)?",
+      "answer": "Ya, calon anggota baru berhak mendapatkan 1x Free Trial Pass dengan didampingi konsultan kebugaran kami. Silakan datang langsung ke cabang terdekat atau hubungi staf customer service untuk pendaftaran."
+    },
+    {
+      "question": "Apakah saya harus membawa gembok sendiri untuk loker?",
+      "answer": "Tidak perlu. Semua cabang FitLife Arena menggunakan loker elektronik dengan PIN mandiri yang dapat digunakan secara gratis selama jam latihan."
+    },
+    {
+      "question": "Apakah tersedia Personal Trainer (PT)?",
+      "answer": "Ya, kami memiliki tim Personal Trainer bersertifikasi internasional. Paket bimbingan PT dapat disesuaikan dengan target kebugaran Anda. Rincian paket PT dapat dikonsultasikan langsung dengan staf di cabang."
+    },
+    {
+      "question": "Apa saja aturan pakaian di gym?",
+      "answer": "Anggota wajib mengenakan pakaian olahraga yang pantas dan sepatu olahraga tertutup (bukan sandal). Dilarang bertelanjang dada di area latihan umum demi kenyamanan dan higienitas bersama."
+    },
+    {
+      "question": "Apakah handuk disediakan oleh pihak gym?",
+      "answer": "Fasilitas handuk olahraga dan handuk mandi tersedia secara gratis khusus untuk pemegang kartu All Club Passport, atau dapat disewa harian bagi member Single Club."
+    },
+    {
+      "question": "Bagaimana cara berhenti berlangganan atau freeze membership?",
+      "answer": "Pengajuan freeze atau pembatalan membership memerlukan konfirmasi administrasi dengan staf customer service atau resepsionis cabang dengan mengisi formulir paling lambat 7 hari kerja sebelum periode tagihan berikutnya."
+    }
+  ]
+}

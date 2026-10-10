@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitBot AI — Smart Gym Assistant</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Main Chat Container -->
+    <main class="chat-container">
+      <!-- Header -->
+      <header class="chat-header">
+        <div class="brand-info">
+          <div class="brand-avatar">
+            <span class="bot-icon">💪</span>
+            <span class="status-indicator" id="statusDot" title="Server Status: Checking..."></span>
+          </div>
+          <div class="brand-text">
+            <h1>FitBot AI</h1>
+            <p class="subtitle">Asisten Virtual FitLife Arena Gym</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button id="btnReset" class="btn-secondary" title="Bersihkan riwayat dan mulai sesi baru">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+              <path d="M3 3v5h5"/>
+            </svg>
+            <span>Reset Chat</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Messages Area -->
+      <div id="messagesArea" class="messages-area">
+        <!-- Bot Welcome Card -->
+        <div class="message-wrapper bot">
+          <div class="avatar">🤖</div>
+          <div class="message-content">
+            <div class="bubble bot-bubble">
+              <p>Halo! Saya <strong>FitBot AI</strong>, asisten virtual resmi di <strong>FitLife Arena</strong>. 👋</p>
+              <p>Ada yang bisa saya bantu hari ini seputar kebugaran Anda? Anda dapat menanyakan tentang fasilitas, jam operasional, lokasi cabang, hingga opsi membership!</p>
+            </div>
+            <span class="timestamp" id="initialTime"></span>
+          </div>
+        </div>
+
+        <!-- Suggestion Chips -->
+        <div class="quick-suggestions" id="quickSuggestions">
+          <span class="suggestions-label">💡 Pertanyaan Populer:</span>
+          <div class="chips-container">
+            <button class="chip-btn" data-text="Apa saja fasilitas gym yang tersedia?">🏋️‍♂️ Fasilitas Gym</button>
+            <button class="chip-btn" data-text="Di mana saja lokasi cabang FitLife Arena?">📍 Lokasi Cabang</button>
+            <button class="chip-btn" data-text="Jam berapa gym buka di hari kerja dan akhir pekan?">⏰ Jam Operasional</button>
+            <button class="chip-btn" data-text="Ada pilihan paket membership apa saja?">💳 Paket Membership</button>
+            <button class="chip-btn" data-text="Apakah tersedia sesi latihan coba gratis (Free Trial)?">✨ Free Trial</button>
+          </div>
+        </div>
+
+        <!-- Typing Indicator (Hidden by default) -->
+        <div id="typingIndicator" class="message-wrapper bot typing-wrapper" style="display: none;">
+          <div class="avatar">🤖</div>
+          <div class="message-content">
+            <div class="bubble bot-bubble typing-bubble">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Bar -->
+      <footer class="chat-input-area">
+        <form id="chatForm" class="chat-form">
+          <div class="input-wrapper">
+            <textarea
+              id="messageInput"
+              rows="1"
+              placeholder="Ketik pertanyaan Anda di sini... (tekan Enter untuk mengirim)"
+              maxlength="2000"
+              autocomplete="off"
+            ></textarea>
+            <div class="char-count"><span id="charCounter">0</span>/2000</div>
+          </div>
+          <button type="submit" id="btnSend" class="btn-send" title="Kirim Pesan">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </form>
+        <div class="disclaimer">
+          FitBot AI menjawab berdasarkan data resmi gym. Untuk konfirmasi transaksi langsung, hubungi Customer Service kami.
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
