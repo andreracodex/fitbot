@@ -5,6 +5,10 @@ import { fileURLToPath } from 'node:url';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import chatRouter from './routes/chat.js';
+import leadsRouter from './routes/leads.js';
+import knowledgeRouter from './routes/knowledge.js';
+import { startTelegramBot } from './channels/telegram.js';
+import { startWhatsAppBot } from './channels/whatsapp.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -38,6 +42,8 @@ const publicDir = path.resolve(__dirname, '../public');
 app.use(express.static(publicDir));
 
 // Mount route API
+app.use('/api/leads', limiter, leadsRouter);
+app.use('/api/knowledge', limiter, knowledgeRouter);
 app.use('/api', limiter, chatRouter);
 
 // Fallback route 404 untuk endpoint API yang tidak dikenal
@@ -59,12 +65,17 @@ let server = null;
 const isMain = process.argv[1] && path.resolve(process.argv[1]) === path.resolve(__filename);
 
 if (isMain) {
-  server = app.listen(PORT, () => {
+  server = app.listen(PORT, async () => {
     console.log(`===============================================`);
     console.log(`🚀 FitBot AI Server aktif di http://localhost:${PORT}`);
     console.log(`   Health Check: http://localhost:${PORT}/api/health`);
     console.log(`   Gym Info:    http://localhost:${PORT}/api/info`);
+    console.log(`   Leads CRM:   http://localhost:${PORT}/leads.html`);
     console.log(`===============================================`);
+
+    // Inisialisasi channel eksternal jika diaktifkan di .env
+    await startTelegramBot();
+    await startWhatsAppBot();
   });
 }
 

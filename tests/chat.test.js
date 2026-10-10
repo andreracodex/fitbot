@@ -1,7 +1,8 @@
 import test, { describe, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { app } from '../src/server.js';
-import { getGymData, getGymSummary, getFormattedGymContext } from '../src/data/gym-data.js';
+import { getGymData, getGymSummary, getFormattedGymContext, getFormattedGymContextAsync } from '../src/data/gym-data.js';
+import { closeDatabase } from '../src/data/database.js';
 
 let testServer;
 let baseUrl;
@@ -25,6 +26,7 @@ describe('FitBot AI Test Suite', () => {
       }
       await new Promise((resolve) => testServer.close(resolve));
     }
+    await closeDatabase();
   });
 
   // --- Modul Data Gym ---
@@ -53,6 +55,14 @@ describe('FitBot AI Test Suite', () => {
       assert.ok(context.includes('Senopati'), 'Harus memuat nama cabang');
       assert.ok(context.includes('Sauna'), 'Harus memuat fasilitas');
       assert.ok(context.includes('Single Club Membership'), 'Harus memuat nama paket');
+    });
+
+    test('getFormattedGymContextAsync() memuat konteks dinamis langsung dari database', async () => {
+      const context = await getFormattedGymContextAsync();
+      assert.ok(typeof context === 'string');
+      assert.ok(context.includes('DATA GYM RESMI'), 'Harus menyertakan header konteks');
+      assert.ok(context.includes('Senopati'), 'Harus memuat cabang dari database');
+      assert.ok(context.includes('FAQ (TANYA JAWAB UMUM)'), 'Harus memuat FAQ dinamis');
     });
   });
 
@@ -161,6 +171,120 @@ describe('FitBot AI Test Suite', () => {
       assert.equal(res.status, 404);
       const json = await res.json();
       assert.ok(json.error);
+    });
+
+    // --- Leads CRM Endpoints ---
+    test('GET /api/leads mengembalikan statistik dan daftar leads', async () => {
+      const res = await fetch(`${baseUrl}/api/leads`);
+      assert.equal(res.status, 200);
+
+      const json = await res.json();
+      assert.ok(json.stats, 'Harus memiliki objek stats');
+      assert.ok(typeof json.stats.total === 'number');
+      assert.ok(Array.isArray(json.leads), 'Harus memiliki array leads');
+    });
+
+    test('PATCH /api/leads/:sessionId memperbarui status lead', async () => {
+      // Pastikan ada lead yang tersimpan dari test sebelumnya
+      const res = await fetch(`${baseUrl}/api/leads/test-sess-1`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'CONTACTED' })
+      });
+
+      assert.equal(res.status, 200);
+      const json = await res.json();
+      assert.equal(json.status, 'CONTACTED');
+    });
+
+    test('GET /api/leads/:sessionId mengembalikan transkrip percakapan', async () => {
+      const res = await fetch(`${baseUrl}/api/leads/test-sess-1`);
+      assert.equal(res.status, 200);
+
+      const json = await res.json();
+      assert.equal(json.sessionId, 'test-sess-1');
+      assert.ok(Array.isArray(json.conversations));
+    });
+
+    // --- Knowledge Base Endpoints ---
+    describe('Knowledge Base Endpoints (src/routes/knowledge.js)', () => {
+      let createdFaqId = null;
+
+      test('GET /api/knowledge/faqs mengembalikan daftar FAQ dari database', async () => {
+        const res = await fetch(`${baseUrl}/api/knowledge/faqs`);
+        assert.equal(res.status, 200);
+
+        const json = await res.json();
+        assert.equal(json.success, true);
+        assert.ok(Array.isArray(json.data));
+        assert.ok(json.data.length > 0, 'Harus memiliki FAQ hasil seeding');
+      });
+
+      test('POST /api/knowledge/faqs menolak input tanpa pertanyaan/jawaban', async () => {
+        const res = await fetch(`${baseUrl}/api/knowledge/faqs`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question: '' })
+        });
+        assert.equal(res.status, 400);
+      });
+
+      test('POST /api/knowledge/faqs berhasil menambahkan FAQ baru', async () => {
+        const res = await fetch(`${baseUrl}/api/knowledge/faqs`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            category: 'Fasilitas',
+            question: 'Apakah tersedia Wi-Fi gratis di lounge?',
+            answer: 'Ya, seluruh area lounge dilengkapi Wi-Fi berkecepatan tinggi.'
+          })
+        });
+        assert.equal(res.status, 201);
+
+        const json = await res.json();
+        assert.equal(json.success, true);
+        assert.ok(json.data.id);
+        createdFaqId = json.data.id;
+      });
+
+      test('PUT /api/knowledge/faqs/:id memperbarui FAQ', async () => {
+        assert.ok(createdFaqId, 'ID FAQ baru harus tersedia');
+        const res = await fetch(`${baseUrl}/api/knowledge/faqs/${createdFaqId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            question: 'Apakah ada Wi-Fi di lounge & gym area?',
+            answer: 'Ya, Wi-Fi berkecepatan tinggi tersedia di semua sudut gym.'
+          })
+        });
+        assert.equal(res.status, 200);
+
+        const json = await res.json();
+        assert.equal(json.success, true);
+        assert.equal(json.data.question, 'Apakah ada Wi-Fi di lounge & gym area?');
+      });
+
+      test('DELETE /api/knowledge/faqs/:id menghapus FAQ', async () => {
+        assert.ok(createdFaqId, 'ID FAQ baru harus tersedia');
+        const res = await fetch(`${baseUrl}/api/knowledge/faqs/${createdFaqId}`, {
+          method: 'DELETE'
+        });
+        assert.equal(res.status, 200);
+
+        const json = await res.json();
+        assert.equal(json.success, true);
+      });
+
+      test('GET /api/knowledge/full mengembalikan struktur knowledge lengkap dari DB', async () => {
+        const res = await fetch(`${baseUrl}/api/knowledge/full`);
+        assert.equal(res.status, 200);
+
+        const json = await res.json();
+        assert.equal(json.success, true);
+        assert.ok(json.data.gymInfo);
+        assert.ok(Array.isArray(json.data.branches));
+        assert.ok(Array.isArray(json.data.faqs));
+      });
     });
   });
 });

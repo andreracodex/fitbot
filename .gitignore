@@ -18,3 +18,7 @@ Thumbs.db
 # IDE and Editor Directories
 .vscode/
 .idea/
+
+# Local Database & WhatsApp Auth Session
+data/*.db
+data/auth_info_baileys/

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitLife Arena — Admin CRM & Knowledge Base</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            obsidian: {
+              950: '#070A11',
+              900: '#0D131F',
+              850: '#111827',
+              800: '#162032',
+              700: '#1E2B42',
+            },
+            gold: {
+              300: '#FDE68A',
+              400: '#FBBF24',
+              500: '#F59E0B',
+              600: '#D97706',
+              700: '#B45309',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-obsidian-950 text-slate-100 min-h-screen py-6 px-3 sm:px-6 font-sans antialiased selection:bg-gold-500 selection:text-obsidian-950">
+  <div class="max-w-7xl mx-auto space-y-6">
+
+    <!-- Top Navigation & Header -->
+    <header class="bg-obsidian-900 border border-gold-500/20 rounded-2xl p-5 sm:p-7 shadow-xl shadow-black/40 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-3">
+          <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2.5">
+            Admin Console & Knowledge Base
+          </h1>
+          <span id="dbEngineBadge" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-gold-500/10 text-gold-400 border border-gold-500/30">
+            Database: Memuat...
+          </span>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-400 mt-1">
+          Pusat pengelolaan prospek calon anggota dan basis pengetahuan resmi asisten Fifi
+        </p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="/" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-obsidian-850 hover:bg-obsidian-800 text-gold-400 border border-gold-500/30 hover:border-gold-400 shadow-sm transition-all duration-200">
+          <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+          </svg>
+          <span>Kembali ke Chat</span>
+        </a>
+
+        <button id="btnRefresh" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-obsidian-950 shadow-lg shadow-gold-500/20 active:scale-95 transition-all duration-200">
+          <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+          </svg>
+          <span>Refresh Data</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="flex items-center gap-3 border-b border-gold-500/15 pb-2">
+      <button id="tabLeads" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-gold-500 text-obsidian-950 shadow-md transition-all flex items-center gap-2">
+        <span>Leads & CRM</span>
+        <span id="tabLeadsBadge" class="px-2 py-0.5 rounded-full text-[10px] bg-obsidian-950 text-gold-400 font-extrabold">-</span>
+      </button>
+
+      <button id="tabKnowledge" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-obsidian-900 text-slate-300 hover:text-white hover:bg-obsidian-850 border border-slate-800 transition-all flex items-center gap-2">
+        <span>Knowledge Base & FAQs</span>
+        <span id="tabFaqBadge" class="px-2 py-0.5 rounded-full text-[10px] bg-gold-500/15 text-gold-400 border border-gold-500/30 font-bold">-</span>
+      </button>
+    </div>
+
+    <!-- VIEW 1: LEADS CRM -->
+    <div id="viewLeads" class="space-y-6">
+      <!-- KPI Metric Cards -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-obsidian-900 border border-gold-500/20 rounded-2xl p-5 shadow-lg relative overflow-hidden">
+          <div class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Total Leads</div>
+          <div class="text-3xl font-extrabold text-white mt-1.5" id="kpiTotal">-</div>
+          <div class="text-[11px] text-gold-400/80 mt-1 font-medium">Seluruh interaksi aktif</div>
+          <div class="absolute -right-4 -bottom-4 w-16 h-16 bg-gold-500/5 rounded-full blur-xl"></div>
+        </div>
+
+        <div class="bg-obsidian-900 border border-slate-800 rounded-2xl p-5 shadow-lg">
+          <div class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Web Concierge</div>
+          <div class="text-3xl font-extrabold text-white mt-1.5" id="kpiWeb">-</div>
+          <div class="text-[11px] text-slate-500 mt-1">Interaksi website</div>
+        </div>
+
+        <div class="bg-obsidian-900 border border-slate-800 rounded-2xl p-5 shadow-lg">
+          <div class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Telegram Channel</div>
+          <div class="text-3xl font-extrabold text-white mt-1.5" id="kpiTelegram">-</div>
+          <div class="text-[11px] text-slate-500 mt-1">Interaksi bot Telegram</div>
+        </div>
+
+        <div class="bg-obsidian-900 border border-slate-800 rounded-2xl p-5 shadow-lg">
+          <div class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">WhatsApp Channel</div>
+          <div class="text-3xl font-extrabold text-white mt-1.5" id="kpiWhatsApp">-</div>
+          <div class="text-[11px] text-slate-500 mt-1">Interaksi bot WhatsApp</div>
+        </div>
+      </div>
+
+      <!-- Leads Data Table Container -->
+      <div class="bg-obsidian-900 border border-gold-500/15 rounded-2xl shadow-xl overflow-hidden">
+        <div class="p-5 border-b border-gold-500/10 flex items-center justify-between">
+          <h2 class="text-sm font-bold text-white tracking-wide">Daftar Prospek (Leads Pipeline)</h2>
+          <span class="text-xs text-slate-400">Diperbarui realtime dari percakapan</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs sm:text-sm">
+            <thead>
+              <tr class="bg-obsidian-850/80 border-b border-gold-500/15 text-[11px] font-semibold tracking-wider text-slate-400 uppercase">
+                <th class="py-4 px-5">Kanal</th>
+                <th class="py-4 px-5">Nama / Identitas</th>
+                <th class="py-4 px-5">Kontak / Handle</th>
+                <th class="py-4 px-5">Minat Terdeteksi</th>
+                <th class="py-4 px-5">Interaksi</th>
+                <th class="py-4 px-5">Kontak Terakhir</th>
+                <th class="py-4 px-5">Status Pipeline</th>
+                <th class="py-4 px-5 text-right">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="leadsTbody" class="divide-y divide-slate-800/80">
+              <tr>
+                <td colspan="8" class="text-center py-12 text-slate-500">
+                  Memuat data prospek...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 2: KNOWLEDGE BASE & FAQS (HIDDEN BY DEFAULT) -->
+    <div id="viewKnowledge" class="space-y-6 hidden">
+      <!-- Knowledge Header Card -->
+      <div class="bg-obsidian-900 border border-gold-500/20 rounded-2xl p-6 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-lg font-bold text-white tracking-tight flex items-center gap-2">
+            Basis Pengetahuan Tanya Jawab (Fifi Grounding FAQs)
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-400 mt-1 max-w-2xl">
+            Semua tanya jawab di bawah ini disimpan langsung di database dan dijadikan pedoman fakta resmi oleh asisten Fifi dalam menjawab pertanyaan pelanggan.
+          </p>
+        </div>
+
+        <button id="btnOpenAddFaq" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-obsidian-950 shadow-lg shadow-gold-500/20 active:scale-95 transition-all duration-200">
+          <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+          </svg>
+          <span>Tambah FAQ Baru</span>
+        </button>
+      </div>
+
+      <!-- FAQ Table Container -->
+      <div class="bg-obsidian-900 border border-gold-500/15 rounded-2xl shadow-xl overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs sm:text-sm">
+            <thead>
+              <tr class="bg-obsidian-850/80 border-b border-gold-500/15 text-[11px] font-semibold tracking-wider text-slate-400 uppercase">
+                <th class="py-4 px-5 w-28">Kategori</th>
+                <th class="py-4 px-5 w-1/3">Pertanyaan</th>
+                <th class="py-4 px-5">Jawaban Resmi Fifi</th>
+                <th class="py-4 px-5 text-right w-28">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="faqsTbody" class="divide-y divide-slate-800/80">
+              <tr>
+                <td colspan="4" class="text-center py-12 text-slate-500">
+                  Memuat data knowledge base...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Modal Transcript Detail -->
+  <div class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4" id="transcriptModal">
+    <div class="bg-obsidian-900 border border-gold-500/30 rounded-2xl w-full max-w-2xl max-h-[85vh] flex flex-col shadow-2xl overflow-hidden animate-fadeIn">
+      <div class="px-6 py-4.5 bg-obsidian-850 border-b border-gold-500/20 flex items-center justify-between">
+        <div>
+          <h3 id="modalTitle" class="text-base font-bold text-white">Transkrip Percakapan</h3>
+          <p id="modalSub" class="text-xs text-slate-400 mt-0.5"></p>
+        </div>
+        <button id="btnCloseModal" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-obsidian-800 hover:bg-obsidian-700 text-slate-300 hover:text-white border border-slate-700 transition-all">
+          Tutup
+        </button>
+      </div>
+      <div class="p-6 overflow-y-auto space-y-4 max-h-[60vh] flex flex-col" id="modalConversations">
+        <!-- Chat bubbles loaded here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Tambah / Edit FAQ -->
+  <div class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4" id="faqModal">
+    <div class="bg-obsidian-900 border border-gold-500/30 rounded-2xl w-full max-w-xl shadow-2xl overflow-hidden">
+      <div class="px-6 py-4.5 bg-obsidian-850 border-b border-gold-500/20 flex items-center justify-between">
+        <h3 id="faqModalTitle" class="text-base font-bold text-white">Tambah FAQ Baru</h3>
+        <button id="btnCloseFaqModal" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-obsidian-800 hover:bg-obsidian-700 text-slate-300 hover:text-white border border-slate-700 transition-all">
+          Batal
+        </button>
+      </div>
+      <form id="faqForm" class="p-6 space-y-4">
+        <input type="hidden" id="faqFormId" value="">
+        
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">Kategori</label>
+          <input type="text" id="faqFormCategory" required placeholder="Contoh: Fasilitas, Membership, Umum, Aturan" class="w-full bg-obsidian-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-gold-500 transition-colors">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">Pertanyaan</label>
+          <textarea id="faqFormQuestion" required rows="2" placeholder="Tuliskan pertanyaan yang sering ditanyakan calon anggota..." class="w-full bg-obsidian-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-gold-500 transition-colors"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">Jawaban Resmi Fifi</label>
+          <textarea id="faqFormAnswer" required rows="4" placeholder="Tuliskan fakta dan jawaban resmi yang akan disampaikan oleh Fifi..." class="w-full bg-obsidian-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-gold-500 transition-colors"></textarea>
+        </div>
+
+        <div class="pt-2 flex items-center justify-end gap-3">
+          <button type="button" id="btnCancelFaqModal" class="px-4 py-2 rounded-xl text-xs font-semibold bg-obsidian-850 hover:bg-obsidian-800 text-slate-300 border border-slate-700 transition-all">
+            Batal
+          </button>
+          <button type="submit" id="btnSaveFaq" class="px-5 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-obsidian-950 shadow-md transition-all">
+            Simpan FAQ
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Elements: Navigation Tabs
+      const tabLeads = document.getElementById('tabLeads');
+      const tabKnowledge = document.getElementById('tabKnowledge');
+      const viewLeads = document.getElementById('viewLeads');
+      const viewKnowledge = document.getElementById('viewKnowledge');
+      const tabLeadsBadge = document.getElementById('tabLeadsBadge');
+      const tabFaqBadge = document.getElementById('tabFaqBadge');
+      const btnRefresh = document.getElementById('btnRefresh');
+
+      // Elements: Leads
+      const leadsTbody = document.getElementById('leadsTbody');
+      const transcriptModal = document.getElementById('transcriptModal');
+      const btnCloseModal = document.getElementById('btnCloseModal');
+      const modalConversations = document.getElementById('modalConversations');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalSub = document.getElementById('modalSub');
+
+      // Elements: FAQ
+      const faqsTbody = document.getElementById('faqsTbody');
+      const btnOpenAddFaq = document.getElementById('btnOpenAddFaq');
+      const faqModal = document.getElementById('faqModal');
+      const btnCloseFaqModal = document.getElementById('btnCloseFaqModal');
+      const btnCancelFaqModal = document.getElementById('btnCancelFaqModal');
+      const faqForm = document.getElementById('faqForm');
+      const faqModalTitle = document.getElementById('faqModalTitle');
+      const faqFormId = document.getElementById('faqFormId');
+      const faqFormCategory = document.getElementById('faqFormCategory');
+      const faqFormQuestion = document.getElementById('faqFormQuestion');
+      const faqFormAnswer = document.getElementById('faqFormAnswer');
+
+      // State
+      let activeTab = 'leads';
+      let allFaqs = [];
+
+      // Initial Load
+      loadLeads();
+      loadFaqs();
+
+      // Tab Switching
+      tabLeads.addEventListener('click', () => switchTab('leads'));
+      tabKnowledge.addEventListener('click', () => switchTab('knowledge'));
+
+      function switchTab(tab) {
+        activeTab = tab;
+        if (tab === 'leads') {
+          viewLeads.classList.remove('hidden');
+          viewKnowledge.classList.add('hidden');
+          tabLeads.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-gold-500 text-obsidian-950 shadow-md transition-all flex items-center gap-2';
+          tabKnowledge.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-obsidian-900 text-slate-300 hover:text-white hover:bg-obsidian-850 border border-slate-800 transition-all flex items-center gap-2';
+        } else {
+          viewLeads.classList.add('hidden');
+          viewKnowledge.classList.remove('hidden');
+          tabKnowledge.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-gold-500 text-obsidian-950 shadow-md transition-all flex items-center gap-2';
+          tabLeads.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-obsidian-900 text-slate-300 hover:text-white hover:bg-obsidian-850 border border-slate-800 transition-all flex items-center gap-2';
+        }
+      }
+
+      btnRefresh.addEventListener('click', () => {
+        loadLeads();
+        loadFaqs();
+      });
+
+      // Transcript Modal Handlers
+      btnCloseModal.addEventListener('click', () => transcriptModal.style.display = 'none');
+      transcriptModal.addEventListener('click', (e) => {
+        if (e.target === transcriptModal) transcriptModal.style.display = 'none';
+      });
+
+      // FAQ Modal Handlers
+      btnOpenAddFaq.addEventListener('click', () => {
+        faqModalTitle.textContent = 'Tambah FAQ Baru';
+        faqFormId.value = '';
+        faqFormCategory.value = 'Umum';
+        faqFormQuestion.value = '';
+        faqFormAnswer.value = '';
+        faqModal.style.display = 'flex';
+      });
+
+      function closeFaqModal() {
+        faqModal.style.display = 'none';
+      }
+
+      btnCloseFaqModal.addEventListener('click', closeFaqModal);
+      btnCancelFaqModal.addEventListener('click', closeFaqModal);
+      faqModal.addEventListener('click', (e) => {
+        if (e.target === faqModal) closeFaqModal();
+      });
+
+      faqForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = faqFormId.value;
+        const category = faqFormCategory.value.trim() || 'Umum';
+        const question = faqFormQuestion.value.trim();
+        const answer = faqFormAnswer.value.trim();
+
+        try {
+          if (id) {
+            // Update
+            const res = await fetch(`/api/knowledge/faqs/${id}`, {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ category, question, answer })
+            });
+            if (!res.ok) throw new Error('Gagal memperbarui FAQ');
+          } else {
+            // Create
+            const res = await fetch('/api/knowledge/faqs', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ category, question, answer })
+            });
+            if (!res.ok) throw new Error('Gagal menambahkan FAQ');
+          }
+
+          closeFaqModal();
+          await loadFaqs();
+        } catch (err) {
+          alert('Error: ' + err.message);
+        }
+      });
+
+      // --- LEADS FUNCTIONS ---
+      async function loadLeads() {
+        try {
+          const res = await fetch('/api/leads');
+          if (!res.ok) throw new Error('Gagal memuat data leads');
+          const data = await res.json();
+
+          // Update KPI
+          document.getElementById('kpiTotal').textContent = data.stats.total;
+          document.getElementById('kpiWeb').textContent = data.stats.byChannel.web;
+          document.getElementById('kpiTelegram').textContent = data.stats.byChannel.telegram;
+          document.getElementById('kpiWhatsApp').textContent = data.stats.byChannel.whatsapp;
+          tabLeadsBadge.textContent = data.stats.total;
+
+          if (document.getElementById('dbEngineBadge') && data.stats.engine) {
+            document.getElementById('dbEngineBadge').textContent = 'Database: ' + data.stats.engine;
+          }
+
+          renderLeadsTable(data.leads);
+        } catch (err) {
+          leadsTbody.innerHTML = `<tr><td colspan="8" class="text-center text-rose-400 py-10 font-medium">Error: ${err.message}</td></tr>`;
+        }
+      }
+
+      function renderLeadsTable(leads) {
+        if (!leads || leads.length === 0) {
+          leadsTbody.innerHTML = `<tr><td colspan="8" class="text-center text-slate-500 py-12">Belum ada leads tercatat. Mulailah percakapan di Web, Telegram, atau WhatsApp untuk menghasilkan prospek.</td></tr>`;
+          return;
+        }
+
+        leadsTbody.innerHTML = leads.map(l => {
+          let channelBadge = '';
+          if (l.channel === 'whatsapp') {
+            channelBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/25">WhatsApp</span>';
+          } else if (l.channel === 'telegram') {
+            channelBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/25">Telegram</span>';
+          } else {
+            channelBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-500/10 text-amber-300 border border-amber-500/25">Web</span>';
+          }
+
+          return `
+            <tr class="hover:bg-obsidian-850/50 transition-colors">
+              <td class="py-4 px-5">${channelBadge}</td>
+              <td class="py-4 px-5 font-semibold text-white">${escapeHtml(l.name || 'Anonymous')}</td>
+              <td class="py-4 px-5 font-mono text-xs text-slate-300">${escapeHtml(l.phone_or_handle || '-')}</td>
+              <td class="py-4 px-5"><span class="text-xs text-gold-400 font-medium">${escapeHtml(l.interest || 'Umum')}</span></td>
+              <td class="py-4 px-5 text-slate-400 text-xs">${l.message_count} pesan</td>
+              <td class="py-4 px-5 text-slate-400 text-xs">${l.last_contact || '-'}</td>
+              <td class="py-4 px-5">
+                <select class="status-select bg-obsidian-950 border border-slate-700/80 rounded-lg px-2.5 py-1 text-xs text-slate-200 focus:outline-none focus:border-gold-500 transition-colors" data-session="${l.session_id}">
+                  <option value="NEW" ${l.status === 'NEW' ? 'selected' : ''}>New Lead</option>
+                  <option value="CONTACTED" ${l.status === 'CONTACTED' ? 'selected' : ''}>Contacted</option>
+                  <option value="FOLLOW_UP" ${l.status === 'FOLLOW_UP' ? 'selected' : ''}>Follow Up</option>
+                  <option value="CONVERTED" ${l.status === 'CONVERTED' ? 'selected' : ''}>Converted</option>
+                </select>
+              </td>
+              <td class="py-4 px-5 text-right">
+                <button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-obsidian-950 shadow-sm transition-all" onclick="viewTranscript('${l.session_id}', '${escapeHtml(l.name)}', '${l.channel}')">
+                  Transkrip
+                </button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        document.querySelectorAll('.status-select').forEach(sel => {
+          sel.addEventListener('change', async (e) => {
+            const sid = e.target.getAttribute('data-session');
+            const newStatus = e.target.value;
+            try {
+              await fetch(`/api/leads/${sid}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: newStatus })
+              });
+            } catch (err) {
+              alert('Gagal memperbarui status: ' + err.message);
+            }
+          });
+        });
+      }
+
+      window.viewTranscript = async function(sessionId, name, channel) {
+        modalTitle.textContent = `Transkrip: ${name || 'Lead'}`;
+        modalSub.textContent = `Kanal: ${channel.toUpperCase()} • Sesi: ${sessionId}`;
+        modalConversations.innerHTML = '<p class="text-center text-slate-500 text-xs py-6">Memuat riwayat percakapan...</p>';
+        transcriptModal.style.display = 'flex';
+
+        try {
+          const res = await fetch(`/api/leads/${sessionId}`);
+          const data = await res.json();
+
+          if (!data.conversations || data.conversations.length === 0) {
+            modalConversations.innerHTML = '<p class="text-center text-slate-500 text-xs py-6">Tidak ada pesan dalam percakapan ini.</p>';
+            return;
+          }
+
+          modalConversations.innerHTML = data.conversations.map(c => `
+            <div class="bubble ${c.sender === 'user' ? 'user-bubble self-end' : 'bot-bubble self-start'} max-w-[85%] text-xs sm:text-sm">
+              <div class="font-bold text-[11px] mb-1 opacity-70">
+                ${c.sender === 'user' ? 'Pengguna' : 'Fifi'}
+              </div>
+              <div class="leading-relaxed">${escapeHtml(c.message)}</div>
+              <div class="text-[10px] opacity-60 mt-1.5 ${c.sender === 'user' ? 'text-right' : 'text-left'}">
+                ${c.created_at}
+              </div>
+            </div>
+          `).join('');
+
+          modalConversations.scrollTop = modalConversations.scrollHeight;
+        } catch (err) {
+          modalConversations.innerHTML = `<p class="text-center text-rose-400 text-xs py-6">Gagal memuat transkrip: ${err.message}</p>`;
+        }
+      };
+
+      // --- FAQ KNOWLEDGE FUNCTIONS ---
+      async function loadFaqs() {
+        try {
+          const res = await fetch('/api/knowledge/faqs');
+          if (!res.ok) throw new Error('Gagal memuat daftar FAQ');
+          const result = await res.json();
+          allFaqs = result.data || [];
+          tabFaqBadge.textContent = allFaqs.length;
+          renderFaqsTable(allFaqs);
+        } catch (err) {
+          faqsTbody.innerHTML = `<tr><td colspan="4" class="text-center text-rose-400 py-10 font-medium">Error: ${err.message}</td></tr>`;
+        }
+      }
+
+      function renderFaqsTable(faqs) {
+        if (!faqs || faqs.length === 0) {
+          faqsTbody.innerHTML = `<tr><td colspan="4" class="text-center text-slate-500 py-12">Belum ada tanya jawab dalam basis data knowledge.</td></tr>`;
+          return;
+        }
+
+        faqsTbody.innerHTML = faqs.map(f => `
+          <tr class="hover:bg-obsidian-850/50 transition-colors">
+            <td class="py-4 px-5">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold bg-gold-500/10 text-gold-400 border border-gold-500/25">
+                ${escapeHtml(f.category || 'Umum')}
+              </span>
+            </td>
+            <td class="py-4 px-5 font-semibold text-white leading-relaxed">
+              ${escapeHtml(f.question)}
+            </td>
+            <td class="py-4 px-5 text-slate-300 text-xs leading-relaxed">
+              ${escapeHtml(f.answer)}
+            </td>
+            <td class="py-4 px-5 text-right space-x-1.5 whitespace-nowrap">
+              <button class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-obsidian-800 hover:bg-obsidian-700 text-gold-400 border border-gold-500/30 transition-all" onclick="editFaq(${f.id})">
+                Edit
+              </button>
+              <button class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 transition-all" onclick="deleteFaq(${f.id})">
+                Hapus
+              </button>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      window.editFaq = function(id) {
+        const item = allFaqs.find(f => f.id === id);
+        if (!item) return;
+
+        faqModalTitle.textContent = 'Edit FAQ Knowledge Base';
+        faqFormId.value = item.id;
+        faqFormCategory.value = item.category || 'Umum';
+        faqFormQuestion.value = item.question;
+        faqFormAnswer.value = item.answer;
+        faqModal.style.display = 'flex';
+      };
+
+      window.deleteFaq = async function(id) {
+        if (!confirm('Apakah Anda yakin ingin menghapus FAQ ini dari basis pengetahuan Fifi?')) return;
+
+        try {
+          const res = await fetch(`/api/knowledge/faqs/${id}`, { method: 'DELETE' });
+          if (!res.ok) throw new Error('Gagal menghapus FAQ');
+          await loadFaqs();
+        } catch (err) {
+          alert('Error: ' + err.message);
+        }
+      };
+
+      function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const avatar = document.createElement('div');
     avatar.className = 'avatar';
-    avatar.textContent = '🤖';
+    avatar.innerHTML = '<img src="fifi.webp" alt="Fifi" class="avatar-photo-sm">';
 
     const contentDiv = document.createElement('div');
     contentDiv.className = 'message-content';
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollToBottom();
       },
       setError: (err) => {
-        bubble.textContent = `⚠️ ${err}`;
+        bubble.textContent = `[Info] ${err}`;
         scrollToBottom();
       }
     };
@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        appendMessage('bot', `⚠️ ${errorData.error || 'Gagal menghubungi server chatbot.'}`);
+        appendMessage('bot', errorData.error || 'Gagal menghubungi server chatbot.');
         return;
       }
 
@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Streaming fetch error:', err);
       appendMessage(
         'bot',
-        '⚠️ Tidak dapat terhubung ke server FitBot. Pastikan server backend sedang aktif dan coba kembali.'
+        'Tidak dapat terhubung ke server FitBot. Pastikan server backend sedang aktif dan coba kembali.'
       );
     } finally {
       isSending = false;
@@ -263,7 +263,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const avatar = document.createElement('div');
     avatar.className = 'avatar';
-    avatar.textContent = sender === 'user' ? '👤' : '🤖';
+    if (sender === 'bot') {
+      avatar.innerHTML = '<img src="fifi.webp" alt="Fifi" class="avatar-photo-sm">';
+    } else {
+      avatar.innerHTML = '<svg style="width: 16px; height: 16px; color: #f59e0b;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>';
+    }
 
     const contentDiv = document.createElement('div');
     contentDiv.className = 'message-content';

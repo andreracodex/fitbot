@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { getFormattedGymContext } from '../data/gym-data.js';
+import { getFormattedGymContext, getFormattedGymContextAsync } from '../data/gym-data.js';
+import { recordMessage } from '../data/database.js';
 
 // In-memory conversation store per session ID (max 10 round-trips per session)
 const MAX_HISTORY_MESSAGES = 20; // 10 user + 10 model messages
@@ -14,20 +15,33 @@ export function isApiKeyConfigured() {
 }
 
 /**
- * Menyusun system prompt lengkap dengan grounding data gym.
+ * Menyusun system prompt lengkap dengan grounding data gym secara dinamis.
  */
-function buildSystemInstruction() {
-  const gymContext = getFormattedGymContext();
-  return `Kamu adalah FitBot AI, asisten virtual customer service gym.
+async function buildSystemInstruction() {
+  let gymContext = '';
+  try {
+    gymContext = await getFormattedGymContextAsync();
+  } catch {
+    gymContext = getFormattedGymContext();
+  }
 
-Tugasmu membantu pengguna mengenai membership, cabang, fasilitas, jam operasional, jadwal, dan kebijakan umum yang tercantum dalam DATA GYM.
+  return `Kamu adalah Fifi, asisten virtual dan wellness consultant resmi di FitLife Arena Gym (FitBot AI).
+Kamu digambarkan sebagai seorang konsultan kebugaran muda yang ceria, ramah, hangat, penuh energi positif, dan selalu bersemangat membantu siapapun memulai atau melanjutkan perjalanan fitness mereka.
+
+Persona & Gaya Bicara Fifi:
+- Nama: Fifi. Sebut dirimu sebagai Fifi saat memperkenalkan diri atau memberikan rekomendasi.
+- Nada Bicara (Tone): Elegan, ramah, profesional, solutif, dan berwawasan kebugaran (seperti personal concierge di klub kebugaran premium).
+- Panggilan: Sapa pengguna dengan santun dan ramah (misalnya menggunakan sapaan "Kak" atau "Kakak" dalam Bahasa Indonesia, atau profesional bersahabat dalam Bahasa Inggris).
+- Gaya Penulisan: Rapi, terstruktur, jelas, dan hindari penggunaan emoji yang berlebihan agar komunikasi senantiasa berkelas dan profesional.
+
+Tugasmu membantu pengunjung mengenai membership, cabang, fasilitas, jam operasional, jadwal, dan kebijakan umum yang tercantum dalam DATA GYM.
 
 Aturan Penting:
-1. Jawab dengan ramah, sopan, ringkas, dan profesional.
+1. Jawab dengan ramah, sopan, ringkas, dan profesional sesuai karakter Fifi.
 2. Gunakan bahasa yang sama dengan bahasa pengguna (Bahasa Indonesia atau Bahasa Inggris), kecuali pengguna meminta bahasa lain.
 3. Gunakan HANYA fakta yang ada dalam DATA GYM atau konteks percakapan yang valid.
 4. JANGAN mengarang harga, diskon/promo, jadwal kelas spesifik, ketersediaan, atau kebijakan jika tidak tercantum di DATA GYM.
-5. Jika informasi tidak tercantum atau belum tersedia (seperti harga paket spesifik), katakan secara jujur bahwa informasi tersebut belum tersedia di sistem data saat ini dan sarankan pengguna menghubungi customer service kami.
+5. Jika informasi tidak tercantum atau belum tersedia (seperti rincian tarif paket spesifik), katakan secara jujur dan manis bahwa informasinya belum ada di data Fifi saat ini, lalu arahkan Kakak untuk menghubungi tim Customer Service kami.
 6. Jangan mengklaim telah melakukan booking, pembayaran, atau menghubungi staf secara otomatis.
 7. Jangan meminta kata sandi, informasi kartu kredit, atau data pribadi sensitif.
 8. Jika pertanyaan ambigu, ajukan satu pertanyaan klarifikasi yang paling relevan.
@@ -37,19 +51,20 @@ ${gymContext}`;
 }
 
 /**
- * Mendapatkan atau membuat instance model Gemini.
+ * Mendapatkan atau membuat instance model Gemini dengan grounding terbaru.
  */
-function getGeminiModel() {
+async function getGeminiModel() {
   if (!isApiKeyConfigured()) {
     throw new Error('CONFIG_ERROR: GEMINI_API_KEY belum dikonfigurasi.');
   }
 
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-  const modelName = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+  const modelName = process.env.GEMINI_MODEL || 'gemini-3.5-flash-lite';
+  const systemInstruction = await buildSystemInstruction();
 
   return genAI.getGenerativeModel({
     model: modelName,
-    systemInstruction: buildSystemInstruction(),
+    systemInstruction,
     generationConfig: {
       temperature: 0.3,
       maxOutputTokens: 500
@@ -63,12 +78,25 @@ function getGeminiModel() {
  * @param {string} userMessage
  * @returns {Promise<string>} Jawaban AI
  */
-export async function sendMessage(sessionId, userMessage) {
+export async function sendMessage(sessionId, userMessage, metadata = {}) {
+  const { channel = 'web', userName = null, userContact = null } = metadata;
+
+  // Catat pesan pengguna ke database
+  recordMessage({
+    sessionId,
+    channel,
+    sender: 'user',
+    message: userMessage,
+    userName,
+    userContact
+  });
+
   if (!isApiKeyConfigured()) {
-    return (
+    const fallbackText =
       'FitBot saat ini belum dapat terhubung ke model AI karena konfigurasi GEMINI_API_KEY ' +
-      'belum disetel di server. Silakan hubungi admin sistem atau staf Customer Service kami.'
-    );
+      'belum disetel di server. Silakan hubungi admin sistem atau staf Customer Service kami.';
+    recordMessage({ sessionId, channel, sender: 'fifi', message: fallbackText });
+    return fallbackText;
   }
 
   // Ambil atau inisialisasi riwayat sesi
@@ -79,7 +107,7 @@ export async function sendMessage(sessionId, userMessage) {
   const history = sessionStore.get(sessionId);
 
   try {
-    const model = getGeminiModel();
+    const model = await getGeminiModel();
 
     // Inisialisasi percakapan chat dengan riwayat sebelumnya
     const chat = model.startChat({
@@ -100,30 +128,30 @@ export async function sendMessage(sessionId, userMessage) {
       sessionStore.set(sessionId, history.slice(-MAX_HISTORY_MESSAGES));
     }
 
+    // Catat balasan Fifi ke database
+    recordMessage({ sessionId, channel, sender: 'fifi', message: replyText });
+
     return replyText;
   } catch (error) {
     // Sanitasi error log agar tidak membocorkan credential
     console.error('[Gemini Service Error]:', error.message || error);
 
-    // Penanganan jenis error tertentu
-    if (error.message?.includes('API_KEY_INVALID') || error.status === 400) {
-      return (
-        'Terjadi kendala autentikasi API key pada server. ' +
-        'Mohon hubungi administrator gym atau customer service kami.'
-      );
-    }
-
-    if (error.status === 429 || error.message?.includes('RESOURCE_EXHAUSTED')) {
-      return (
-        'Layanan chat saat ini sedang menerima banyak permintaan. ' +
-        'Mohon tunggu beberapa saat sebelum mencoba kembali.'
-      );
-    }
-
-    return (
+    let errorReply =
       'Maaf, FitBot sedang mengalami kendala teknis sementara dalam memproses permintaan Anda. ' +
-      'Silakan coba kembali dalam beberapa saat atau hubungi Customer Service kami di +62 812-3456-7890.'
-    );
+      'Silakan coba kembali dalam beberapa saat atau hubungi Customer Service kami di +62 812-3456-7890.';
+
+    if (error.message?.includes('API_KEY_INVALID') || error.status === 400) {
+      errorReply =
+        'Terjadi kendala autentikasi API key pada server. ' +
+        'Mohon hubungi administrator gym atau customer service kami.';
+    } else if (error.status === 429 || error.message?.includes('RESOURCE_EXHAUSTED')) {
+      errorReply =
+        'Layanan chat saat ini sedang menerima banyak permintaan. ' +
+        'Mohon tunggu beberapa saat sebelum mencoba kembali.';
+    }
+
+    recordMessage({ sessionId, channel, sender: 'fifi', message: errorReply });
+    return errorReply;
   }
 }
 
@@ -131,12 +159,28 @@ export async function sendMessage(sessionId, userMessage) {
  * Mengirim pesan ke Gemini AI dengan streaming (kata per kata via async generator).
  * @param {string} sessionId
  * @param {string} userMessage
+ * @param {object} metadata
  * @returns {AsyncGenerator<string>}
  */
-export async function* streamMessage(sessionId, userMessage) {
+export async function* streamMessage(sessionId, userMessage, metadata = {}) {
+  const { channel = 'web', userName = null, userContact = null } = metadata;
+
+  // Catat pesan pengguna ke database
+  recordMessage({
+    sessionId,
+    channel,
+    sender: 'user',
+    message: userMessage,
+    userName,
+    userContact
+  });
+
   if (!isApiKeyConfigured()) {
-    yield 'FitBot saat ini belum dapat terhubung ke model AI karena konfigurasi GEMINI_API_KEY ' +
+    const fallbackText =
+      'FitBot saat ini belum dapat terhubung ke model AI karena konfigurasi GEMINI_API_KEY ' +
       'belum disetel di server. Silakan hubungi admin sistem atau staf Customer Service kami.';
+    recordMessage({ sessionId, channel, sender: 'fifi', message: fallbackText });
+    yield fallbackText;
     return;
   }
 
@@ -147,7 +191,7 @@ export async function* streamMessage(sessionId, userMessage) {
   const history = sessionStore.get(sessionId);
 
   try {
-    const model = getGeminiModel();
+    const model = await getGeminiModel();
     const chat = model.startChat({
       history: history.slice(-MAX_HISTORY_MESSAGES)
     });
@@ -170,16 +214,25 @@ export async function* streamMessage(sessionId, userMessage) {
     if (history.length > MAX_HISTORY_MESSAGES) {
       sessionStore.set(sessionId, history.slice(-MAX_HISTORY_MESSAGES));
     }
+
+    // Catat jawaban Fifi ke database
+    recordMessage({ sessionId, channel, sender: 'fifi', message: fullReply });
   } catch (error) {
     console.error('[Gemini Stream Error]:', error.message || error);
 
+    let errorReply =
+      'Maaf, FitBot sedang mengalami kendala teknis sementara dalam memproses permintaan Anda. Silakan coba kembali dalam beberapa saat atau hubungi Customer Service kami di +62 812-3456-7890.';
+
     if (error.message?.includes('API_KEY_INVALID') || error.status === 400) {
-      yield 'Terjadi kendala autentikasi API key pada server. Mohon hubungi administrator gym atau customer service kami.';
+      errorReply =
+        'Terjadi kendala autentikasi API key pada server. Mohon hubungi administrator gym atau customer service kami.';
     } else if (error.status === 429 || error.message?.includes('RESOURCE_EXHAUSTED')) {
-      yield 'Layanan chat saat ini sedang menerima banyak permintaan. Mohon tunggu beberapa saat sebelum mencoba kembali.';
-    } else {
-      yield 'Maaf, FitBot sedang mengalami kendala teknis sementara dalam memproses permintaan Anda. Silakan coba kembali dalam beberapa saat atau hubungi Customer Service kami di +62 812-3456-7890.';
+      errorReply =
+        'Layanan chat saat ini sedang menerima banyak permintaan. Mohon tunggu beberapa saat sebelum mencoba kembali.';
     }
+
+    recordMessage({ sessionId, channel, sender: 'fifi', message: errorReply });
+    yield errorReply;
   }
 }
 

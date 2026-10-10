@@ -87,6 +87,11 @@ async function runEvaluation() {
     });
 
     console.log(isPassed ? '✅ LULUS' : '❌ GAGAL');
+
+    // Berikan jeda 2.5 detik antar request untuk menghormati rate limit free-tier (15 RPM)
+    if (hasApiKey && i < dataset.length - 1) {
+      await new Promise((r) => setTimeout(r, 2500));
+    }
   }
 
   const accuracyRate = ((passedCount / dataset.length) * 100).toFixed(1);
