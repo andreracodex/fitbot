@@ -128,6 +128,62 @@ export async function sendMessage(sessionId, userMessage) {
 }
 
 /**
+ * Mengirim pesan ke Gemini AI dengan streaming (kata per kata via async generator).
+ * @param {string} sessionId
+ * @param {string} userMessage
+ * @returns {AsyncGenerator<string>}
+ */
+export async function* streamMessage(sessionId, userMessage) {
+  if (!isApiKeyConfigured()) {
+    yield 'FitBot saat ini belum dapat terhubung ke model AI karena konfigurasi GEMINI_API_KEY ' +
+      'belum disetel di server. Silakan hubungi admin sistem atau staf Customer Service kami.';
+    return;
+  }
+
+  if (!sessionStore.has(sessionId)) {
+    sessionStore.set(sessionId, []);
+  }
+
+  const history = sessionStore.get(sessionId);
+
+  try {
+    const model = getGeminiModel();
+    const chat = model.startChat({
+      history: history.slice(-MAX_HISTORY_MESSAGES)
+    });
+
+    const result = await chat.sendMessageStream(userMessage);
+    let fullReply = '';
+
+    for await (const chunk of result.stream) {
+      const text = chunk.text();
+      fullReply += text;
+      yield text;
+    }
+
+    // Perbarui riwayat sesi dengan jawaban lengkap
+    history.push(
+      { role: 'user', parts: [{ text: userMessage }] },
+      { role: 'model', parts: [{ text: fullReply }] }
+    );
+
+    if (history.length > MAX_HISTORY_MESSAGES) {
+      sessionStore.set(sessionId, history.slice(-MAX_HISTORY_MESSAGES));
+    }
+  } catch (error) {
+    console.error('[Gemini Stream Error]:', error.message || error);
+
+    if (error.message?.includes('API_KEY_INVALID') || error.status === 400) {
+      yield 'Terjadi kendala autentikasi API key pada server. Mohon hubungi administrator gym atau customer service kami.';
+    } else if (error.status === 429 || error.message?.includes('RESOURCE_EXHAUSTED')) {
+      yield 'Layanan chat saat ini sedang menerima banyak permintaan. Mohon tunggu beberapa saat sebelum mencoba kembali.';
+    } else {
+      yield 'Maaf, FitBot sedang mengalami kendala teknis sementara dalam memproses permintaan Anda. Silakan coba kembali dalam beberapa saat atau hubungi Customer Service kami di +62 812-3456-7890.';
+    }
+  }
+}
+
+/**
  * Menghapus riwayat percakapan untuk session ID tertentu.
  * @param {string} sessionId
  * @returns {boolean}

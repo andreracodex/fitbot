@@ -2,6 +2,7 @@ import express from 'express';
 import { getGymSummary } from '../data/gym-data.js';
 import {
   sendMessage,
+  streamMessage,
   resetSession,
   isApiKeyConfigured,
   getActiveSessionCount
@@ -85,6 +86,58 @@ router.post('/chat', async (req, res) => {
       reply: 'Terjadi kesalahan internal pada server chatbot. Silakan coba kembali sesaat lagi.',
       error: 'INTERNAL_SERVER_ERROR'
     });
+  }
+});
+
+/**
+ * POST /api/chat/stream
+ * Mengirim pesan dan menerima respons streaming kata per kata via Server-Sent Events (SSE).
+ * Body: { sessionId: string, message: string }
+ */
+router.post('/chat/stream', async (req, res) => {
+  const { sessionId, message } = req.body;
+
+  if (typeof message !== 'string') {
+    return res.status(400).json({
+      error: 'Format permintaan tidak valid. Bidang "message" harus berupa string.'
+    });
+  }
+
+  const trimmedMessage = message.trim();
+
+  if (trimmedMessage.length === 0) {
+    return res.status(400).json({
+      error: 'Pesan tidak boleh kosong atau hanya berisi spasi.'
+    });
+  }
+
+  if (trimmedMessage.length > 2000) {
+    return res.status(400).json({
+      error: 'Pesan terlalu panjang. Maksimum 2.000 karakter per pesan.'
+    });
+  }
+
+  const validSessionId = (typeof sessionId === 'string' && sessionId.trim().length > 0)
+    ? sessionId.trim()
+    : 'default-session';
+
+  // Header Server-Sent Events (SSE)
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+  res.setHeader('X-Accel-Buffering', 'no');
+  res.flushHeaders?.();
+
+  try {
+    for await (const chunk of streamMessage(validSessionId, trimmedMessage)) {
+      res.write(`data: ${JSON.stringify({ chunk })}\n\n`);
+    }
+    res.write(`data: ${JSON.stringify({ done: true, sessionId: validSessionId })}\n\n`);
+    res.end();
+  } catch (error) {
+    console.error('[Chat Stream Route Error]:', error.message || error);
+    res.write(`data: ${JSON.stringify({ error: 'Terjadi kesalahan pada alur data streaming.' })}\n\n`);
+    res.end();
   }
 });
 

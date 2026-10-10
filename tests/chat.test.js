@@ -130,6 +130,32 @@ describe('FitBot AI Test Suite', () => {
       assert.equal(json.sessionId, 'test-sess-1');
     });
 
+    test('POST /api/chat/stream mengembalikan format SSE dengan benar', async () => {
+      const res = await fetch(`${baseUrl}/api/chat/stream`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId: 'test-stream-sess', message: 'Halo FitBot' })
+      });
+
+      assert.equal(res.status, 200);
+      assert.ok(res.headers.get('content-type').includes('text/event-stream'));
+      const text = await res.text();
+      assert.ok(text.includes('data: '));
+      assert.ok(text.includes('"done":true'));
+    });
+
+    test('POST /api/chat/stream menolak pesan kosong dengan status 400', async () => {
+      const res = await fetch(`${baseUrl}/api/chat/stream`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId: 'test-stream-sess', message: '' })
+      });
+
+      assert.equal(res.status, 400);
+      const json = await res.json();
+      assert.ok(json.error);
+    });
+
     test('GET endpoint tidak dikenal mengembalikan 404', async () => {
       const res = await fetch(`${baseUrl}/api/endpoint-yang-tidak-ada`);
       assert.equal(res.status, 404);

@@ -12,6 +12,7 @@ Proyek ini merupakan implementasi Final Project **AI Productivity and AI API Int
 - **Data Grounding Anti-Halusinasi**: Menjawab fakta hanya berdasarkan data terstruktur di `data/gym-data.json`. Jika informasi harga atau promo spesifik belum tersedia, chatbot secara jujur mengakuinya dan mengarahkan pengguna ke Customer Service (fallback mechanism).
 - **Conversation Memory Bersesi**: Mempertahankan konteks percakapan multi-turn per pengguna (`sessionId`) di server.
 - **Bilingual (ID & EN)**: Mampu memahami dan merespons dalam Bahasa Indonesia maupun Bahasa Inggris sesuai bahasa pengguna.
+- **Streaming Responses (SSE)**: Respon Gemini API muncul secara real-time kata per kata (Server-Sent Events) untuk pengalaman percakapan yang hidup dan interaktif.
 - **Keamanan API Key Ketat**: Kredensial Gemini API Key hanya dikelola di sisi server melalui `.env` dan tidak pernah diekspos ke antarmuka peramban (browser) maupun Git repository.
 - **Antarmuka Web Responsif**: Tampilan chat modern, ramah perangkat seluler (mobile-friendly), dilengkapi tombol *Quick Suggestion Chips*, status koneksi real-time, dan fitur *Reset Chat*.
 - **Keamanan & Validasi Backend**: Dilengkapi proteksi HTTP security header (`helmet`), pembatasan laju request (`express-rate-limit`), serta validasi sanitasi input.
@@ -23,7 +24,7 @@ Proyek ini merupakan implementasi Final Project **AI Productivity and AI API Int
 ```text
 Browser (HTML5 / CSS3 / Vanilla JS)
           │
-          │ POST /api/chat  { sessionId, message }
+          │ POST /api/chat/stream  { sessionId, message }
           ▼
 Node.js + Express (Port 3000)
           │
@@ -36,7 +37,7 @@ Node.js + Express (Port 3000)
 Google Gemini API (@google/generative-ai)
           │
           ▼
-Respon Terstruktur & Fallback Friendly dikirim kembali ke Browser
+Respon Streaming Kata demi Kata via SSE dikirim ke Browser
 ```
 
 ---
@@ -46,21 +47,26 @@ Respon Terstruktur & Fallback Friendly dikirim kembali ke Browser
 ```text
 fitbot/
 ├── data/
-│   └── gym-data.json         # Sumber data resmi gym (cabang, fasilitas, membership, FAQ)
+│   ├── gym-data.json         # Sumber data resmi gym (cabang, fasilitas, membership, FAQ)
+│   └── test-dataset.json     # 20 skenario pertanyaan uji terstruktur (PRD Section 3 & 14)
+├── docs/
+│   ├── DEMO_PRESENTATION_GUIDE.md # Panduan & naskah presentasi live demo final project
+│   └── TEST_RESULTS.md       # Laporan hasil evaluasi benchmark akurasi & fallback
 ├── public/
 │   ├── index.html            # Antarmuka chatbot web
 │   ├── styles.css            # Gaya tema modern gym (dark aesthetic)
-│   └── app.js                # Logika client frontend & interaksi API
+│   └── app.js                # Logika client frontend & streaming SSE handler
 ├── src/
 │   ├── server.js             # Konfigurasi Express, middleware keamanan, static hosting
 │   ├── routes/
-│   │   └── chat.js           # Endpoint REST (/api/health, /api/info, /api/chat, /api/chat/reset)
+│   │   └── chat.js           # Endpoint REST (/api/health, /api/info, /api/chat, /api/chat/stream, /api/chat/reset)
 │   ├── services/
-│   │   └── gemini.js         # Layanan Gemini SDK, system prompt & manajemen percakapan
+│   │   └── gemini.js         # Layanan Gemini SDK, prompt grounding & streaming generator
 │   └── data/
 │       └── gym-data.js       # Modul pembaca dan pemformat grounding data
 ├── tests/
-│   └── chat.test.js          # Pengujian otomatis berbasis Node.js Test Runner
+│   ├── chat.test.js          # Pengujian otomatis berbasis Node.js Test Runner
+│   └── evaluate.js           # Evaluator 20 skenario uji terstruktur
 ├── .env.example              # Template konfigurasi environment variable
 ├── .gitignore                # Aturan pengabaian file sensitif
 ├── package.json              # Konfigurasi dependensi dan skrip proyek
@@ -116,19 +122,29 @@ Buka peramban web dan akses:
 |---|---|---|---|
 | `GET` | `/api/health` | Status server & ketersediaan API key | - |
 | `GET` | `/api/info` | Ringkasan informasi operasional gym | - |
-| `POST` | `/api/chat` | Mengirim pertanyaan dan menerima balasan AI | `{"sessionId": "string", "message": "string"}` |
+| `POST` | `/api/chat` | Mengirim pertanyaan dan menerima balasan AI (JSON) | `{"sessionId": "string", "message": "string"}` |
+| `POST` | `/api/chat/stream` | Mengirim pertanyaan dan menerima balasan streaming (SSE) | `{"sessionId": "string", "message": "string"}` |
 | `POST` | `/api/chat/reset` | Menghapus riwayat memori percakapan sesi | `{"sessionId": "string"}` |
 
 ---
 
-## 🧪 Pengujian & Validasi (Test Suite)
+## 🧪 Pengujian & Evaluasi
 
-Proyek ini telah dilengkapi dengan rangkaian automated test menggunakan **Node.js Native Test Runner** (`node:test` dan `node:assert`).
-
-Jalankan test dengan perintah:
+### 1. Automated Unit/Integration Tests
+Rangkaian pengujian integrasi server:
 ```bash
 npm test
 ```
+
+### 2. Benchmark Evaluasi 20 Skenario PRD
+Menguji 20 skenario terstruktur sesuai syarat PRD Bagian 3 & 14 (laporan otomatis disimpan di [`docs/TEST_RESULTS.md`](docs/TEST_RESULTS.md)):
+```bash
+npm run evaluate
+```
+
+### 3. Panduan Live Demo Presentasi
+Untuk naskah demonstrasi langkah demi langkah di hadapan penguji/dosen, silakan baca:  
+👉 [`docs/DEMO_PRESENTATION_GUIDE.md`](docs/DEMO_PRESENTATION_GUIDE.md)
 
 ### Matriks Pengujian Skenario (Acceptance Criteria)
 

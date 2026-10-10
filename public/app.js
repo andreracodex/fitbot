@@ -123,7 +123,47 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /**
-   * Mengirim pesan ke endpoint backend /api/chat.
+   * Membuat bubble pesan bot baru yang siap diperbarui secara streaming.
+   */
+  function createStreamingBotMessage() {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'message-wrapper bot';
+
+    const avatar = document.createElement('div');
+    avatar.className = 'avatar';
+    avatar.textContent = '🤖';
+
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'message-content';
+
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble bot-bubble';
+
+    const timeSpan = document.createElement('span');
+    timeSpan.className = 'timestamp';
+    timeSpan.textContent = formatCurrentTime();
+
+    contentDiv.appendChild(bubble);
+    contentDiv.appendChild(timeSpan);
+    wrapper.appendChild(avatar);
+    wrapper.appendChild(contentDiv);
+
+    messagesArea.insertBefore(wrapper, typingIndicator);
+
+    return {
+      update: (text) => {
+        bubble.innerHTML = renderFormattedMarkdown(text);
+        scrollToBottom();
+      },
+      setError: (err) => {
+        bubble.textContent = `⚠️ ${err}`;
+        scrollToBottom();
+      }
+    };
+  }
+
+  /**
+   * Mengirim pesan ke endpoint backend streaming /api/chat/stream.
    */
   async function sendMessage(text) {
     if (isSending) return;
@@ -146,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
     showTypingIndicator();
 
     try {
-      const response = await fetch('/api/chat', {
+      const response = await fetch('/api/chat/stream', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -155,18 +195,54 @@ document.addEventListener('DOMContentLoaded', () => {
         })
       });
 
-      const data = await response.json();
       hideTypingIndicator();
 
-      if (response.ok && data.reply) {
-        appendMessage('bot', data.reply);
-      } else {
-        const errorMsg = data.error || data.reply || 'Terjadi gangguan saat memproses pesan.';
-        appendMessage('bot', `⚠️ ${errorMsg}`);
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        appendMessage('bot', `⚠️ ${errorData.error || 'Gagal menghubungi server chatbot.'}`);
+        return;
+      }
+
+      const streamHandle = createStreamingBotMessage();
+      let accumulatedText = '';
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder('utf-8');
+      let buffer = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n\n');
+        buffer = lines.pop() || '';
+
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (trimmed.startsWith('data: ')) {
+            try {
+              const data = JSON.parse(trimmed.substring(6));
+              if (data.chunk) {
+                accumulatedText += data.chunk;
+                streamHandle.update(accumulatedText);
+              }
+              if (data.error) {
+                streamHandle.setError(data.error);
+              }
+            } catch (e) {
+              // Abaikan parsing line fragment
+            }
+          }
+        }
+      }
+
+      if (!accumulatedText.trim()) {
+        streamHandle.update('Tidak ada balasan yang diterima dari model AI.');
       }
     } catch (err) {
       hideTypingIndicator();
-      console.error('Fetch error:', err);
+      console.error('Streaming fetch error:', err);
       appendMessage(
         'bot',
         '⚠️ Tidak dapat terhubung ke server FitBot. Pastikan server backend sedang aktif dan coba kembali.'
