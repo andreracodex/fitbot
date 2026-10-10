@@ -1,42 +1,42 @@
 {
   "gymInfo": {
-    "name": "FitLife Arena",
-    "tagline": "Your Ultimate Fitness & Wellness Community",
+    "name": "Fitness Plus Indonesia",
+    "tagline": "Your Ultimate Athletic & Wellness Club",
     "contact": {
       "phone": "+62 812-3456-7890",
-      "email": "support@fitlifearena.demo",
-      "instagram": "@fitlifearena.demo",
+      "email": "support@fitnessplus.demo",
+      "instagram": "@fitnessplus.indonesia",
       "customerServiceHours": "Senin - Minggu: 08:00 - 20:00 WIB"
     },
-    "note": "Ini adalah data demo untuk keperluan final project FitBot AI."
+    "note": "Pusat Kebugaran & Wellness Concierge Resmi Fitness Plus Indonesia."
   },
   "branches": [
     {
-      "id": "cabang-jaksel",
-      "name": "FitLife Arena Senopati",
+      "id": "cabang-canggu",
+      "name": "Fitness Plus Canggu Bali",
+      "address": "Jl. Pantai Batu Bolong No. 88, Canggu, Badung, Bali",
+      "phone": "+62 361-555-0101",
+      "facilitiesHighlight": ["Dry Sauna", "Studio Yoga Outdoor", "Olympic Free Weights", "Recovery Bar", "Shower Air Panas"]
+    },
+    {
+      "id": "cabang-senopati",
+      "name": "Fitness Plus Senopati Jakarta",
       "address": "Jl. Senopati No. 88, Kebayoran Baru, Jakarta Selatan",
-      "phone": "+62 21-555-0101",
-      "facilitiesHighlight": ["Sauna", "Studio Yoga", "Area Free Weights", "Locker Room Premium", "Shower Air Hangat"]
-    },
-    {
-      "id": "cabang-jakbar",
-      "name": "FitLife Arena Puri Indah",
-      "address": "Jl. Puri Indah Raya No. 12, Kembangan, Jakarta Barat",
       "phone": "+62 21-555-0102",
-      "facilitiesHighlight": ["Kolam Renang Semi-Olympic", "Studio Spinning", "Functional Training Ground", "Sauna"]
+      "facilitiesHighlight": ["Cardio Theatre", "Studio Spinning", "Functional Training Area", "Sauna Premium"]
     },
     {
-      "id": "cabang-jakpus",
-      "name": "FitLife Arena Sudirman",
-      "address": "Gedung Sentral Sudirman Lt. 3, Jl. Jend. Sudirman Kav. 25, Jakarta Pusat",
+      "id": "cabang-puri",
+      "name": "Fitness Plus Puri Indah Jakarta",
+      "address": "Jl. Puri Indah Raya No. 12, Kembangan, Jakarta Barat",
       "phone": "+62 21-555-0103",
-      "facilitiesHighlight": ["Cardio Theatre", "Olympic Lifting Platform", "Shower & Loker", "Juice & Protein Bar"]
+      "facilitiesHighlight": ["Kolam Renang Semi-Olympic", "Lifting Platform", "Locker Digital", "Juice & Protein Bar"]
     }
   ],
   "operatingHours": {
     "weekdays": "Senin - Jumat: 06:00 - 22:00 WIB",
     "weekends": "Sabtu - Minggu: 07:00 - 20:00 WIB",
-    "holidays": "Hari Libur Nasional: 08:00 - 18:00 WIB (kecuali diumumkan khusus)"
+    "holidays": "Hari Libur Nasional: 08:00 - 18:00 WIB (Kecuali pengumuman khusus)"
   },
   "facilities": [
     {
@@ -63,7 +63,7 @@
         "Locker digital gratis selama sesi latihan berlangsung",
         "Wi-Fi berkecepatan tinggi gratis",
         "Dispenser air minum isi ulang (wajib bawa tumbler sendiri)",
-        "Area parkir luas"
+        "Area parkir luas & pengawasan CCTV 24/7"
       ]
     }
   ],
@@ -76,18 +76,18 @@
         "Free akses kelas reguler mingguan",
         "Loker harian dan shower"
       ],
-      "pricingNote": "Informasi tarif resmi dan promo diskon bulanan saat ini belum tercantum di sistem data demo. Silakan hubungi Customer Service untuk penawaran terbaru."
+      "pricingNote": "Informasi paket: 1 Bulan, 3 Bulan, 6 Bulan, dan 1 Tahun. Hubungi Customer Service untuk diskon khusus cabang."
     },
     {
       "name": "All Club Passport",
-      "description": "Akses fleksibel ke seluruh cabang FitLife Arena di Indonesia.",
+      "description": "Akses fleksibel ke seluruh cabang Fitness Plus Indonesia.",
       "benefits": [
-        "Akses tanpa batas ke seluruh cabang FitLife Arena",
-        "Termasuk akses fasilitas kolam renang di cabang Puri Indah",
+        "Akses tanpa batas ke seluruh cabang Fitness Plus Indonesia",
+        "Termasuk akses kolam renang di cabang Puri Indah",
         "Hak mengundang 1 tamu per bulan (Guest Pass)",
         "Diskon merchandise & Protein Bar"
       ],
-      "pricingNote": "Informasi tarif resmi dan promo diskon paket tahunan saat ini belum tercantum di sistem data demo. Silakan hubungi Customer Service untuk penawaran terbaru."
+      "pricingNote": "Penawaran promo hemat hingga 30% untuk pendaftaran 1 Tahun All Club Passport."
     },
     {
       "name": "Student / Pelajar",
@@ -96,38 +96,104 @@
         "Akses penuh di cabang pilihan pada jam off-peak (08:00 - 16:00 WIB)",
         "Akses kelas studio group"
       ],
-      "pricingNote": "Informasi tarif resmi paket pelajar saat ini belum tercantum di sistem data demo. Silakan hubungi Customer Service untuk verifikasi kartu pelajar dan promo aktif."
+      "pricingNote": "Tarif khusus pelajar/mahasiswa dengan sertifikasi kartu identitas pelajar aktif."
     }
   ],
   "classSchedules": {
-    "status": "Jadwal kelas mingguan berganti setiap periode dan dipublikasikan via papan pengumuman cabang atau Instagram resmi.",
+    "status": "Jadwal kelas mingguan dipublikasikan via papan pengumuman cabang, aplikasi mobile, atau Instagram resmi.",
     "popularClasses": ["Vinyasa Yoga", "Les Mills Body Combat", "Spinning Rush", "Core & HIIT Blast", "Zumba Dance"],
-    "scheduleNote": "Untuk jadwal jam kelas harian yang terperinci dan booking sesi, silakan hubungi tim resepsionis cabang terkait atau Customer Service."
+    "scheduleNote": "Untuk jadwal jam kelas harian yang terperinci dan booking sesi, silakan gunakan aplikasi mobile atau hubungi resepsionis."
   },
   "faqs": [
     {
-      "question": "Apakah tersedia sesi latihan uji coba (Free Trial)?",
-      "answer": "Ya, calon anggota baru berhak mendapatkan 1x Free Trial Pass dengan didampingi konsultan kebugaran kami. Silakan datang langsung ke cabang terdekat atau hubungi staf customer service untuk pendaftaran."
+      "category": "Membership",
+      "question": "Apa saja pilihan paket membership yang tersedia di Fitness Plus?",
+      "answer": "Kami menyediakan opsi Single Club Membership, All Club Passport (akses seluruh cabang), dan Student Passport khusus pelajar/mahasiswa dengan durasi 1 Bulan, 3 Bulan, 6 Bulan, dan 1 Tahun."
     },
     {
+      "category": "Membership",
+      "question": "Apakah ada diskon khusus untuk pendaftaran membership tahunan?",
+      "answer": "Ya, pendaftaran membership 1 Tahun mendapatkan gratis biaya pendaftaran (joining fee 100% OFF) serta bonus 1 bulan tambahan."
+    },
+    {
+      "category": "Membership",
+      "question": "Berapa usia minimal untuk mendaftar menjadi anggota Fitness Plus?",
+      "answer": "Usia minimal anggota adalah 15 tahun dengan persetujuan surat dari orang tua/wali, atau 18 tahun ke atas untuk pendaftaran mandiri."
+    },
+    {
+      "category": "Promotion",
+      "question": "Promo dan penawaran spesial apa saja yang sedang berlangsung bulan ini?",
+      "answer": "Bulan ini tersedia promo Free Trial Pass 1 Hari, Diskon Pendaftaran Cabang Baru Canggu & Senopati, serta paket bundling Personal Trainer pemula."
+    },
+    {
+      "category": "Promotion",
+      "question": "Bagaimana cara mengklaim Voucher Free Trial Pass 1 Hari?",
+      "answer": "Anda dapat mengklaim Voucher Free Trial Pass dengan mendaftar melalui asisten Fifi ini atau menunjukkan KTP/SIM kepada staf resepsionis cabang terdekat."
+    },
+    {
+      "category": "Classes",
+      "question": "Jenis kelas kelompok (Group Classes) apa saja yang tersedia?",
+      "answer": "Kami menyediakan kelas Les Mills Body Combat, Vinyasa Yoga, Power Pilates, Spinning Rush Cycling, Zumba Dance, serta Core & HIIT Blast."
+    },
+    {
+      "category": "Classes",
+      "question": "Apakah mengikuti kelas studio dikenakan biaya tambahan?",
+      "answer": "Tidak. Seluruh kelas studio reguler sudah termasuk GRATIS bagi seluruh anggota aktif Fitness Plus."
+    },
+    {
+      "category": "Facilities",
+      "question": "Fasilitas unggulan apa saja yang tersedia di cabang Fitness Plus?",
+      "answer": "Fasilitas unggulan mencakup Area Free Weights (dumbbell hingga 50kg), Cardio Theatre, Olympic Lifting Platform, Dry Sauna, Kolam Renang Semi-Olympic (cabang Puri Indah), Loker digital gratis, dan Shower Air Panas."
+    },
+    {
+      "category": "Facilities",
+      "question": "Apakah loker dan shower gratis digunakan oleh anggota?",
+      "answer": "Ya, loker elektronik digital dan fasilitas shower air panas/dingin dapat digunakan secara gratis oleh seluruh anggota selama waktu latihan."
+    },
+    {
+      "category": "Facilities",
       "question": "Apakah saya harus membawa gembok sendiri untuk loker?",
-      "answer": "Tidak perlu. Semua cabang FitLife Arena menggunakan loker elektronik dengan PIN mandiri yang dapat digunakan secara gratis selama jam latihan."
+      "answer": "Tidak perlu. Semua loker kami menggunakan sistem pengunci PIN digital mandiri yang dapat digunakan secara gratis."
     },
     {
-      "question": "Apakah tersedia Personal Trainer (PT)?",
-      "answer": "Ya, kami memiliki tim Personal Trainer bersertifikasi internasional. Paket bimbingan PT dapat disesuaikan dengan target kebugaran Anda. Rincian paket PT dapat dikonsultasikan langsung dengan staf di cabang."
+      "category": "Services",
+      "question": "Apakah tersedia bimbingan Personal Trainer (PT)?",
+      "answer": "Ya, kami memiliki tim Personal Trainer bersertifikasi internasional untuk pendampingan pemula, penurunan berat badan (fat loss), pembentukan otot, hingga rehabilitasi cedera."
     },
     {
-      "question": "Apa saja aturan pakaian di gym?",
-      "answer": "Anggota wajib mengenakan pakaian olahraga yang pantas dan sepatu olahraga tertutup (bukan sandal). Dilarang bertelanjang dada di area latihan umum demi kenyamanan dan higienitas bersama."
+      "category": "Services",
+      "question": "Apakah ada layanan analisis komposisi tubuh (InBody / Body Composition)?",
+      "answer": "Ya, pemeriksaan dan analisis komposisi tubuh (kadar lemak, massa otot, usia sel, BMI) tersedia gratis bagi anggota baru dan evaluasi rutin bulanan."
     },
     {
-      "question": "Apakah handuk disediakan oleh pihak gym?",
-      "answer": "Fasilitas handuk olahraga dan handuk mandi tersedia secara gratis khusus untuk pemegang kartu All Club Passport, atau dapat disewa harian bagi member Single Club."
+      "category": "App & Support",
+      "question": "Bagaimana cara mengunduh dan menggunakan Aplikasi Mobile Fitness Plus?",
+      "answer": "Aplikasi Fitness Plus tersedia di Google Play Store & Apple App Store. Anda dapat menggunakannya untuk scan barcode masuk gym, booking jadwal kelas studio, dan memantau riwayat latihan."
     },
     {
-      "question": "Bagaimana cara berhenti berlangganan atau freeze membership?",
-      "answer": "Pengajuan freeze atau pembatalan membership memerlukan konfirmasi administrasi dengan staf customer service atau resepsionis cabang dengan mengisi formulir paling lambat 7 hari kerja sebelum periode tagihan berikutnya."
+      "category": "App & Support",
+      "question": "Apa yang harus saya lakukan jika bermasalah saat masuk gym atau lupa kata sandi aplikasi?",
+      "answer": "Anda dapat menggunakan fitur 'Lupa Password' di aplikasi atau langsung meminta bantuan staf customer service di meja resepsionis cabang."
+    },
+    {
+      "category": "Policy",
+      "question": "Bagaimana prosedur pembekuan (freeze) atau pembatalan membership?",
+      "answer": "Pengajuan freeze (maksimal 3 bulan/tahun) atau pembatalan membership dilakukan dengan mengisi formulir administrasi di cabang terdaftar minimal 7 hari kerja sebelum periode billing berikutnya."
+    },
+    {
+      "category": "Policy",
+      "question": "Apa saja aturan pakaian dan etika latihan di Fitness Plus?",
+      "answer": "Anggota wajib memakai baju olahraga yang sopan dan sepatu olahraga tertutup (bukan sandal), mengelap alat setelah digunakan, serta mengembalikan dumbbell/barbell ke rak semula."
+    },
+    {
+      "category": "General",
+      "question": "Berapa jam operasional Fitness Plus pada hari kerja dan akhir pekan?",
+      "answer": "Hari Kerja (Senin - Jumat): 06:00 - 22:00 WIB. Akhir Pekan (Sabtu - Minggu): 07:00 - 20:00 WIB. Hari Libur Nasional: 08:00 - 18:00 WIB."
+    },
+    {
+      "category": "General",
+      "question": "Apakah Fitness Plus tetap buka pada hari libur nasional?",
+      "answer": "Ya, sebagian besar cabang tetap buka pada hari libur nasional dengan jam operasional khusus libur (08:00 - 18:00 WIB)."
     }
   ]
 }

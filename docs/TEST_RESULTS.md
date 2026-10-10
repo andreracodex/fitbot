@@ -1,6 +1,6 @@
 # Laporan Hasil Evaluasi Pengujian FitBot AI 📊
 
-**Waktu Pengujian:** 10/10/2026, 17.14.46 WIB  
+**Waktu Pengujian:** 10/10/2026, 17.39.28 WIB  
 **Mode Evaluasi:** Live Google Gemini API Integration  
 **Total Skenario Uji:** 20 Skenario  
 **Tingkat Akurasi:** **100.0%** (Target PRD: ≥ 85%)  
@@ -23,12 +23,12 @@
 
 | ID | Kategori | Pertanyaan Pengguna | Kata Kunci / Ekspektasi | Status |
 |---|---|---|---|---|
-| **TC-01** | Fasilitas Gym | Apa saja fasilitas gym yang tersedia di FitLife Arena? | `Cardio, Free Weights, Sauna, Locker, Shower` | ✅ LULUS |
+| **TC-01** | Fasilitas Gym | Apa saja fasilitas gym yang tersedia di Fitness Plus Gym? | `Cardio, Free Weights, Sauna, Locker, Shower` | ✅ LULUS |
 | **TC-02** | Fasilitas Spesifik Cabang | Apakah di cabang Senopati ada fasilitas sauna? | `Senopati, Sauna` | ✅ LULUS |
 | **TC-03** | Fasilitas Spesifik Cabang | Cabang mana yang memiliki fasilitas kolam renang? | `Puri Indah, kolam renang` | ✅ LULUS |
 | **TC-04** | Jam Operasional | Jam berapa gym buka pada hari kerja (Senin - Jumat)? | `06:00, 22:00` | ✅ LULUS |
 | **TC-05** | Jam Operasional | Kalau hari Sabtu dan Minggu jam operasionalnya bagaimana? | `07:00, 20:00` | ✅ LULUS |
-| **TC-06** | Lokasi Cabang | Di mana saja lokasi cabang FitLife Arena yang ada di Jakarta? | `Senopati, Puri Indah, Sudirman` | ✅ LULUS |
+| **TC-06** | Lokasi Cabang | Di mana saja lokasi cabang Fitness Plus Gym yang ada di Jakarta? | `Senopati, Puri Indah, Sudirman` | ✅ LULUS |
 | **TC-07** | Membership | Apa saja keuntungan dari paket Single Club Membership? | `satu cabang, alat gym, kelas, loker` | ✅ LULUS |
 | **TC-08** | Membership | Apa kelebihan paket All Club Passport dibanding paket biasa? | `seluruh cabang, kolam renang, tamu, Guest Pass` | ✅ LULUS |
 | **TC-09** | Membership | Apakah tersedia paket khusus untuk pelajar atau mahasiswa? | `pelajar, mahasiswa, off-peak, 08:00 - 16:00` | ✅ LULUS |

@@ -16,7 +16,7 @@
 
 ## 📌 Ringkasan Produk
 
-**FitBot AI** adalah chatbot customer service pintar untuk gym **FitLife Arena**, yang dibangun menggunakan **Google Gemini API** dan **Node.js (Express)**. Aplikasi ini dirancang untuk menjawab pertanyaan calon anggota dan anggota aktif seputar jam operasional, fasilitas, cabang, jadwal kelas, dan paket membership berdasarkan sumber data resmi terstruktur (*JSON grounding data*) tanpa halusinasi.
+**FitBot AI** adalah chatbot customer service pintar untuk gym **Fitness Plus Gym**, yang dibangun menggunakan **Google Gemini API** dan **Node.js (Express)**. Aplikasi ini dirancang untuk menjawab pertanyaan calon anggota dan anggota aktif seputar jam operasional, fasilitas, cabang, jadwal kelas, dan paket membership berdasarkan sumber data resmi terstruktur (*JSON grounding data*) tanpa halusinasi.
 
 Proyek ini merupakan implementasi Final Project **AI Productivity and AI API Integration for Developers** (100% JavaScript / Node.js, tanpa Python).
 
@@ -103,7 +103,7 @@ Ada tiga target pengguna utama.
   <ul>
     <li>Otomatis mencatat leads ke database SQLite / MySQL.</li>
     <li>Deteksi otomatis minat prospek (<em>Interest Tagging</em>).</li>
-    <li>Dashboard CRM interaktif di <code>/leads.html</code>.</li>
+    <li>Dashboard Admin interaktif di <code>/dashboard</code>.</li>
   </ul>
 </td>
 </tr>
@@ -168,7 +168,7 @@ fitbot/
 ├── public/
 │   ├── images/               # Dokumentasi aset visual & avatar (Hero, User Target)
 │   ├── index.html            # Antarmuka chatbot web Fifi
-│   ├── leads.html            # Dashboard Leads CRM & viewer transkrip chat
+│   ├── dashboard.html        # Dashboard Admin Fifi (Leads CRM, Stats & Knowledge Base)
 │   ├── fifi.webp             # Foto avatar resmi Fifi
 │   ├── styles.css            # Gaya tema modern gym
 │   └── app.js                # Logika client frontend & streaming SSE

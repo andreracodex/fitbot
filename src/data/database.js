@@ -3,6 +3,7 @@ import { DatabaseSync } from 'node:sqlite';
 import path from 'node:path';
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { hashPassword } from '../services/auth.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -68,7 +69,7 @@ function readSeedJson() {
 function seedKnowledgeSqlite(db) {
   try {
     const checkFaq = db.prepare('SELECT COUNT(*) as count FROM gym_faqs').get();
-    if (checkFaq && checkFaq.count > 0) {
+    if (checkFaq && checkFaq.count >= 10) {
       return;
     }
 
@@ -155,6 +156,220 @@ function seedKnowledgeSqlite(db) {
     console.log('🌱 [Database] Auto-seeding knowledge base ke SQLite berhasil.');
   } catch (err) {
     console.error('[SQLite Seed Error]:', err.message);
+  }
+}
+
+/**
+ * Seeding akun Super Admin default ke SQLite jika tabel admin_users kosong
+ */
+function seedSuperAdminSqlite(db) {
+  try {
+    const check = db.prepare('SELECT COUNT(*) as count FROM admin_users').get();
+    if (check && check.count > 0) return;
+
+    const username = process.env.ADMIN_USERNAME || 'superadmin';
+    const password = process.env.ADMIN_PASSWORD || 'superadmin123';
+    const { hash, salt } = hashPassword(password);
+
+    db.prepare(`
+      INSERT INTO admin_users (username, password_hash, salt, role)
+      VALUES (?, ?, ?, 'superadmin')
+    `).run(username, hash, salt);
+
+    console.log(`🔐 [Auth] Akun Super Admin default (${username}) siap di SQLite.`);
+  } catch (err) {
+    console.error('[SQLite Admin Seed Error]:', err.message);
+  }
+}
+
+/**
+ * Data Seed Percakapan & Leads Omnichannel Default
+ */
+const SAMPLE_LEADS = [
+  {
+    sessionId: 'lead-sarah-johnson',
+    name: 'Sarah Johnson',
+    phone: '+62 812 3456 7890',
+    channel: 'whatsapp',
+    status: 'IN_PROGRESS',
+    interest: 'Membership Options & Pricing (Canggu Branch)',
+    notes: 'Tertarik paket membership 6 bulan atau 1 tahun di Cabang Canggu Bali. Meminta info jadwal tur gym.',
+    time: '10:24 AM',
+    conversations: [
+      { sender: 'user', message: 'Hi, can you tell me about the membership options?' },
+      { sender: 'bot', message: "Hi! I'm Fifi, your AI assistant from Fitness Plus Indonesia. I'd be happy to help you with our membership options.\n\nWe offer 1 Month, 3 Months, 6 Months, and 1 Year memberships.\n\nFor the latest pricing and promotions, I'll be happy to connect you with our branch consultant. Which branch are you interested in?" },
+      { sender: 'user', message: "I'm interested in the Canggu branch. Is there a current promotion?" },
+      { sender: 'bot', message: "Great! The Canggu branch has a special promotion right now. I'll forward your inquiry to our branch consultant so you can get the most up-to-date pricing and details.\n\nWould you like to choose a membership duration: 1 Month, 3 Months, 6 Months, or 1 Year?" }
+    ]
+  },
+  {
+    sessionId: 'lead-michael-tan',
+    name: 'Michael Tan',
+    phone: '+62 811 2233 4455',
+    channel: 'whatsapp',
+    status: 'RESOLVED',
+    interest: 'Trial Class & Free Pass',
+    notes: 'Klaim Free Trial 3 Hari di Senopati. Mau coba kelas BodyPump Sabtu.',
+    time: '09:12 AM',
+    conversations: [
+      { sender: 'user', message: 'Do you have a trial class?' },
+      { sender: 'bot', message: 'Halo Michael! Ya, kami menyediakan Free Trial 3 Hari di seluruh cabang Fitness Plus. Anda bisa menikmati akses gym dan seluruh kelas Les Mills maupun Yoga.' },
+      { sender: 'user', message: 'Boleh, cabang Senopati ya.' },
+      { sender: 'bot', message: 'Siap! Sesi trial Anda di Fitness Plus Senopati sudah tercatat. Tim kami akan mengirimkan QR access melalui WhatsApp ini.' }
+    ]
+  },
+  {
+    sessionId: 'lead-jessica-lee',
+    name: 'Jessica Lee',
+    phone: '+62 811 9876 3210',
+    channel: 'instagram',
+    status: 'IN_PROGRESS',
+    interest: 'Dry Sauna & Wellness Hours',
+    notes: 'Tanya jam operasional sauna di Canggu.',
+    time: '08:47 AM',
+    conversations: [
+      { sender: 'user', message: 'What are the sauna hours?' },
+      { sender: 'bot', message: 'Hi Jessica! Dry Sauna di Fitness Plus Canggu dan Senopati beroperasi setiap hari dari jam 06:00 sampai 21:30 WITA. Sauna tersedia gratis untuk seluruh anggota aktif!' }
+    ]
+  },
+  {
+    sessionId: 'lead-daniel-kim',
+    name: 'Daniel Kim',
+    phone: '+62 813 7765 4321',
+    channel: 'whatsapp',
+    status: 'RESOLVED',
+    interest: 'Paket 6 Bulan & Personal Trainer',
+    notes: 'Sudah mendaftar paket 6 bulan via transfer bank.',
+    time: 'Yesterday',
+    conversations: [
+      { sender: 'user', message: 'How much is the membership for 6 months?' },
+      { sender: 'bot', message: 'Halo Daniel! Paket 6 bulan saat ini sedang ada promo hemat 20% plus bonus 2 sesi Personal Trainer dan analisis InBody gratis!' }
+    ]
+  },
+  {
+    sessionId: 'lead-emily-carter',
+    name: 'Emily Carter',
+    phone: '+62 812 6600 1122',
+    channel: 'instagram',
+    status: 'RESOLVED',
+    interest: 'Promosi Pasangan & Sahabat',
+    notes: 'Tertarik promo berdua diskon 25%.',
+    time: 'Yesterday',
+    conversations: [
+      { sender: 'user', message: 'Is there a promotion right now?' },
+      { sender: 'bot', message: 'Hi Emily! Kami saat ini ada promo potongan 25% untuk pendaftaran paket berdua (Sahabat/Pasangan) serta voucher merchandise eksklusif.' }
+    ]
+  },
+  {
+    sessionId: 'lead-ryan-park',
+    name: 'Ryan Park',
+    phone: '+62 818 3344 5566',
+    channel: 'whatsapp',
+    status: 'IN_PROGRESS',
+    interest: 'Jadwal Kelas Les Mills & Yoga',
+    notes: 'Meminta jadwal kelas PDF cabang Ubud.',
+    time: 'Yesterday',
+    conversations: [
+      { sender: 'user', message: 'Can I check the class schedule?' },
+      { sender: 'bot', message: 'Halo Ryan! Jadwal kelas mingguan (BodyPump, Yoga, Spinning, Zumba) bisa dicek langsung di aplikasi FitBot atau saya kirimkan jadwal PDF cabang Ubud.' }
+    ]
+  },
+  {
+    sessionId: 'lead-samantha-wilson',
+    name: 'Samantha Wilson',
+    phone: '+62 817 9988 7766',
+    channel: 'whatsapp',
+    status: 'RESOLVED',
+    interest: 'Lokasi & Valet Cabang Canggu',
+    notes: 'Sudah berkunjung ke Canggu hari ini.',
+    time: 'Oct 15',
+    conversations: [
+      { sender: 'user', message: 'Where is the Canggu branch located?' },
+      { sender: 'bot', message: 'Hi Samantha! Cabang Canggu beralamat di Jl. Pantai Batu Bolong No. 88, Canggu, Badung, Bali. Parkir luas dengan valet service gratis untuk member!' }
+    ]
+  },
+  {
+    sessionId: 'lead-kevin-lim',
+    name: 'Kevin Lim',
+    phone: '+62 813 6677 8899',
+    channel: 'instagram',
+    status: 'RESOLVED',
+    interest: 'InBody Body Composition Scan',
+    notes: 'Jadwal tes InBody scan Kamis pagi bersama Nutritionist.',
+    time: 'Oct 15',
+    conversations: [
+      { sender: 'user', message: 'Do you offer body composition check?' },
+      { sender: 'bot', message: 'Halo Kevin! Ya, setiap member baru mendapatkan pemeriksaan komposisi tubuh gratis dengan InBody 570 dan konsultasi analisa bersama nutritionist kami.' }
+    ]
+  },
+  {
+    sessionId: 'lead-olivia-davis',
+    name: 'Olivia Davis',
+    phone: '+62 812 4444 7788',
+    channel: 'whatsapp',
+    status: 'RESOLVED',
+    interest: 'Pilihan Paket Membership',
+    notes: 'Memilih paket Annual VIP All-Club Pass.',
+    time: 'Oct 14',
+    conversations: [
+      { sender: 'user', message: 'What are the available membership plans?' },
+      { sender: 'bot', message: 'Hi Olivia! Kami memiliki 4 pilihan: Single Club, All-Club Passport, Annual VIP, dan Student Flex. Semuanya termasuk akses loker dan fasilitas shower air panas.' }
+    ]
+  },
+  {
+    sessionId: 'lead-lucas-martin',
+    name: 'Lucas Martin',
+    phone: '+62 819 5555 6677',
+    channel: 'whatsapp',
+    status: 'ESCALATED',
+    interest: 'Pembatalan / Freeze Keanggotaan',
+    notes: 'Perlu konfirmasi freeze membership selama 1 bulan karena dinas ke luar kota. Tiket diteruskan ke Supervisor.',
+    time: 'Oct 14',
+    conversations: [
+      { sender: 'user', message: 'How can I cancel my membership?' },
+      { sender: 'bot', message: 'Halo Lucas, untuk proses pembatalan atau freeze akun, mohon isi formulir permohonan 14 hari sebelum siklus billing berikutnya atau hubungi tim Membership Support kami di support@fitnessplus.demo. Saya sudah meneruskan tiket ini ke Supervisor Concierge kami untuk pendampingan langsung.' }
+    ]
+  }
+];
+
+/**
+ * Seeding data conversation leads ke SQLite
+ */
+function seedLeadsSqlite(db) {
+  try {
+    const check = db.prepare('SELECT COUNT(*) as count FROM leads').get();
+    if (check && check.count >= 5) return;
+
+    for (const item of SAMPLE_LEADS) {
+      const existing = db.prepare('SELECT id FROM leads WHERE session_id = ?').get(item.sessionId);
+      if (!existing) {
+        db.prepare(`
+          INSERT INTO leads (
+            session_id, channel, name, phone_or_handle, interest, status, message_count, first_contact, last_contact, notes
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now', '-2 days'), datetime('now', 'localtime'), ?)
+        `).run(
+          item.sessionId,
+          item.channel,
+          item.name,
+          item.phone,
+          item.interest,
+          item.status,
+          item.conversations.length,
+          item.notes || null
+        );
+
+        const insertConv = db.prepare(`
+          INSERT INTO conversations (session_id, channel, sender, message, created_at)
+          VALUES (?, ?, ?, ?, datetime('now', 'localtime'))
+        `);
+        for (const msg of item.conversations) {
+          insertConv.run(item.sessionId, item.channel, msg.sender, msg.message);
+        }
+      }
+    }
+    console.log('🌱 [Database] Auto-seeding conversations & leads ke SQLite berhasil.');
+  } catch (err) {
+    console.error('[SQLite Seed Leads Error]:', err.message);
   }
 }
 
@@ -246,11 +461,33 @@ function initSqlite() {
       customer_service_hours TEXT,
       note TEXT
     );
+
+    -- Admin & Authentication Tables
+    CREATE TABLE IF NOT EXISTS admin_users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      username TEXT UNIQUE NOT NULL,
+      password_hash TEXT NOT NULL,
+      salt TEXT NOT NULL,
+      role TEXT DEFAULT 'superadmin',
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      last_login DATETIME
+    );
   `);
+
+  try {
+    db.exec(`ALTER TABLE leads ADD COLUMN notes TEXT;`);
+  } catch (_) {}
+
+  try {
+    db.exec(`UPDATE leads SET name = 'Ruski' WHERE session_id = 'wa_246626266443955' AND (name LIKE '%😊%' OR name LIKE 'Pelanggan WA%')`);
+    db.exec(`UPDATE leads SET name = 'Pelanggan WhatsApp' WHERE name = '😊' OR name LIKE '%😊%'`);
+  } catch (_) {}
 
   sqliteDb = db;
   activeEngine = 'sqlite';
   seedKnowledgeSqlite(db);
+  seedSuperAdminSqlite(db);
+  seedLeadsSqlite(db);
   return sqliteDb;
 }
 
@@ -372,12 +609,36 @@ async function initMysql() {
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
 
+    // Admin & Authentication Tables di MySQL
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS admin_users (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(100) UNIQUE NOT NULL,
+        password_hash VARCHAR(255) NOT NULL,
+        salt VARCHAR(64) NOT NULL,
+        role VARCHAR(50) DEFAULT 'superadmin',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        last_login DATETIME NULL
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    `);
+
+    try {
+      await pool.query(`ALTER TABLE leads ADD COLUMN notes TEXT;`);
+    } catch (_) {}
+
+    try {
+      await pool.query(`UPDATE leads SET name = 'Ruski' WHERE session_id = 'wa_246626266443955' AND (name LIKE '%😊%' OR name LIKE 'Pelanggan WA%')`);
+      await pool.query(`UPDATE leads SET name = 'Pelanggan WhatsApp' WHERE name = '😊' OR name LIKE '%😊%'`);
+    } catch (_) {}
+
     mysqlPool = pool;
     activeEngine = 'mysql';
     console.log(`🐬 [Database] Berhasil terhubung ke MySQL: ${DB_USER}@${DB_HOST}:${DB_PORT}/${DB_NAME}`);
 
     // Auto-seed knowledge dari gym-data.json jika tabel kosong
     await seedKnowledgeMysql(pool);
+    await seedSuperAdminMysql(pool);
+    await seedLeadsMysql(pool);
 
     return mysqlPool;
   } catch (err) {
@@ -393,7 +654,7 @@ async function initMysql() {
 async function seedKnowledgeMysql(pool) {
   try {
     const [[{ count }]] = await pool.query('SELECT COUNT(*) as count FROM gym_faqs');
-    if (count > 0) {
+    if (count >= 10) {
       return;
     }
 
@@ -470,6 +731,72 @@ async function seedKnowledgeMysql(pool) {
   }
 }
 
+/**
+ * Seeding akun Super Admin default ke MySQL jika tabel admin_users kosong
+ */
+async function seedSuperAdminMysql(pool) {
+  try {
+    const [[{ count }]] = await pool.query('SELECT COUNT(*) as count FROM admin_users');
+    if (count > 0) return;
+
+    const username = process.env.ADMIN_USERNAME || 'superadmin';
+    const password = process.env.ADMIN_PASSWORD || 'superadmin123';
+    const { hash, salt } = hashPassword(password);
+
+    await pool.query(
+      `INSERT INTO admin_users (username, password_hash, salt, role)
+       VALUES (?, ?, ?, 'superadmin')`,
+      [username, hash, salt]
+    );
+
+    console.log(`🔐 [Auth] Akun Super Admin default (${username}) siap di MySQL.`);
+  } catch (err) {
+    console.error('[MySQL Admin Seed Error]:', err.message);
+  }
+}
+
+/**
+ * Seeding data conversation leads ke MySQL
+ */
+async function seedLeadsMysql(pool) {
+  try {
+    const [[{ count }]] = await pool.query('SELECT COUNT(*) as count FROM leads');
+    if (count >= 5) return;
+
+    for (const item of SAMPLE_LEADS) {
+      const [existing] = await pool.query('SELECT id FROM leads WHERE session_id = ?', [item.sessionId]);
+      if (existing.length === 0) {
+        await pool.query(
+          `INSERT INTO leads (
+            session_id, channel, name, phone_or_handle, interest, status, message_count, first_contact, last_contact, notes
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, DATE_SUB(NOW(), INTERVAL 2 DAY), NOW(), ?)`,
+          [
+            item.sessionId,
+            item.channel,
+            item.name,
+            item.phone,
+            item.interest,
+            item.status,
+            item.conversations.length,
+            item.notes || null
+          ]
+        );
+
+        for (const msg of item.conversations) {
+          await pool.query(
+            `INSERT INTO conversations (session_id, channel, sender, message, created_at)
+             VALUES (?, ?, ?, ?, NOW())`,
+            [item.sessionId, item.channel, msg.sender, msg.message]
+          );
+        }
+      }
+    }
+    console.log('🌱 [Database] Auto-seeding conversations & leads ke MySQL berhasil.');
+  } catch (err) {
+    console.error('[MySQL Seed Leads Error]:', err.message);
+  }
+}
+
 // Inisialisasi awal saat modul dimuat
 if (DB_TYPE === 'mysql' && process.env.NODE_ENV !== 'test') {
   initMysql().catch(() => initSqlite());
@@ -489,18 +816,29 @@ export async function recordMessage({
   userContact = null
 }) {
   const detectedInterest = detectInterest(message);
+  const pool = mysqlPool;
 
-  if (activeEngine === 'mysql' && mysqlPool) {
+  let cleanUserName = userName;
+  if (cleanUserName) {
+    cleanUserName = cleanUserName.replace(/[\p{Extended_Pictographic}\u200d\uFE0F\uD800-\uDBFF\uDC00-\uDFFF]/gu, '').trim();
+    if (!cleanUserName || !/[a-zA-Z0-9]/.test(cleanUserName)) {
+      cleanUserName = (userContact && userContact !== 'Sesi Web' && userContact !== 'null')
+        ? `Pelanggan WA (${userContact})`
+        : (channel === 'whatsapp' ? 'Pelanggan WhatsApp' : 'Customer');
+    }
+  }
+
+  if (activeEngine === 'mysql' && pool) {
     try {
       // 1. Simpan percakapan ke MySQL
-      await mysqlPool.query(
+      await pool.query(
         `INSERT INTO conversations (session_id, channel, sender, message, created_at)
          VALUES (?, ?, ?, ?, NOW())`,
         [sessionId, channel, sender, message]
       );
 
       // 2. Periksa lead yang sudah ada di MySQL
-      const [leads] = await mysqlPool.query(
+      const [leads] = await pool.query(
         `SELECT * FROM leads WHERE session_id = ?`,
         [sessionId]
       );
@@ -514,7 +852,7 @@ export async function recordMessage({
             : `${updatedInterest}, ${detectedInterest}`;
         }
 
-        await mysqlPool.query(
+        await pool.query(
           `UPDATE leads SET 
              message_count = message_count + 1,
              last_contact = NOW(),
@@ -522,17 +860,17 @@ export async function recordMessage({
              phone_or_handle = COALESCE(?, phone_or_handle),
              interest = ?
            WHERE session_id = ?`,
-          [userName, userContact, updatedInterest, sessionId]
+          [cleanUserName, userContact, updatedInterest, sessionId]
         );
       } else {
-        await mysqlPool.query(
+        await pool.query(
           `INSERT INTO leads (
              session_id, channel, name, phone_or_handle, interest, status, message_count, first_contact, last_contact
            ) VALUES (?, ?, ?, ?, ?, 'NEW', 1, NOW(), NOW())`,
           [
             sessionId,
             channel,
-            userName || (channel === 'web' ? 'Web Visitor' : 'Lead ' + channel),
+            cleanUserName || (channel === 'web' ? 'Web Visitor' : 'Lead ' + channel),
             userContact || (channel === 'web' ? 'Sesi Web' : sessionId),
             detectedInterest || 'Umum'
           ]
@@ -574,7 +912,7 @@ export async function recordMessage({
           interest = ?
         WHERE session_id = ?
       `);
-      updateLead.run(userName, userContact, updatedInterest, sessionId);
+      updateLead.run(cleanUserName ?? null, userContact ?? null, updatedInterest, sessionId);
     } else {
       const insertLead = db.prepare(`
         INSERT INTO leads (
@@ -584,7 +922,7 @@ export async function recordMessage({
       insertLead.run(
         sessionId,
         channel,
-        userName || (channel === 'web' ? 'Web Visitor' : 'Lead ' + channel),
+        cleanUserName || (channel === 'web' ? 'Web Visitor' : 'Lead ' + channel),
         userContact || (channel === 'web' ? 'Sesi Web' : sessionId),
         detectedInterest || 'Umum'
       );
@@ -598,14 +936,50 @@ export async function recordMessage({
  * Mengambil daftar seluruh leads
  */
 export async function getAllLeads() {
+  const query = `
+    SELECT l.*,
+      (SELECT c.message FROM conversations c WHERE c.session_id = l.session_id ORDER BY c.id DESC LIMIT 1) as last_message,
+      (SELECT c.created_at FROM conversations c WHERE c.session_id = l.session_id ORDER BY c.id DESC LIMIT 1) as last_message_time
+    FROM leads l
+    ORDER BY l.last_contact DESC
+  `;
+  let rows;
   if (activeEngine === 'mysql' && mysqlPool) {
-    const [rows] = await mysqlPool.query(
-      `SELECT * FROM leads ORDER BY last_contact DESC`
+    const [result] = await mysqlPool.query(query);
+    rows = result;
+  } else {
+    const db = initSqlite();
+    rows = db.prepare(query).all();
+  }
+
+  return rows.map(l => {
+    let cleanName = (l.name || '').replace(/[\p{Extended_Pictographic}\u200d\uFE0F\uD800-\uDBFF\uDC00-\uDFFF]/gu, '').trim();
+    if (!cleanName || !/[a-zA-Z0-9]/.test(cleanName) || cleanName.startsWith('Pelanggan WA (+')) {
+      cleanName = (l.session_id === 'wa_246626266443955' || (l.phone_or_handle && l.phone_or_handle.includes('246626266443955')))
+        ? 'Ruski'
+        : (l.channel === 'whatsapp' ? 'Pelanggan WhatsApp' : (l.channel === 'web' ? 'Web Visitor' : 'Customer'));
+    }
+    return { ...l, name: cleanName };
+  });
+}
+
+/**
+ * Memperbarui nama pelanggan lead
+ */
+export async function updateLeadName(sessionId, name) {
+  const cleanName = (name || '').trim();
+  if (!cleanName) {
+    throw new Error('Nama pelanggan tidak boleh kosong.');
+  }
+  if (activeEngine === 'mysql' && mysqlPool) {
+    await mysqlPool.query(
+      `UPDATE leads SET name = ? WHERE session_id = ?`,
+      [cleanName, sessionId]
     );
-    return rows;
+    return;
   }
   const db = initSqlite();
-  return db.prepare(`SELECT * FROM leads ORDER BY last_contact DESC`).all();
+  db.prepare(`UPDATE leads SET name = ? WHERE session_id = ?`).run(cleanName, sessionId);
 }
 
 /**
@@ -629,20 +1003,41 @@ export async function getLeadConversations(sessionId) {
  * Memperbarui status lead
  */
 export async function updateLeadStatus(sessionId, status) {
-  const validStatus = ['NEW', 'FOLLOW_UP', 'CONTACTED', 'CONVERTED'];
-  if (!validStatus.includes(status)) {
+  const cleanStatus = (status || '').trim();
+  const normalized = cleanStatus.toUpperCase().replace(/\s+/g, '_');
+  const validStatus = [
+    'NEW', 'FOLLOW_UP', 'CONTACTED', 'CONVERTED',
+    'IN_PROGRESS', 'IN PROGRESS', 'RESOLVED', 'ESCALATED'
+  ];
+  if (!validStatus.includes(cleanStatus.toUpperCase()) && !validStatus.includes(normalized)) {
     throw new Error('Status lead tidak valid.');
   }
+
+  const finalStatus = (normalized === 'IN_PROGRESS' || normalized === 'IN PROGRESS')
+    ? 'IN_PROGRESS'
+    : (normalized === 'RESOLVED' ? 'RESOLVED' : (normalized === 'ESCALATED' ? 'ESCALATED' : cleanStatus.toUpperCase()));
 
   if (activeEngine === 'mysql' && mysqlPool) {
     await mysqlPool.query(
       `UPDATE leads SET status = ? WHERE session_id = ?`,
-      [status, sessionId]
+      [finalStatus, sessionId]
     );
     return;
   }
   const db = initSqlite();
-  db.prepare(`UPDATE leads SET status = ? WHERE session_id = ?`).run(status, sessionId);
+  db.prepare(`UPDATE leads SET status = ? WHERE session_id = ?`).run(finalStatus, sessionId);
+}
+
+/**
+ * Memperbarui catatan internal lead
+ */
+export async function updateLeadNotes(sessionId, notes) {
+  if (activeEngine === 'mysql' && mysqlPool) {
+    await mysqlPool.query(`UPDATE leads SET notes = ? WHERE session_id = ?`, [notes, sessionId]);
+    return;
+  }
+  const db = initSqlite();
+  db.prepare(`UPDATE leads SET notes = ? WHERE session_id = ?`).run(notes, sessionId);
 }
 
 /**
@@ -654,13 +1049,17 @@ export async function getLeadStats() {
     const [[{ web }]] = await mysqlPool.query(`SELECT COUNT(*) as web FROM leads WHERE channel = 'web'`);
     const [[{ telegram }]] = await mysqlPool.query(`SELECT COUNT(*) as telegram FROM leads WHERE channel = 'telegram'`);
     const [[{ whatsapp }]] = await mysqlPool.query(`SELECT COUNT(*) as whatsapp FROM leads WHERE channel = 'whatsapp'`);
-    const [[{ converted }]] = await mysqlPool.query(`SELECT COUNT(*) as converted FROM leads WHERE status = 'CONVERTED'`);
+    const [[{ tiktok }]] = await mysqlPool.query(`SELECT COUNT(*) as tiktok FROM leads WHERE channel = 'tiktok'`);
+    const [[{ instagram }]] = await mysqlPool.query(`SELECT COUNT(*) as instagram FROM leads WHERE channel = 'instagram'`);
+    const [[{ converted }]] = await mysqlPool.query(`SELECT COUNT(*) as converted FROM leads WHERE status IN ('CONVERTED', 'RESOLVED')`);
+    const [[{ inProgress }]] = await mysqlPool.query(`SELECT COUNT(*) as inProgress FROM leads WHERE status IN ('IN_PROGRESS', 'IN PROGRESS', 'NEW', 'FOLLOW_UP')`);
+    const [[{ escalated }]] = await mysqlPool.query(`SELECT COUNT(*) as escalated FROM leads WHERE status = 'ESCALATED'`);
     const [[{ newLeads }]] = await mysqlPool.query(`SELECT COUNT(*) as newLeads FROM leads WHERE status = 'NEW'`);
 
     return {
       total,
-      byChannel: { web, telegram, whatsapp },
-      byStatus: { new: newLeads, converted },
+      byChannel: { web, telegram, whatsapp, tiktok, instagram },
+      byStatus: { new: newLeads, inProgress, resolved: converted, escalated, converted },
       engine: 'MySQL'
     };
   }
@@ -670,13 +1069,17 @@ export async function getLeadStats() {
   const web = db.prepare(`SELECT COUNT(*) as count FROM leads WHERE channel = 'web'`).get().count;
   const telegram = db.prepare(`SELECT COUNT(*) as count FROM leads WHERE channel = 'telegram'`).get().count;
   const whatsapp = db.prepare(`SELECT COUNT(*) as count FROM leads WHERE channel = 'whatsapp'`).get().count;
-  const converted = db.prepare(`SELECT COUNT(*) as count FROM leads WHERE status = 'CONVERTED'`).get().count;
+  const tiktok = db.prepare(`SELECT COUNT(*) as count FROM leads WHERE channel = 'tiktok'`).get().count;
+  const instagram = db.prepare(`SELECT COUNT(*) as count FROM leads WHERE channel = 'instagram'`).get().count;
+  const converted = db.prepare(`SELECT COUNT(*) as count FROM leads WHERE status IN ('CONVERTED', 'RESOLVED')`).get().count;
+  const inProgress = db.prepare(`SELECT COUNT(*) as count FROM leads WHERE status IN ('IN_PROGRESS', 'IN PROGRESS', 'NEW', 'FOLLOW_UP')`).get().count;
+  const escalated = db.prepare(`SELECT COUNT(*) as count FROM leads WHERE status = 'ESCALATED'`).get().count;
   const newLeads = db.prepare(`SELECT COUNT(*) as count FROM leads WHERE status = 'NEW'`).get().count;
 
   return {
     total,
-    byChannel: { web, telegram, whatsapp },
-    byStatus: { new: newLeads, converted },
+    byChannel: { web, telegram, whatsapp, tiktok, instagram },
+    byStatus: { new: newLeads, inProgress, resolved: converted, escalated, converted },
     engine: 'SQLite'
   };
 }
@@ -840,13 +1243,18 @@ export async function createFaq({ category = 'Umum', question, answer }) {
 /**
  * Memperbarui FAQ
  */
-export async function updateFaq(id, { category, question, answer, is_active = 1 }) {
+export async function updateFaq(id, { category, question, answer, is_active } = {}) {
   if (!id) throw new Error('ID FAQ tidak valid.');
+
+  const catVal = category !== undefined ? category : null;
+  const qVal = question !== undefined ? question : null;
+  const aVal = answer !== undefined ? answer : null;
+  const activeVal = is_active !== undefined ? (is_active ? 1 : 0) : null;
 
   if (activeEngine === 'mysql' && mysqlPool) {
     await mysqlPool.query(
       'UPDATE gym_faqs SET category = COALESCE(?, category), question = COALESCE(?, question), answer = COALESCE(?, answer), is_active = COALESCE(?, is_active) WHERE id = ?',
-      [category, question, answer, is_active, id]
+      [catVal, qVal, aVal, activeVal, id]
     );
     return { id: Number(id), category, question, answer, is_active };
   }
@@ -860,7 +1268,7 @@ export async function updateFaq(id, { category, question, answer, is_active = 1 
       answer = COALESCE(?, answer),
       is_active = COALESCE(?, is_active)
     WHERE id = ?
-  `).run(category, question, answer, is_active, id);
+  `).run(catVal, qVal, aVal, activeVal, id);
 
   return { id: Number(id), category, question, answer, is_active };
 }
@@ -880,4 +1288,51 @@ export async function deleteFaq(id) {
   db.prepare('DELETE FROM gym_faqs WHERE id = ?').run(id);
   return true;
 }
+
+/**
+ * Mengambil data admin berdasarkan username untuk proses autentikasi
+ */
+export async function getAdminByUsername(username) {
+  if (!username) return null;
+
+  if (activeEngine === 'mysql' && mysqlPool) {
+    try {
+      const [rows] = await mysqlPool.query(
+        'SELECT * FROM admin_users WHERE username = ? LIMIT 1',
+        [username]
+      );
+      return rows[0] || null;
+    } catch (err) {
+      console.warn('[MySQL getAdminByUsername Error]:', err.message);
+    }
+  }
+
+  try {
+    const db = initSqlite();
+    return db.prepare('SELECT * FROM admin_users WHERE username = ? LIMIT 1').get(username) || null;
+  } catch (err) {
+    console.warn('[SQLite getAdminByUsername Error]:', err.message);
+    return null;
+  }
+}
+
+/**
+ * Memperbarui timestamp login terakhir akun admin
+ */
+export async function updateAdminLastLogin(id) {
+  if (!id) return;
+
+  if (activeEngine === 'mysql' && mysqlPool) {
+    try {
+      await mysqlPool.query('UPDATE admin_users SET last_login = NOW() WHERE id = ?', [id]);
+      return;
+    } catch {}
+  }
+
+  try {
+    const db = initSqlite();
+    db.prepare("UPDATE admin_users SET last_login = datetime('now', 'localtime') WHERE id = ?").run(id);
+  } catch {}
+}
+
 

@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `conversations` (
   INDEX `idx_conversations_created` (`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 3. Tabel Gym Info (Profil & Kontak Resmi FitLife Arena)
+-- 3. Tabel Gym Info (Profil & Kontak Resmi Fitness Plus Gym)
 CREATE TABLE IF NOT EXISTS `gym_info` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(150),
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `gym_info` (
   `note` TEXT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 4. Tabel Gym Branches (Daftar Cabang FitLife Arena)
+-- 4. Tabel Gym Branches (Daftar Cabang Fitness Plus Gym)
 CREATE TABLE IF NOT EXISTS `gym_branches` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `branch_id` VARCHAR(50) UNIQUE,
@@ -93,3 +93,16 @@ CREATE TABLE IF NOT EXISTS `gym_faqs` (
   INDEX `idx_faqs_category` (`category`),
   INDEX `idx_faqs_active` (`is_active`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 9. Tabel Admin Users (Autentikasi Super Admin)
+CREATE TABLE IF NOT EXISTS `admin_users` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `username` VARCHAR(100) UNIQUE NOT NULL,
+  `password_hash` VARCHAR(255) NOT NULL,
+  `salt` VARCHAR(64) NOT NULL,
+  `role` VARCHAR(50) DEFAULT 'superadmin',
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `last_login` DATETIME NULL,
+  INDEX `idx_admin_username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+

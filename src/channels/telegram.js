@@ -27,7 +27,7 @@ export async function startTelegramBot() {
     bot.start(async (ctx) => {
       const name = ctx.from.first_name || 'Kak';
       await ctx.reply(
-        `Halo ${name}, saya Fifi, personal wellness assistant di FitLife Arena Gym.\n\n` +
+        `Halo ${name}, saya Fifi, personal wellness assistant di Fitnes Pluss Gym.\n\n` +
         `Bagaimana saya dapat membantu rencana kebugaran Anda hari ini? Anda dapat menanyakan tentang fasilitas, jam operasional cabang, atau opsi membership resmi.`
       );
     });

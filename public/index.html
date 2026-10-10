@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id" class="dark">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,8 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -41,18 +43,23 @@
   </script>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-obsidian-950 text-slate-100 min-h-screen flex items-center justify-center p-2 sm:p-4 font-sans antialiased selection:bg-gold-500 selection:text-obsidian-950">
-  <div class="w-full max-w-4xl h-[96vh] sm:h-[94vh] flex flex-col bg-obsidian-900 border border-gold-500/20 rounded-2xl sm:rounded-3xl shadow-2xl shadow-black/80 overflow-hidden relative">
-    
+
+<body
+  class="bg-obsidian-950 text-slate-100 min-h-screen flex items-center justify-center p-2 sm:p-4 font-sans antialiased selection:bg-gold-500 selection:text-obsidian-950">
+  <div
+    class="w-full max-w-4xl h-[96vh] sm:h-[94vh] flex flex-col bg-obsidian-900 border border-gold-500/20 rounded-2xl sm:rounded-3xl shadow-2xl shadow-black/80 overflow-hidden relative">
+
     <!-- Ambient Background Glow -->
     <div class="absolute top-0 right-1/4 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl pointer-events-none"></div>
     <div class="absolute bottom-0 left-1/4 w-96 h-96 bg-amber-600/5 rounded-full blur-3xl pointer-events-none"></div>
 
     <!-- Header Section -->
-    <header class="relative z-10 px-5 sm:px-7 py-4 bg-obsidian-900/90 backdrop-blur-md border-b border-gold-500/15 flex items-center justify-between">
+    <header
+      class="relative z-10 px-5 sm:px-7 py-4 bg-obsidian-900/90 backdrop-blur-md border-b border-gold-500/15 flex items-center justify-between">
       <div class="flex items-center gap-3.5">
         <div class="relative">
-          <div class="w-11 h-11 rounded-full ring-2 ring-gold-500/60 p-0.5 overflow-hidden shadow-md shadow-gold-500/20 bg-obsidian-800">
+          <div
+            class="w-11 h-11 rounded-full ring-2 ring-gold-500/60 p-0.5 overflow-hidden shadow-md shadow-gold-500/20 bg-obsidian-800">
             <img src="fifi.webp" alt="Fifi" class="w-full h-full object-cover object-top rounded-full">
           </div>
           <span id="statusDot" class="status-indicator" title="Status Sistem: Menghubungkan..."></span>
@@ -62,28 +69,34 @@
             <h1 class="text-base sm:text-lg font-bold tracking-tight text-white flex items-center">
               Fifi
             </h1>
-            <span class="text-[10px] font-semibold tracking-wider uppercase px-2 py-0.5 rounded-full bg-gold-500/10 text-gold-400 border border-gold-500/30">
+            <span
+              class="text-[10px] font-semibold tracking-wider uppercase px-2 py-0.5 rounded-full bg-gold-500/10 text-gold-400 border border-gold-500/30">
               Wellness Assistant
             </span>
           </div>
-          <p class="text-xs text-slate-400 font-normal">FitLife Arena • Smart Gym Concierge</p>
+          <p class="text-xs text-slate-400 font-normal">Fitness Plus Gym • Smart Gym Concierge</p>
         </div>
       </div>
 
       <!-- Action Buttons -->
       <div class="flex items-center gap-2">
-        <a href="/leads.html" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-obsidian-850 hover:bg-obsidian-800 text-gold-400 border border-gold-500/30 hover:border-gold-400 shadow-sm transition-all duration-200" title="Buka Admin Console (Leads CRM & Knowledge Base)">
+        <a href="/dashboard.html"
+          class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-obsidian-850 hover:bg-obsidian-800 text-gold-400 border border-gold-500/30 hover:border-gold-400 shadow-sm transition-all duration-200"
+          title="Buka Admin Console (Dashboard AI Fifi & Knowledge Base)">
           <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
-            <rect width="18" height="18" x="3" y="3" rx="2"/>
-            <path d="M3 9h18M9 21V9"/>
+            <rect width="18" height="18" x="3" y="3" rx="2" />
+            <path d="M3 9h18M9 21V9" />
           </svg>
           <span class="hidden sm:inline">Admin Console</span>
         </a>
 
-        <button id="btnReset" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-obsidian-850 hover:bg-obsidian-800 text-slate-300 hover:text-white border border-slate-700/80 hover:border-gold-500/40 shadow-sm transition-all duration-200" title="Mulai sesi percakapan baru">
-          <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-            <path d="M3 3v5h5"/>
+        <button id="btnReset"
+          class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-obsidian-850 hover:bg-obsidian-800 text-slate-300 hover:text-white border border-slate-700/80 hover:border-gold-500/40 shadow-sm transition-all duration-200"
+          title="Mulai sesi percakapan baru">
+          <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+            <path d="M3 3v5h5" />
           </svg>
           <span class="hidden sm:inline">Reset Sesi</span>
         </button>
@@ -91,8 +104,9 @@
     </header>
 
     <!-- Messages Container -->
-    <div id="messagesArea" class="flex-1 overflow-y-auto px-5 sm:px-7 py-6 flex flex-col gap-5 scroll-smooth relative z-10">
-      
+    <div id="messagesArea"
+      class="flex-1 overflow-y-auto px-5 sm:px-7 py-6 flex flex-col gap-5 scroll-smooth relative z-10">
+
       <!-- Bot Welcome Card -->
       <div class="message-wrapper bot">
         <div class="avatar">
@@ -100,8 +114,10 @@
         </div>
         <div class="message-content">
           <div class="bubble bot-bubble">
-            <p>Halo, saya <strong>Fifi</strong>, asisten virtual dan wellness consultant resmi di <strong>FitLife Arena</strong>.</p>
-            <p>Bagaimana saya dapat membantu rencana kebugaran Anda hari ini? Anda dapat menanyakan tentang fasilitas klub, jadwal operasional cabang, rincian paket membership, atau panduan pendaftaran latihan.</p>
+            <p>Halo, saya <strong>Fifi</strong>, asisten virtual dan wellness consultant resmi di <strong>Fitness Plus
+                Gym</strong>.</p>
+            <p>Bagaimana saya dapat membantu rencana kebugaran Anda hari ini? Anda dapat menanyakan tentang fasilitas
+              klub, jadwal operasional cabang, rincian paket membership, atau panduan pendaftaran latihan.</p>
           </div>
           <span class="timestamp" id="initialTime"></span>
         </div>
@@ -111,11 +127,15 @@
       <div class="quick-suggestions" id="quickSuggestions">
         <span class="suggestions-label">Topik Populer</span>
         <div class="chips-container">
-          <button class="chip-btn" data-text="Apa saja fasilitas utama yang tersedia di FitLife Arena?">Fasilitas Klub</button>
-          <button class="chip-btn" data-text="Di mana saja lokasi cabang FitLife Arena?">Cabang & Lokasi</button>
-          <button class="chip-btn" data-text="Bagaimana jam operasional gym pada hari kerja dan akhir pekan?">Jam Operasional</button>
-          <button class="chip-btn" data-text="Apa saja pilihan paket membership yang tersedia?">Paket Membership</button>
-          <button class="chip-btn" data-text="Bagaimana prosedur untuk mendapatkan sesi Free Trial?">Sesi Free Trial</button>
+          <button class="chip-btn" data-text="Apa saja fasilitas utama yang tersedia di Fitness Plus Gym?">Fasilitas
+            Klub</button>
+          <button class="chip-btn" data-text="Di mana saja lokasi cabang Fitness Plus Gym?">Cabang & Lokasi</button>
+          <button class="chip-btn" data-text="Bagaimana jam operasional gym pada hari kerja dan akhir pekan?">Jam
+            Operasional</button>
+          <button class="chip-btn" data-text="Apa saja pilihan paket membership yang tersedia?">Paket
+            Membership</button>
+          <button class="chip-btn" data-text="Bagaimana prosedur untuk mendapatkan sesi Free Trial?">Sesi Free
+            Trial</button>
         </div>
       </div>
 
@@ -139,40 +159,36 @@
     <footer class="relative z-10 px-5 sm:px-7 py-4 bg-obsidian-900/95 border-t border-gold-500/15">
       <form id="chatForm" class="flex items-end gap-3">
         <div class="relative flex-1">
-          <textarea
-            id="messageInput"
-            rows="1"
-            placeholder="Tanyakan seputar fasilitas, jam buka, atau membership..."
-            maxlength="2000"
-            autocomplete="off"
-            class="w-full bg-obsidian-950 border border-slate-700/80 focus:border-gold-500 rounded-xl px-4 py-3.5 pr-16 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-gold-500/50 resize-none transition-all duration-200 leading-relaxed"
-          ></textarea>
+          <textarea id="messageInput" rows="1" placeholder="Tanyakan seputar fasilitas, jam buka, atau membership..."
+            maxlength="2000" autocomplete="off"
+            class="w-full bg-obsidian-950 border border-slate-700/80 focus:border-gold-500 rounded-xl px-4 py-3.5 pr-16 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-gold-500/50 resize-none transition-all duration-200 leading-relaxed"></textarea>
           <div class="absolute right-3.5 bottom-3 text-[11px] text-slate-500 select-none">
             <span id="charCounter">0</span>/2000
           </div>
         </div>
 
         <!-- Gold Action Send Button -->
-        <button
-          type="submit"
-          id="btnSend"
+        <button type="submit" id="btnSend"
           class="h-[48px] px-5 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-obsidian-950 font-bold flex items-center justify-center gap-2 shadow-lg shadow-gold-500/20 active:scale-95 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none flex-shrink-0"
-          title="Kirim Pertanyaan"
-        >
+          title="Kirim Pertanyaan">
           <span class="hidden sm:inline text-xs tracking-wider uppercase">Kirim</span>
-          <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round"
+            stroke-linejoin="round">
             <line x1="22" y1="2" x2="11" y2="13"></line>
             <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
           </svg>
         </button>
       </form>
       <div class="mt-2 text-center text-[11px] text-slate-500 tracking-wide">
-        FitBot AI memberikan informasi resmi FitLife Arena. Untuk konfirmasi transaksi langsung, hubungi tim Customer Service.
+        FitBot AI memberikan informasi resmi Fitness Plus Gym. Untuk konfirmasi transaksi langsung, hubungi tim Customer
+        Service.
       </div>
     </footer>
 
   </div>
 
+  <script src="marked.min.js"></script>
   <script src="app.js"></script>
 </body>
+
 </html>

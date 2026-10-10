@@ -9,6 +9,7 @@ import {
   getKnowledgeDataAsync,
   invalidateKnowledgeCache
 } from '../data/gym-data.js';
+import { requireSuperAdmin } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -35,9 +36,9 @@ router.get('/faqs', async (req, res) => {
 
 /**
  * POST /api/knowledge/faqs
- * Menambahkan FAQ baru ke knowledge base
+ * Menambahkan FAQ baru ke knowledge base (Khusus Super Admin)
  */
-router.post('/faqs', async (req, res) => {
+router.post('/faqs', requireSuperAdmin, async (req, res) => {
   try {
     const { category, question, answer } = req.body || {};
 
@@ -80,9 +81,9 @@ router.post('/faqs', async (req, res) => {
 
 /**
  * PUT /api/knowledge/faqs/:id
- * Memperbarui FAQ yang sudah ada
+ * Memperbarui FAQ yang sudah ada (Khusus Super Admin)
  */
-router.put('/faqs/:id', async (req, res) => {
+router.put('/faqs/:id', requireSuperAdmin, async (req, res) => {
   try {
     const { id } = req.params;
     const { category, question, answer, is_active } = req.body || {};
@@ -119,9 +120,9 @@ router.put('/faqs/:id', async (req, res) => {
 
 /**
  * DELETE /api/knowledge/faqs/:id
- * Menghapus FAQ dari knowledge base
+ * Menghapus FAQ dari knowledge base (Khusus Super Admin)
  */
-router.delete('/faqs/:id', async (req, res) => {
+router.delete('/faqs/:id', requireSuperAdmin, async (req, res) => {
   try {
     const { id } = req.params;
 

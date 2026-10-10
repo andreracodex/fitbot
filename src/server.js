@@ -7,6 +7,8 @@ import rateLimit from 'express-rate-limit';
 import chatRouter from './routes/chat.js';
 import leadsRouter from './routes/leads.js';
 import knowledgeRouter from './routes/knowledge.js';
+import webhooksRouter from './routes/webhooks.js';
+import authRouter from './routes/auth.js';
 import { startTelegramBot } from './channels/telegram.js';
 import { startWhatsAppBot } from './channels/whatsapp.js';
 
@@ -42,9 +44,16 @@ const publicDir = path.resolve(__dirname, '../public');
 app.use(express.static(publicDir));
 
 // Mount route API
+app.use('/api/auth', limiter, authRouter);
 app.use('/api/leads', limiter, leadsRouter);
 app.use('/api/knowledge', limiter, knowledgeRouter);
+app.use('/api/webhooks', webhooksRouter);
 app.use('/api', limiter, chatRouter);
+
+// Route slug khusus untuk /dashboard dan backward compatibility /leads.html
+app.get(['/dashboard', '/leads.html'], (req, res) => {
+  res.sendFile(path.join(publicDir, 'dashboard.html'));
+});
 
 // Fallback route 404 untuk endpoint API yang tidak dikenal
 app.use('/api', (req, res) => {
@@ -70,7 +79,7 @@ if (isMain) {
     console.log(`🚀 FitBot AI Server aktif di http://localhost:${PORT}`);
     console.log(`   Health Check: http://localhost:${PORT}/api/health`);
     console.log(`   Gym Info:    http://localhost:${PORT}/api/info`);
-    console.log(`   Leads CRM:   http://localhost:${PORT}/leads.html`);
+    console.log(`   Dashboard:   http://localhost:${PORT}/dashboard`);
     console.log(`===============================================`);
 
     // Inisialisasi channel eksternal jika diaktifkan di .env

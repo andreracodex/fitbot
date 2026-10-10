@@ -91,8 +91,8 @@ export async function startWhatsAppBot() {
         if (!messageText || messageText.trim() === '') continue;
 
         const phone = jid.split('@')[0];
-        const sessionId = `wa_${phone}`;
-        const userName = msg.pushName || `Pelanggan WA (+${phone})`;
+        const rawPushName = (msg.pushName || '').replace(/[\p{Extended_Pictographic}\u200d\uFE0F\uD800-\uDBFF\uDC00-\uDFFF]/gu, '').trim();
+        const userName = (rawPushName && /[a-zA-Z0-9]/.test(rawPushName)) ? rawPushName : `Pelanggan WA (+${phone})`;
         const userContact = `+${phone}`;
 
         console.log(`📩 [WhatsApp] Pesan dari ${userName} (${userContact}): "${messageText}"`);

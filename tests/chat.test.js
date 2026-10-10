@@ -83,7 +83,7 @@ describe('FitBot AI Test Suite', () => {
       assert.equal(res.status, 200);
 
       const json = await res.json();
-      assert.equal(json.gymName, 'FitLife Arena');
+      assert.equal(json.gymName, 'Fitness Plus Indonesia');
       assert.ok(json.branches.length >= 3);
     });
 
@@ -173,9 +173,52 @@ describe('FitBot AI Test Suite', () => {
       assert.ok(json.error);
     });
 
-    // --- Leads CRM Endpoints ---
-    test('GET /api/leads mengembalikan statistik dan daftar leads', async () => {
+    let adminToken = null;
+
+    test('POST /api/auth/login berhasil melakukan login Super Admin dan mendapatkan token', async () => {
+      const res = await fetch(`${baseUrl}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: process.env.ADMIN_USERNAME || 'superadmin',
+          password: process.env.ADMIN_PASSWORD || 'superadmin123'
+        })
+      });
+
+      assert.equal(res.status, 200);
+      const json = await res.json();
+      assert.equal(json.success, true);
+      assert.ok(json.token, 'Harus mendapatkan bearer token');
+      assert.equal(json.user.role, 'superadmin');
+      adminToken = json.token;
+    });
+
+    test('POST /api/auth/login menolak password yang salah dengan status 401', async () => {
+      const res = await fetch(`${baseUrl}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: 'superadmin',
+          password: 'wrongpassword'
+        })
+      });
+
+      assert.equal(res.status, 401);
+      const json = await res.json();
+      assert.equal(json.success, false);
+    });
+
+    // --- Leads CRM Endpoints (Protected by Super Admin Auth) ---
+    test('GET /api/leads menolak akses tanpa token dengan 401', async () => {
       const res = await fetch(`${baseUrl}/api/leads`);
+      assert.equal(res.status, 401);
+    });
+
+    test('GET /api/leads mengembalikan statistik dan daftar leads dengan token Super Admin', async () => {
+      assert.ok(adminToken);
+      const res = await fetch(`${baseUrl}/api/leads`, {
+        headers: { Authorization: `Bearer ${adminToken}` }
+      });
       assert.equal(res.status, 200);
 
       const json = await res.json();
@@ -184,11 +227,14 @@ describe('FitBot AI Test Suite', () => {
       assert.ok(Array.isArray(json.leads), 'Harus memiliki array leads');
     });
 
-    test('PATCH /api/leads/:sessionId memperbarui status lead', async () => {
-      // Pastikan ada lead yang tersimpan dari test sebelumnya
+    test('PATCH /api/leads/:sessionId memperbarui status lead dengan token Super Admin', async () => {
+      assert.ok(adminToken);
       const res = await fetch(`${baseUrl}/api/leads/test-sess-1`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${adminToken}`
+        },
         body: JSON.stringify({ status: 'CONTACTED' })
       });
 
@@ -197,8 +243,11 @@ describe('FitBot AI Test Suite', () => {
       assert.equal(json.status, 'CONTACTED');
     });
 
-    test('GET /api/leads/:sessionId mengembalikan transkrip percakapan', async () => {
-      const res = await fetch(`${baseUrl}/api/leads/test-sess-1`);
+    test('GET /api/leads/:sessionId mengembalikan transkrip percakapan dengan token Super Admin', async () => {
+      assert.ok(adminToken);
+      const res = await fetch(`${baseUrl}/api/leads/test-sess-1`, {
+        headers: { Authorization: `Bearer ${adminToken}` }
+      });
       assert.equal(res.status, 200);
 
       const json = await res.json();
@@ -210,7 +259,20 @@ describe('FitBot AI Test Suite', () => {
     describe('Knowledge Base Endpoints (src/routes/knowledge.js)', () => {
       let createdFaqId = null;
 
-      test('GET /api/knowledge/faqs mengembalikan daftar FAQ dari database', async () => {
+
+      test('GET /api/auth/me mengembalikan identitas Super Admin dengan Bearer token', async () => {
+        assert.ok(adminToken);
+        const res = await fetch(`${baseUrl}/api/auth/me`, {
+          headers: { Authorization: `Bearer ${adminToken}` }
+        });
+
+        assert.equal(res.status, 200);
+        const json = await res.json();
+        assert.equal(json.success, true);
+        assert.equal(json.user.role, 'superadmin');
+      });
+
+      test('GET /api/knowledge/faqs mengembalikan daftar FAQ dari database (Public Read)', async () => {
         const res = await fetch(`${baseUrl}/api/knowledge/faqs`);
         assert.equal(res.status, 200);
 
@@ -220,19 +282,39 @@ describe('FitBot AI Test Suite', () => {
         assert.ok(json.data.length > 0, 'Harus memiliki FAQ hasil seeding');
       });
 
-      test('POST /api/knowledge/faqs menolak input tanpa pertanyaan/jawaban', async () => {
+      test('POST /api/knowledge/faqs menolak request tanpa login Super Admin dengan 401', async () => {
         const res = await fetch(`${baseUrl}/api/knowledge/faqs`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            question: 'Pertanyaan ilegal',
+            answer: 'Jawaban ilegal'
+          })
+        });
+        assert.equal(res.status, 401);
+      });
+
+      test('POST /api/knowledge/faqs menolak input tanpa pertanyaan/jawaban jika login', async () => {
+        assert.ok(adminToken);
+        const res = await fetch(`${baseUrl}/api/knowledge/faqs`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${adminToken}`
+          },
           body: JSON.stringify({ question: '' })
         });
         assert.equal(res.status, 400);
       });
 
-      test('POST /api/knowledge/faqs berhasil menambahkan FAQ baru', async () => {
+      test('POST /api/knowledge/faqs berhasil menambahkan FAQ baru dengan token Super Admin', async () => {
+        assert.ok(adminToken);
         const res = await fetch(`${baseUrl}/api/knowledge/faqs`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${adminToken}`
+          },
           body: JSON.stringify({
             category: 'Fasilitas',
             question: 'Apakah tersedia Wi-Fi gratis di lounge?',
@@ -247,11 +329,24 @@ describe('FitBot AI Test Suite', () => {
         createdFaqId = json.data.id;
       });
 
-      test('PUT /api/knowledge/faqs/:id memperbarui FAQ', async () => {
-        assert.ok(createdFaqId, 'ID FAQ baru harus tersedia');
+      test('PUT /api/knowledge/faqs/:id menolak request tanpa token dengan 401', async () => {
+        assert.ok(createdFaqId);
         const res = await fetch(`${baseUrl}/api/knowledge/faqs/${createdFaqId}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question: 'Ubah tanpa token' })
+        });
+        assert.equal(res.status, 401);
+      });
+
+      test('PUT /api/knowledge/faqs/:id memperbarui FAQ dengan token Super Admin', async () => {
+        assert.ok(createdFaqId && adminToken);
+        const res = await fetch(`${baseUrl}/api/knowledge/faqs/${createdFaqId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${adminToken}`
+          },
           body: JSON.stringify({
             question: 'Apakah ada Wi-Fi di lounge & gym area?',
             answer: 'Ya, Wi-Fi berkecepatan tinggi tersedia di semua sudut gym.'
@@ -264,10 +359,19 @@ describe('FitBot AI Test Suite', () => {
         assert.equal(json.data.question, 'Apakah ada Wi-Fi di lounge & gym area?');
       });
 
-      test('DELETE /api/knowledge/faqs/:id menghapus FAQ', async () => {
-        assert.ok(createdFaqId, 'ID FAQ baru harus tersedia');
+      test('DELETE /api/knowledge/faqs/:id menolak request tanpa token dengan 401', async () => {
+        assert.ok(createdFaqId);
         const res = await fetch(`${baseUrl}/api/knowledge/faqs/${createdFaqId}`, {
           method: 'DELETE'
+        });
+        assert.equal(res.status, 401);
+      });
+
+      test('DELETE /api/knowledge/faqs/:id menghapus FAQ dengan token Super Admin', async () => {
+        assert.ok(createdFaqId && adminToken);
+        const res = await fetch(`${baseUrl}/api/knowledge/faqs/${createdFaqId}`, {
+          method: 'DELETE',
+          headers: { Authorization: `Bearer ${adminToken}` }
         });
         assert.equal(res.status, 200);
 
@@ -284,6 +388,55 @@ describe('FitBot AI Test Suite', () => {
         assert.ok(json.data.gymInfo);
         assert.ok(Array.isArray(json.data.branches));
         assert.ok(Array.isArray(json.data.faqs));
+      });
+    });
+
+    // --- Webhook & Omnichannel Endpoints ---
+    describe('Webhook & Omnichannel Endpoints (src/routes/webhooks.js)', () => {
+      test('GET /api/webhooks/tiktok menangani verifikasi challenge handshake', async () => {
+        const res = await fetch(`${baseUrl}/api/webhooks/tiktok?challenge=xyz987`);
+        assert.equal(res.status, 200);
+        const text = await res.text();
+        assert.equal(text, 'xyz987');
+      });
+
+      test('POST /api/webhooks/tiktok menerima pesan DM dan mengembalikan balasan Fifi', async () => {
+        const res = await fetch(`${baseUrl}/api/webhooks/tiktok`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            event: 'im_chat_message',
+            sender_id: 'user_tiktok_123',
+            sender_nickname: 'Fit Enthusiast',
+            content: 'Halo Fifi, Fitness Plus Gym ada cabang di mana saja?'
+          })
+        });
+
+        assert.equal(res.status, 200);
+        const json = await res.json();
+        assert.equal(json.status, 'success');
+        assert.equal(json.channel, 'tiktok');
+        assert.ok(json.reply, 'Harus ada balasan Fifi');
+      });
+
+      test('POST /api/webhooks/omnichannel memproses gateway multichannel (TikTok, IG, WA, Line)', async () => {
+        const res = await fetch(`${baseUrl}/api/webhooks/omnichannel`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            channel: 'tiktok',
+            sessionId: 'omni_tiktok_456',
+            message: 'Berapa jam operasional gym di Senopati?',
+            userName: 'Siti Sarah',
+            userContact: '@sitisarah_fit'
+          })
+        });
+
+        assert.equal(res.status, 200);
+        const json = await res.json();
+        assert.equal(json.success, true);
+        assert.equal(json.channel, 'tiktok');
+        assert.ok(json.reply);
       });
     });
   });

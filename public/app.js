@@ -297,50 +297,74 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /**
-   * Parser Markdown sederhana untuk teks balasan AI:
-   * Mengubah **bold**, - list items, dan baris baru dengan aman.
+   * Parser Markdown untuk teks balasan AI:
+   * Mengubah **bold**, *italic*, list (unordered & ordered), header, code, dan baris baru.
    */
   function renderFormattedMarkdown(text) {
     if (!text) return '';
 
+    if (typeof window.marked !== 'undefined' && typeof window.marked.parse === 'function') {
+      try {
+        window.marked.setOptions({ breaks: true, gfm: true });
+        return window.marked.parse(text);
+      } catch (e) {
+        console.warn('Marked parse error, fallback to regex parser:', e);
+      }
+    }
+
     // Sanitasi teks dasar untuk mencegah XSS
-    let escaped = text
+    let html = text
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
 
-    // Format bold: **teks**
-    escaped = escaped.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    // Format Bold + Italic: ***teks*** atau ___teks___
+    html = html.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
+    html = html.replace(/___(.*?)___/g, '<strong><em>$1</em></strong>');
 
-    // Format baris baru dan paragraf
-    const lines = escaped.split('\n');
-    let html = '';
-    let inList = false;
+    // Format Bold: **teks** atau __teks__
+    html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/__(.*?)__/g, '<strong>$1</strong>');
+
+    // Format Italic: *teks* atau _teks_
+    html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    html = html.replace(/_(.*?)_/g, '<em>$1</em>');
+
+    // Format Code Inline: `code`
+    html = html.replace(/`(.*?)`/g, '<code>$1</code>');
+
+    // Format baris baru dan struktur paragraf/list
+    const lines = html.split('\n');
+    let result = '';
+    let inUl = false;
+    let inOl = false;
 
     lines.forEach((line) => {
       const trimmed = line.trim();
-      if (trimmed.startsWith('* ') || trimmed.startsWith('- ')) {
-        if (!inList) {
-          html += '<ul>';
-          inList = true;
-        }
-        html += `<li>${trimmed.substring(2)}</li>`;
+      const isUl = /^[*\-]\s+/.test(trimmed);
+      const isOl = /^\d+\.\s+/.test(trimmed);
+
+      if (isUl) {
+        if (inOl) { result += '</ol>'; inOl = false; }
+        if (!inUl) { result += '<ul>'; inUl = true; }
+        result += `<li>${trimmed.replace(/^[*\-]\s+/, '')}</li>`;
+      } else if (isOl) {
+        if (inUl) { result += '</ul>'; inUl = false; }
+        if (!inOl) { result += '<ol>'; inOl = true; }
+        result += `<li>${trimmed.replace(/^\d+\.\s+/, '')}</li>`;
       } else {
-        if (inList) {
-          html += '</ul>';
-          inList = false;
-        }
+        if (inUl) { result += '</ul>'; inUl = false; }
+        if (inOl) { result += '</ol>'; inOl = false; }
         if (trimmed.length > 0) {
-          html += `<p>${trimmed}</p>`;
+          result += `<p>${trimmed}</p>`;
         }
       }
     });
 
-    if (inList) {
-      html += '</ul>';
-    }
+    if (inUl) result += '</ul>';
+    if (inOl) result += '</ol>';
 
-    return html || `<p>${escaped}</p>`;
+    return result || `<p>${html}</p>`;
   }
 
   function showTypingIndicator() {
