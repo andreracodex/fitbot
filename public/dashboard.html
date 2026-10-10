@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="id" class="light">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fitness Plus Indonesia — Dashboard Fifi</title>
+  <title>Fitness Plus Gym — Dashboard Fifi</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -48,7 +50,7 @@
       background-color: #f8fafc;
       color: #0f172a;
     }
-    
+
     .sidebar-gradient {
       background: linear-gradient(180deg, #0C2B29 0%, #071D1B 100%);
     }
@@ -56,13 +58,13 @@
     .stat-card-shadow {
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
     }
-    
+
     .chat-bubble-fifi {
       background-color: #ECFDF5;
       border: 1px solid #A7F3D0;
       color: #064E3B;
     }
-    
+
     .chat-bubble-user {
       background-color: #F1F5F9;
       border: 1px solid #E2E8F0;
@@ -73,33 +75,40 @@
     .custom-scroll::-webkit-scrollbar {
       width: 4px;
     }
+
     .custom-scroll::-webkit-scrollbar-track {
       background: transparent;
     }
+
     .custom-scroll::-webkit-scrollbar-thumb {
       background: #CBD5E1;
       border-radius: 9999px;
     }
+
     .custom-scroll::-webkit-scrollbar-thumb:hover {
       background: #94A3B8;
     }
   </style>
 </head>
+
 <body class="antialiased min-h-screen bg-slate-50 text-slate-800 selection:bg-emerald-500 selection:text-white">
 
   <!-- ======================================================== -->
   <!-- GATE VIEW: LOGIN SCREEN (Tampil Saat Belum Login)        -->
   <!-- ======================================================== -->
   <div id="loginGateView" class="min-h-screen flex items-center justify-center p-4 bg-brand-950">
-    <div class="bg-brand-900 border border-emerald-500/25 rounded-3xl w-full max-w-md p-8 sm:p-10 shadow-2xl space-y-6 relative overflow-hidden">
+    <div
+      class="bg-brand-900 border border-emerald-500/25 rounded-3xl w-full max-w-md p-8 sm:p-10 shadow-2xl space-y-6 relative overflow-hidden">
       <div class="absolute -top-12 -right-12 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl"></div>
 
       <div class="text-center space-y-3">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[11px] font-bold text-emerald-400 tracking-wider uppercase">
-          Fitness Plus Indonesia • Restrict Area
+        <div
+          class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[11px] font-bold text-emerald-400 tracking-wider uppercase">
+          Fitness Plus Gym • Restrict Area
         </div>
         <div class="flex items-center justify-center gap-2.5 pt-1">
-          <div class="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center text-brand-950 shadow-lg shadow-emerald-500/30 font-black">
+          <div
+            class="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center text-brand-950 shadow-lg shadow-emerald-500/30 font-black">
             <svg class="w-6 h-6 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
@@ -112,27 +121,33 @@
       </div>
 
       <form id="gateLoginForm" class="space-y-4 pt-2">
-        <div id="gateErrorMsg" class="hidden text-xs text-rose-400 bg-rose-500/10 border border-rose-500/25 rounded-xl p-3.5 leading-relaxed"></div>
+        <div id="gateErrorMsg"
+          class="hidden text-xs text-rose-400 bg-rose-500/10 border border-rose-500/25 rounded-xl p-3.5 leading-relaxed">
+        </div>
 
         <div>
           <label class="block text-xs font-semibold text-slate-300 mb-1.5">Username Admin</label>
-          <input type="text" id="gateUsername" required autocomplete="username" placeholder="superadmin" class="w-full bg-brand-950 border border-slate-700/80 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-colors">
+          <input type="text" id="gateUsername" required autocomplete="username" placeholder="superadmin"
+            class="w-full bg-brand-950 border border-slate-700/80 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-colors">
         </div>
 
         <div>
           <label class="block text-xs font-semibold text-slate-300 mb-1.5">Password</label>
-          <input type="password" id="gatePassword" required autocomplete="current-password" placeholder="••••••••" class="w-full bg-brand-950 border border-slate-700/80 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-colors">
+          <input type="password" id="gatePassword" required autocomplete="current-password" placeholder="••••••••"
+            class="w-full bg-brand-950 border border-slate-700/80 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-colors">
         </div>
 
-        <button type="submit" id="btnGateSubmit" class="w-full py-3 rounded-xl text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-brand-950 shadow-lg shadow-emerald-500/20 transition-all duration-200 active:scale-95">
+        <button type="submit" id="btnGateSubmit"
+          class="w-full py-3 rounded-xl text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-brand-950 shadow-lg shadow-emerald-500/20 transition-all duration-200 active:scale-95">
           Masuk ke Dashboard Fifi
         </button>
       </form>
 
       <div class="text-center pt-2 border-t border-slate-800/80">
-        <a href="/" class="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-emerald-400 font-medium transition-colors">
+        <a href="/"
+          class="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-emerald-400 font-medium transition-colors">
           <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
           </svg>
           <span>Kembali ke Chat Public</span>
         </a>
@@ -148,10 +163,12 @@
     <!-- ---------------------------------------------------- -->
     <!-- LEFT SIDEBAR                                         -->
     <!-- ---------------------------------------------------- -->
-    <aside class="w-full md:w-64 sidebar-gradient text-white flex-shrink-0 flex flex-col border-r border-sidebar-border min-h-screen">
+    <aside
+      class="w-full md:w-64 sidebar-gradient text-white flex-shrink-0 flex flex-col border-r border-sidebar-border min-h-screen">
       <!-- Brand Logo Header -->
       <div class="p-6 flex items-center gap-3 border-b border-sidebar-border/40">
-        <div class="w-9 h-9 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-emerald-400 shadow-sm">
+        <div
+          class="w-9 h-9 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-emerald-400 shadow-sm">
           <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
             <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" />
           </svg>
@@ -164,58 +181,72 @@
 
       <!-- Navigation Links -->
       <nav class="flex-1 p-4 space-y-1.5">
-        <button id="navDashboard" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-sidebar-active text-white shadow-sm border border-emerald-500/20 transition-all">
+        <button id="navDashboard"
+          class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-sidebar-active text-white shadow-sm border border-emerald-500/20 transition-all">
           <div class="flex items-center gap-3">
             <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>
             <span>Dashboard</span>
           </div>
         </button>
 
-        <button id="navChatbot" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-sidebar-text hover:text-white hover:bg-sidebar-hover transition-all">
+        <button id="navChatbot"
+          class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-sidebar-text hover:text-white hover:bg-sidebar-hover transition-all">
           <div class="flex items-center gap-3">
             <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
             </svg>
             <span>Chatbot</span>
           </div>
         </button>
 
-        <button id="navConversations" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-sidebar-text hover:text-white hover:bg-sidebar-hover transition-all">
+        <button id="navConversations"
+          class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-sidebar-text hover:text-white hover:bg-sidebar-hover transition-all">
           <div class="flex items-center gap-3">
             <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
             </svg>
             <span>Conversations</span>
           </div>
-          <span id="sidebarLeadsBadge" class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-300 font-semibold border border-emerald-500/30">0</span>
+          <span id="sidebarLeadsBadge"
+            class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-300 font-semibold border border-emerald-500/30">0</span>
         </button>
 
-        <button id="navKnowledge" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-sidebar-text hover:text-white hover:bg-sidebar-hover transition-all">
+        <button id="navKnowledge"
+          class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-sidebar-text hover:text-white hover:bg-sidebar-hover transition-all">
           <div class="flex items-center gap-3">
             <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
             <span>Knowledge Base</span>
           </div>
-          <span id="sidebarFaqBadge" class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-300 font-semibold border border-emerald-500/30">0</span>
+          <span id="sidebarFaqBadge"
+            class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-300 font-semibold border border-emerald-500/30">0</span>
         </button>
 
-        <button id="navAnalytics" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-sidebar-text hover:text-white hover:bg-sidebar-hover transition-all">
+        <button id="navAnalytics"
+          class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-sidebar-text hover:text-white hover:bg-sidebar-hover transition-all">
           <div class="flex items-center gap-3">
             <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
             <span>Analytics</span>
           </div>
         </button>
 
-        <button id="navSettings" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-sidebar-text hover:text-white hover:bg-sidebar-hover transition-all">
+        <button id="navSettings"
+          class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-sidebar-text hover:text-white hover:bg-sidebar-hover transition-all">
           <div class="flex items-center gap-3">
             <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
             <span>Settings</span>
           </div>
@@ -225,9 +256,11 @@
       <!-- Bottom Profile Section -->
       <div class="p-4 border-t border-sidebar-border/40 mt-auto">
         <div class="flex items-center gap-3 p-3 rounded-2xl bg-sidebar-hover/60 border border-emerald-500/20">
-          <div class="relative w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-400/40 p-0.5 overflow-hidden flex-shrink-0 flex items-center justify-center">
+          <div
+            class="relative w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-400/40 p-0.5 overflow-hidden flex-shrink-0 flex items-center justify-center">
             <img src="fifi.webp" alt="Fifi" class="w-full h-full object-cover rounded-full">
-            <span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-brand-900"></span>
+            <span
+              class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-brand-900"></span>
           </div>
           <div class="overflow-hidden">
             <h4 class="text-xs font-bold text-white tracking-wide truncate">Fifi</h4>
@@ -242,9 +275,10 @@
     <!-- RIGHT MAIN CONTENT AREA                              -->
     <!-- ---------------------------------------------------- -->
     <main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
-      
+
       <!-- Top Page Header -->
-      <header class="bg-white border-b border-slate-200 px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 sticky top-0 z-20 shadow-xs">
+      <header
+        class="bg-white border-b border-slate-200 px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 sticky top-0 z-20 shadow-xs">
         <div>
           <p id="topGreetingText" class="text-xs font-medium text-slate-500">Good Morning,</p>
           <h2 id="topHeaderTitle" class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 mt-0.5">
@@ -257,9 +291,12 @@
 
         <div class="flex flex-wrap items-center gap-3">
           <!-- Notification Bell Icon -->
-          <button class="p-2 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors relative" title="Notifications">
+          <button
+            class="p-2 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors relative"
+            title="Notifications">
             <svg class="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
             </svg>
             <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-500"></span>
           </button>
@@ -267,18 +304,22 @@
           <!-- Client Profile Badge -->
           <div class="flex items-center gap-3 pl-2 border-l border-slate-200">
             <div class="text-right hidden sm:block">
-              <div class="text-xs font-bold text-slate-900 leading-tight">Fitness Plus Indonesia</div>
+              <div class="text-xs font-bold text-slate-900 leading-tight">Fitness Plus Gym</div>
               <div class="text-[10px] font-semibold text-slate-500">Corporate Client</div>
             </div>
-            <div class="w-9 h-9 rounded-full bg-brand-900 text-white font-bold text-xs flex items-center justify-center shadow-sm">
+            <div
+              class="w-9 h-9 rounded-full bg-brand-900 text-white font-bold text-xs flex items-center justify-center shadow-sm">
               FI
             </div>
           </div>
 
           <!-- Logout Button -->
-          <button id="btnLogout" class="p-2 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 border border-slate-200 transition-colors" title="Logout dari dashboard">
+          <button id="btnLogout"
+            class="p-2 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 border border-slate-200 transition-colors"
+            title="Logout dari dashboard">
             <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
             </svg>
           </button>
         </div>
@@ -292,24 +333,31 @@
         <!-- ======================================================== -->
         <div id="viewDashboard" class="space-y-6">
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="bg-white border border-slate-200/80 rounded-2xl p-5 stat-card-shadow hover:border-emerald-500/30 transition-all">
-              <div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center text-emerald-600 mb-3">
+            <div
+              class="bg-white border border-slate-200/80 rounded-2xl p-5 stat-card-shadow hover:border-emerald-500/30 transition-all">
+              <div
+                class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center text-emerald-600 mb-3">
                 <svg class="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
               </div>
               <div class="text-xs font-semibold text-slate-500">Total Conversations</div>
-              <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1" id="dashTotalConversations">2,843</div>
+              <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1"
+                id="dashTotalConversations">2,843</div>
               <div class="text-xs font-semibold text-emerald-600 mt-2 flex items-center gap-1">
                 <span>↑ 18%</span>
                 <span class="text-slate-400 font-normal">vs. previous week</span>
               </div>
             </div>
 
-            <div class="bg-white border border-slate-200/80 rounded-2xl p-5 stat-card-shadow hover:border-emerald-500/30 transition-all">
-              <div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center text-emerald-600 mb-3">
+            <div
+              class="bg-white border border-slate-200/80 rounded-2xl p-5 stat-card-shadow hover:border-emerald-500/30 transition-all">
+              <div
+                class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center text-emerald-600 mb-3">
                 <svg class="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <div class="text-xs font-semibold text-slate-500">Response Rate</div>
@@ -320,24 +368,31 @@
               </div>
             </div>
 
-            <div class="bg-white border border-slate-200/80 rounded-2xl p-5 stat-card-shadow hover:border-emerald-500/30 transition-all">
-              <div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center text-emerald-600 mb-3">
+            <div
+              class="bg-white border border-slate-200/80 rounded-2xl p-5 stat-card-shadow hover:border-emerald-500/30 transition-all">
+              <div
+                class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center text-emerald-600 mb-3">
                 <svg class="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
               </div>
               <div class="text-xs font-semibold text-slate-500">Active Sessions</div>
-              <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1" id="dashActiveSessions">512</div>
+              <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1"
+                id="dashActiveSessions">512</div>
               <div class="text-xs font-semibold text-emerald-600 mt-2 flex items-center gap-1">
                 <span>↑ 22%</span>
                 <span class="text-slate-400 font-normal">vs. previous week</span>
               </div>
             </div>
 
-            <div class="bg-white border border-slate-200/80 rounded-2xl p-5 stat-card-shadow hover:border-emerald-500/30 transition-all">
-              <div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center text-emerald-600 mb-3">
+            <div
+              class="bg-white border border-slate-200/80 rounded-2xl p-5 stat-card-shadow hover:border-emerald-500/30 transition-all">
+              <div
+                class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center text-emerald-600 mb-3">
                 <svg class="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <div class="text-xs font-semibold text-slate-500">Avg. Response Time</div>
@@ -352,13 +407,15 @@
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
             <div class="lg:col-span-8 space-y-6">
               <div class="grid grid-cols-1 sm:grid-cols-12 gap-6">
-                <div class="sm:col-span-7 bg-white border border-slate-200/80 rounded-2xl p-5 stat-card-shadow flex flex-col justify-between">
+                <div
+                  class="sm:col-span-7 bg-white border border-slate-200/80 rounded-2xl p-5 stat-card-shadow flex flex-col justify-between">
                   <div class="flex items-center justify-between mb-4">
                     <div>
                       <h3 class="text-sm font-bold text-slate-900">Conversation Activity</h3>
                       <p class="text-xs text-slate-400">Total conversations per day</p>
                     </div>
-                    <select class="bg-slate-50 border border-slate-200 text-slate-600 text-xs font-semibold rounded-lg px-2.5 py-1 focus:outline-none focus:border-emerald-500">
+                    <select
+                      class="bg-slate-50 border border-slate-200 text-slate-600 text-xs font-semibold rounded-lg px-2.5 py-1 focus:outline-none focus:border-emerald-500">
                       <option>Last 7 days</option>
                       <option>Last 30 days</option>
                     </select>
@@ -381,8 +438,11 @@
                       <text x="0" y="68" font-size="9" fill="#94A3B8">400</text>
                       <text x="0" y="103" font-size="9" fill="#94A3B8">200</text>
 
-                      <path d="M 20 110 C 60 100, 80 80, 130 75 C 180 95, 200 110, 250 100 C 300 70, 330 60, 380 30 L 380 135 L 20 135 Z" fill="url(#chartGradient)" />
-                      <path d="M 20 110 C 60 100, 80 80, 130 75 C 180 95, 200 110, 250 100 C 300 70, 330 60, 380 30" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" />
+                      <path
+                        d="M 20 110 C 60 100, 80 80, 130 75 C 180 95, 200 110, 250 100 C 300 70, 330 60, 380 30 L 380 135 L 20 135 Z"
+                        fill="url(#chartGradient)" />
+                      <path d="M 20 110 C 60 100, 80 80, 130 75 C 180 95, 200 110, 250 100 C 300 70, 330 60, 380 30"
+                        fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" />
 
                       <circle cx="20" cy="110" r="3.5" fill="#10B981" stroke="#FFFFFF" stroke-width="2" />
                       <circle cx="80" cy="92" r="3.5" fill="#10B981" stroke="#FFFFFF" stroke-width="2" />
@@ -405,7 +465,8 @@
                   </div>
                 </div>
 
-                <div class="sm:col-span-5 bg-white border border-slate-200/80 rounded-2xl p-5 stat-card-shadow flex flex-col justify-between">
+                <div
+                  class="sm:col-span-5 bg-white border border-slate-200/80 rounded-2xl p-5 stat-card-shadow flex flex-col justify-between">
                   <div>
                     <h3 class="text-sm font-bold text-slate-900">Top Questions</h3>
                     <p class="text-xs text-slate-400 mb-3">Most common inquiries</p>
@@ -413,7 +474,8 @@
                     <div class="space-y-2.5">
                       <div class="flex items-center justify-between text-xs">
                         <div class="flex items-center gap-2">
-                          <span class="w-5 h-5 rounded-md bg-slate-100 text-slate-600 font-bold text-[10px] flex items-center justify-center">1</span>
+                          <span
+                            class="w-5 h-5 rounded-md bg-slate-100 text-slate-600 font-bold text-[10px] flex items-center justify-center">1</span>
                           <span class="font-semibold text-slate-800">Membership & Pricing</span>
                         </div>
                         <span class="font-semibold text-slate-500 text-[11px]">24.8%</span>
@@ -421,7 +483,8 @@
 
                       <div class="flex items-center justify-between text-xs">
                         <div class="flex items-center gap-2">
-                          <span class="w-5 h-5 rounded-md bg-slate-100 text-slate-600 font-bold text-[10px] flex items-center justify-center">2</span>
+                          <span
+                            class="w-5 h-5 rounded-md bg-slate-100 text-slate-600 font-bold text-[10px] flex items-center justify-center">2</span>
                           <span class="font-semibold text-slate-800">Branch Information</span>
                         </div>
                         <span class="font-semibold text-slate-500 text-[11px]">18.6%</span>
@@ -429,7 +492,8 @@
 
                       <div class="flex items-center justify-between text-xs">
                         <div class="flex items-center gap-2">
-                          <span class="w-5 h-5 rounded-md bg-slate-100 text-slate-600 font-bold text-[10px] flex items-center justify-center">3</span>
+                          <span
+                            class="w-5 h-5 rounded-md bg-slate-100 text-slate-600 font-bold text-[10px] flex items-center justify-center">3</span>
                           <span class="font-semibold text-slate-800">Class Schedule</span>
                         </div>
                         <span class="font-semibold text-slate-500 text-[11px]">14.2%</span>
@@ -437,7 +501,8 @@
 
                       <div class="flex items-center justify-between text-xs">
                         <div class="flex items-center gap-2">
-                          <span class="w-5 h-5 rounded-md bg-slate-100 text-slate-600 font-bold text-[10px] flex items-center justify-center">4</span>
+                          <span
+                            class="w-5 h-5 rounded-md bg-slate-100 text-slate-600 font-bold text-[10px] flex items-center justify-center">4</span>
                           <span class="font-semibold text-slate-800">Facilities & Amenities</span>
                         </div>
                         <span class="font-semibold text-slate-500 text-[11px]">11.7%</span>
@@ -445,7 +510,8 @@
 
                       <div class="flex items-center justify-between text-xs">
                         <div class="flex items-center gap-2">
-                          <span class="w-5 h-5 rounded-md bg-slate-100 text-slate-600 font-bold text-[10px] flex items-center justify-center">5</span>
+                          <span
+                            class="w-5 h-5 rounded-md bg-slate-100 text-slate-600 font-bold text-[10px] flex items-center justify-center">5</span>
                           <span class="font-semibold text-slate-800">Body Composition</span>
                         </div>
                         <span class="font-semibold text-slate-500 text-[11px]">8.9%</span>
@@ -453,10 +519,11 @@
                     </div>
                   </div>
 
-                  <button id="btnViewAllQuestions" class="mt-4 text-[11px] font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-1 transition-colors">
+                  <button id="btnViewAllQuestions"
+                    class="mt-4 text-[11px] font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-1 transition-colors">
                     <span>View all questions</span>
                     <svg class="w-3 h-3 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2.5">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
                   </button>
                 </div>
@@ -470,8 +537,11 @@
                   <div class="flex items-center gap-5">
                     <div class="relative w-24 h-24 flex-shrink-0 flex items-center justify-center">
                       <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
-                        <path class="text-slate-100 stroke-current" stroke-width="3.8" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                        <path class="text-emerald-500 stroke-current" stroke-width="3.8" stroke-dasharray="96.4, 100" stroke-linecap="round" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <path class="text-slate-100 stroke-current" stroke-width="3.8" fill="none"
+                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <path class="text-emerald-500 stroke-current" stroke-width="3.8" stroke-dasharray="96.4, 100"
+                          stroke-linecap="round" fill="none"
+                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                       </svg>
                       <div class="absolute text-center">
                         <span class="text-xs font-extrabold text-slate-900 block leading-none">96.4%</span>
@@ -557,19 +627,22 @@
             </div>
 
             <div class="lg:col-span-4 flex flex-col">
-              <div class="bg-white border border-slate-200/80 rounded-2xl stat-card-shadow flex flex-col h-full overflow-hidden">
+              <div
+                class="bg-white border border-slate-200/80 rounded-2xl stat-card-shadow flex flex-col h-full overflow-hidden">
                 <div class="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
                   <div>
                     <h3 class="text-sm font-bold text-slate-900">Chat Preview</h3>
                     <p class="text-xs text-slate-400">Real conversation with Fifi</p>
                   </div>
-                  <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200/80 text-[11px] font-bold text-emerald-600">
+                  <div
+                    class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200/80 text-[11px] font-bold text-emerald-600">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                     <span>Online</span>
                   </div>
                 </div>
 
-                <div id="dashChatBox" class="flex-1 p-4 space-y-4 overflow-y-auto max-h-[460px] custom-scroll bg-slate-50/30">
+                <div id="dashChatBox"
+                  class="flex-1 p-4 space-y-4 overflow-y-auto max-h-[460px] custom-scroll bg-slate-50/30">
                   <div class="flex justify-end gap-2.5">
                     <div class="max-w-[82%]">
                       <div class="chat-bubble-user rounded-2xl rounded-tr-xs p-3 text-xs leading-relaxed shadow-xs">
@@ -577,20 +650,28 @@
                       </div>
                       <span class="text-[10px] text-slate-400 block text-right mt-1 px-1">10:24 AM</span>
                     </div>
-                    <div class="w-7 h-7 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 flex-shrink-0">
-                      <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <div
+                      class="w-7 h-7 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 flex-shrink-0">
+                      <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                      </svg>
                     </div>
                   </div>
 
                   <div class="flex justify-start gap-2.5">
-                    <div class="w-7 h-7 rounded-full bg-emerald-500/20 border border-emerald-400/40 p-0.5 flex-shrink-0 flex items-center justify-center overflow-hidden">
+                    <div
+                      class="w-7 h-7 rounded-full bg-emerald-500/20 border border-emerald-400/40 p-0.5 flex-shrink-0 flex items-center justify-center overflow-hidden">
                       <img src="fifi.webp" alt="Fifi" class="w-full h-full object-cover rounded-full">
                     </div>
                     <div class="max-w-[85%]">
-                      <div class="chat-bubble-fifi rounded-2xl rounded-tl-xs p-3 text-xs leading-relaxed shadow-xs space-y-2">
-                        <p>Hello! I'm <strong>Fifi</strong>, your AI assistant from <strong>Fitness Plus Indonesia</strong>. I'd be happy to help you with our membership options.</p>
+                      <div
+                        class="chat-bubble-fifi rounded-2xl rounded-tl-xs p-3 text-xs leading-relaxed shadow-xs space-y-2">
+                        <p>Hello! I'm <strong>Fifi</strong>, your AI assistant from <strong>Fitness Plus Gym</strong>.
+                          I'd be happy to help you with our membership options.</p>
                         <p>We offer <strong>1 Month, 3 Months, 6 Months, and 1 Year</strong> memberships.</p>
-                        <p>For the latest pricing and promotions, I'll be happy to connect you with our branch consultant. Which branch are you interested in?</p>
+                        <p>For the latest pricing and promotions, I'll be happy to connect you with our branch
+                          consultant. Which branch are you interested in?</p>
                       </div>
                       <span class="text-[10px] text-slate-400 block text-left mt-1 px-1">10:24 AM</span>
                     </div>
@@ -603,18 +684,26 @@
                       </div>
                       <span class="text-[10px] text-slate-400 block text-right mt-1 px-1">10:25 AM</span>
                     </div>
-                    <div class="w-7 h-7 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 flex-shrink-0">
-                      <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <div
+                      class="w-7 h-7 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 flex-shrink-0">
+                      <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                      </svg>
                     </div>
                   </div>
 
                   <div class="flex justify-start gap-2.5">
-                    <div class="w-7 h-7 rounded-full bg-emerald-500/20 border border-emerald-400/40 p-0.5 flex-shrink-0 flex items-center justify-center overflow-hidden">
+                    <div
+                      class="w-7 h-7 rounded-full bg-emerald-500/20 border border-emerald-400/40 p-0.5 flex-shrink-0 flex items-center justify-center overflow-hidden">
                       <img src="fifi.webp" alt="Fifi" class="w-full h-full object-cover rounded-full">
                     </div>
                     <div class="max-w-[85%]">
-                      <div class="chat-bubble-fifi rounded-2xl rounded-tl-xs p-3 text-xs leading-relaxed shadow-xs space-y-2">
-                        <p>Great! The <strong>Canggu branch</strong> has a special promotion right now. I'll forward your inquiry to our branch consultant so you can get the most up-to-date pricing and details.</p>
+                      <div
+                        class="chat-bubble-fifi rounded-2xl rounded-tl-xs p-3 text-xs leading-relaxed shadow-xs space-y-2">
+                        <p>Great! The <strong>Canggu branch</strong> has a special promotion right now. I'll forward
+                          your inquiry to our branch consultant so you can get the most up-to-date pricing and details.
+                        </p>
                         <p>Would you like to choose a membership duration: 1 Month, 3 Months, 6 Months, or 1 Year?</p>
                       </div>
                       <span class="text-[10px] text-slate-400 block text-left mt-1 px-1">10:25 AM</span>
@@ -624,14 +713,20 @@
 
                 <div class="p-3 border-t border-slate-100 bg-white">
                   <form id="dashChatForm" class="flex items-center gap-2">
-                    <button type="button" class="p-2 text-slate-400 hover:text-slate-600 transition-colors" title="Attach file">
+                    <button type="button" class="p-2 text-slate-400 hover:text-slate-600 transition-colors"
+                      title="Attach file">
                       <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/>
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
                       </svg>
                     </button>
-                    <input type="text" id="dashChatInput" placeholder="Type your message..." class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-500 transition-colors">
-                    <button type="submit" id="dashBtnSend" class="w-8 h-8 rounded-full bg-brand-900 hover:bg-brand-800 text-white flex items-center justify-center flex-shrink-0 transition-all active:scale-95 shadow-xs" title="Send message">
-                      <svg class="w-3.5 h-3.5 stroke-current translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2.5">
+                    <input type="text" id="dashChatInput" placeholder="Type your message..."
+                      class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-500 transition-colors">
+                    <button type="submit" id="dashBtnSend"
+                      class="w-8 h-8 rounded-full bg-brand-900 hover:bg-brand-800 text-white flex items-center justify-center flex-shrink-0 transition-all active:scale-95 shadow-xs"
+                      title="Send message">
+                      <svg class="w-3.5 h-3.5 stroke-current translate-x-0.5" fill="none" viewBox="0 0 24 24"
+                        stroke-width="2.5">
                         <line x1="22" y1="2" x2="11" y2="13"></line>
                         <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                       </svg>
@@ -658,25 +753,29 @@
               <!-- Filter Pills & Date Range Header Row -->
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0" id="convStatusPillsContainer">
-                  <button id="pillConvAll" data-status="ALL" class="conv-status-pill px-3 py-1.5 rounded-xl border text-xs font-semibold flex items-center gap-2 transition-all bg-emerald-50 text-emerald-800 border-emerald-300 shadow-2xs">
+                  <button id="pillConvAll" data-status="ALL"
+                    class="conv-status-pill px-3 py-1.5 rounded-xl border text-xs font-semibold flex items-center gap-2 transition-all bg-emerald-50 text-emerald-800 border-emerald-300 shadow-2xs">
                     <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
                     <span>All</span>
                     <span id="pillAllCount" class="font-bold text-slate-800 ml-1">2,843</span>
                   </button>
 
-                  <button id="pillConvInProgress" data-status="IN_PROGRESS" class="conv-status-pill px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-semibold flex items-center gap-2 transition-all bg-white text-slate-600 hover:bg-slate-50">
+                  <button id="pillConvInProgress" data-status="IN_PROGRESS"
+                    class="conv-status-pill px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-semibold flex items-center gap-2 transition-all bg-white text-slate-600 hover:bg-slate-50">
                     <span class="w-2 h-2 rounded-full bg-amber-500"></span>
                     <span>In Progress</span>
                     <span id="pillInProgressCount" class="font-bold text-slate-800 ml-1">312</span>
                   </button>
 
-                  <button id="pillConvResolved" data-status="RESOLVED" class="conv-status-pill px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-semibold flex items-center gap-2 transition-all bg-white text-slate-600 hover:bg-slate-50">
+                  <button id="pillConvResolved" data-status="RESOLVED"
+                    class="conv-status-pill px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-semibold flex items-center gap-2 transition-all bg-white text-slate-600 hover:bg-slate-50">
                     <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
                     <span>Resolved</span>
                     <span id="pillResolvedCount" class="font-bold text-slate-800 ml-1">2,487</span>
                   </button>
 
-                  <button id="pillConvEscalated" data-status="ESCALATED" class="conv-status-pill px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-semibold flex items-center gap-2 transition-all bg-white text-slate-600 hover:bg-slate-50">
+                  <button id="pillConvEscalated" data-status="ESCALATED"
+                    class="conv-status-pill px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-semibold flex items-center gap-2 transition-all bg-white text-slate-600 hover:bg-slate-50">
                     <span class="w-2 h-2 rounded-full bg-purple-500"></span>
                     <span>Escalated</span>
                     <span id="pillEscalatedCount" class="font-bold text-slate-800 ml-1">44</span>
@@ -685,15 +784,20 @@
 
                 <!-- Date Range Pill -->
                 <div class="flex items-center gap-2 flex-shrink-0">
-                  <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-medium text-slate-700 shadow-2xs cursor-pointer hover:border-slate-300 transition-colors" id="btnConvDateRange">
-                    <svg class="w-3.5 h-3.5 text-slate-500 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
+                  <div
+                    class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-medium text-slate-700 shadow-2xs cursor-pointer hover:border-slate-300 transition-colors"
+                    id="btnConvDateRange">
+                    <svg class="w-3.5 h-3.5 text-slate-500 stroke-current" fill="none" viewBox="0 0 24 24"
+                      stroke-width="2">
                       <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                       <line x1="16" y1="2" x2="16" y2="6"></line>
                       <line x1="8" y1="2" x2="8" y2="6"></line>
                       <line x1="3" y1="10" x2="21" y2="10"></line>
                     </svg>
                     <span id="convDateRangeDisplay">Oct 10, 2025 - Oct 16, 2025</span>
-                    <svg class="w-3 h-3 text-slate-400 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+                    <svg class="w-3 h-3 text-slate-400 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
+                      <path d="M19 9l-7 7-7-7" />
+                    </svg>
                   </div>
                 </div>
               </div>
@@ -701,36 +805,51 @@
               <!-- Search Bar & Action Buttons -->
               <div class="flex items-center gap-2.5">
                 <div class="relative flex-1">
-                  <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
+                  <svg
+                    class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none stroke-current"
+                    fill="none" viewBox="0 0 24 24" stroke-width="2">
                     <circle cx="11" cy="11" r="8"></circle>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                   </svg>
-                  <input type="text" id="convSearchInput" placeholder="Search by name, phone number, or message..." class="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-500 shadow-2xs transition-colors">
+                  <input type="text" id="convSearchInput" placeholder="Search by name, phone number, or message..."
+                    class="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-500 shadow-2xs transition-colors">
                 </div>
 
-                <button id="btnExportConv" class="inline-flex items-center gap-1.5 px-3 py-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 shadow-2xs transition-all active:scale-95" title="Export to CSV">
+                <button id="btnExportConv"
+                  class="inline-flex items-center gap-1.5 px-3 py-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 shadow-2xs transition-all active:scale-95"
+                  title="Export to CSV">
                   <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                   </svg>
                   <span>Export</span>
                 </button>
 
                 <div class="relative">
-                  <button id="btnChannelFilterToggle" class="p-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-slate-600 shadow-2xs transition-all active:scale-95" title="Filter by Channel">
+                  <button id="btnChannelFilterToggle"
+                    class="p-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-slate-600 shadow-2xs transition-all active:scale-95"
+                    title="Filter by Channel">
                     <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
                       <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
                     </svg>
                   </button>
-                  <div id="channelFilterMenu" class="hidden absolute right-0 mt-1 w-44 bg-white border border-slate-200 rounded-xl shadow-lg z-20 py-1 text-xs">
+                  <div id="channelFilterMenu"
+                    class="hidden absolute right-0 mt-1 w-44 bg-white border border-slate-200 rounded-xl shadow-lg z-20 py-1 text-xs">
                     <div class="px-3 py-1.5 font-bold text-slate-400 text-[10px] uppercase">Filter Channel</div>
-                    <button class="channel-filter-item w-full text-left px-3 py-1.5 hover:bg-slate-50 flex items-center justify-between" data-channel="ALL">
+                    <button
+                      class="channel-filter-item w-full text-left px-3 py-1.5 hover:bg-slate-50 flex items-center justify-between"
+                      data-channel="ALL">
                       <span>Semua Channel</span>
                       <span class="text-emerald-600 font-bold">✓</span>
                     </button>
-                    <button class="channel-filter-item w-full text-left px-3 py-1.5 hover:bg-slate-50" data-channel="whatsapp">WhatsApp</button>
-                    <button class="channel-filter-item w-full text-left px-3 py-1.5 hover:bg-slate-50" data-channel="instagram">Instagram</button>
-                    <button class="channel-filter-item w-full text-left px-3 py-1.5 hover:bg-slate-50" data-channel="web">Web Concierge</button>
-                    <button class="channel-filter-item w-full text-left px-3 py-1.5 hover:bg-slate-50" data-channel="telegram">Telegram</button>
+                    <button class="channel-filter-item w-full text-left px-3 py-1.5 hover:bg-slate-50"
+                      data-channel="whatsapp">WhatsApp</button>
+                    <button class="channel-filter-item w-full text-left px-3 py-1.5 hover:bg-slate-50"
+                      data-channel="instagram">Instagram</button>
+                    <button class="channel-filter-item w-full text-left px-3 py-1.5 hover:bg-slate-50"
+                      data-channel="web">Web Concierge</button>
+                    <button class="channel-filter-item w-full text-left px-3 py-1.5 hover:bg-slate-50"
+                      data-channel="telegram">Telegram</button>
                   </div>
                 </div>
               </div>
@@ -740,7 +859,8 @@
                 <div class="overflow-x-auto">
                   <table class="w-full text-left text-xs">
                     <thead>
-                      <tr class="bg-slate-50/70 border-b border-slate-100 text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
+                      <tr
+                        class="bg-slate-50/70 border-b border-slate-100 text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
                         <th class="py-3 px-4">Customer</th>
                         <th class="py-3 px-4">Last Message</th>
                         <th class="py-3 px-4">Channel</th>
@@ -760,9 +880,12 @@
                 </div>
 
                 <!-- Pagination Footer -->
-                <div class="p-3.5 border-t border-slate-100 flex items-center justify-between bg-slate-50/30 text-xs text-slate-500">
+                <div
+                  class="p-3.5 border-t border-slate-100 flex items-center justify-between bg-slate-50/30 text-xs text-slate-500">
                   <div class="text-[11px]" id="convPaginationSummary">
-                    Menampilkan <span class="font-bold text-slate-800" id="convPageStart">1</span> - <span class="font-bold text-slate-800" id="convPageEnd">10</span> dari <span class="font-bold text-slate-800" id="convTotalFiltered">10</span> percakapan
+                    Menampilkan <span class="font-bold text-slate-800" id="convPageStart">1</span> - <span
+                      class="font-bold text-slate-800" id="convPageEnd">10</span> dari <span
+                      class="font-bold text-slate-800" id="convTotalFiltered">10</span> percakapan
                   </div>
                   <div class="flex items-center gap-1" id="convPaginationButtons">
                     <!-- Dynamic Page Buttons -->
@@ -775,50 +898,68 @@
             <!-- RIGHT COLUMN: Selected Conversation Detail Card      -->
             <!-- ==================================================== -->
             <div class="xl:col-span-5 sticky top-6">
-              <div class="bg-white border border-slate-200/80 rounded-2xl stat-card-shadow flex flex-col h-[740px] overflow-hidden">
-                
+              <div
+                class="bg-white border border-slate-200/80 rounded-2xl stat-card-shadow flex flex-col h-[740px] overflow-hidden">
+
                 <!-- Detail Header -->
                 <div class="p-4 border-b border-slate-100 bg-white space-y-3">
                   <div class="flex items-start justify-between gap-3">
                     <div class="flex items-center gap-3">
-                      <button id="btnConvBackMobile" class="xl:hidden p-1.5 -ml-1 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100">
-                        <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
+                      <button id="btnConvBackMobile"
+                        class="xl:hidden p-1.5 -ml-1 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100">
+                        <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
+                          <path d="M15 19l-7-7 7-7" />
+                        </svg>
                       </button>
-                      <div class="w-10 h-10 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center font-bold text-slate-700 text-xs shadow-2xs" id="convDetailAvatar">
+                      <div
+                        class="w-10 h-10 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center font-bold text-slate-700 text-xs shadow-2xs"
+                        id="convDetailAvatar">
                         SJ
                       </div>
                       <div>
                         <div class="flex items-center gap-1.5">
-                          <h3 class="text-sm font-bold text-slate-900 leading-tight" id="convDetailName">Sarah Johnson</h3>
-                          <button id="btnHeaderEditName" class="text-slate-400 hover:text-emerald-600 transition-colors p-0.5 rounded hover:bg-slate-100" title="Ubah Nama Pelanggan">
-                            <svg class="w-3 h-3 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                          <h3 class="text-sm font-bold text-slate-900 leading-tight" id="convDetailName">Sarah Johnson
+                          </h3>
+                          <button id="btnHeaderEditName"
+                            class="text-slate-400 hover:text-emerald-600 transition-colors p-0.5 rounded hover:bg-slate-100"
+                            title="Ubah Nama Pelanggan">
+                            <svg class="w-3 h-3 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
+                              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                            </svg>
                           </button>
                         </div>
-                        <p class="text-[11px] text-slate-400 font-mono mt-0.5" id="convDetailPhone">+62 812 3456 7890</p>
+                        <p class="text-[11px] text-slate-400 font-mono mt-0.5" id="convDetailPhone">+62 812 3456 7890
+                        </p>
                       </div>
                     </div>
 
                     <!-- Status Selector & Action Menu -->
                     <div class="flex items-center gap-1.5">
-                      <select id="convDetailStatusSelect" class="bg-amber-50 border border-amber-200/80 text-amber-800 font-bold text-[11px] px-2.5 py-1 rounded-full focus:outline-none cursor-pointer transition-all">
+                      <select id="convDetailStatusSelect"
+                        class="bg-amber-50 border border-amber-200/80 text-amber-800 font-bold text-[11px] px-2.5 py-1 rounded-full focus:outline-none cursor-pointer transition-all">
                         <option value="IN_PROGRESS">In Progress</option>
                         <option value="RESOLVED">Resolved</option>
                         <option value="ESCALATED">Escalated</option>
                       </select>
 
                       <div class="relative">
-                        <button id="btnConvDetailMenu" class="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 transition-colors">
+                        <button id="btnConvDetailMenu"
+                          class="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 transition-colors">
                           <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
                             <circle cx="12" cy="12" r="1"></circle>
                             <circle cx="12" cy="5" r="1"></circle>
                             <circle cx="12" cy="19" r="1"></circle>
                           </svg>
                         </button>
-                        <div id="convDetailMenuDropdown" class="hidden absolute right-0 mt-1 w-44 bg-white border border-slate-200 rounded-xl shadow-lg z-20 py-1 text-xs">
-                          <button id="btnMenuCopyPhone" class="w-full text-left px-3.5 py-2 hover:bg-slate-50 flex items-center gap-2 text-slate-700">
+                        <div id="convDetailMenuDropdown"
+                          class="hidden absolute right-0 mt-1 w-44 bg-white border border-slate-200 rounded-xl shadow-lg z-20 py-1 text-xs">
+                          <button id="btnMenuCopyPhone"
+                            class="w-full text-left px-3.5 py-2 hover:bg-slate-50 flex items-center gap-2 text-slate-700">
                             <span>Salin Nomor</span>
                           </button>
-                          <button id="btnMenuExportTranscript" class="w-full text-left px-3.5 py-2 hover:bg-slate-50 flex items-center gap-2 text-slate-700">
+                          <button id="btnMenuExportTranscript"
+                            class="w-full text-left px-3.5 py-2 hover:bg-slate-50 flex items-center gap-2 text-slate-700">
                             <span>Unduh Transkrip TXT</span>
                           </button>
                         </div>
@@ -828,8 +969,12 @@
 
                   <!-- Metadata Badges Row -->
                   <div class="flex flex-wrap items-center gap-2 pt-1 text-[11px] text-slate-500">
-                    <span id="convDetailChannelBadge" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/60 font-semibold">
-                      <svg class="w-3 h-3 fill-current" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.16 12.04 20.16C10.56 20.16 9.12 19.76 7.85 19L7.55 18.82L4.43 19.64L5.26 16.6L5.07 16.29C4.24 14.97 3.8 13.46 3.8 11.91C3.8 7.37 7.5 3.67 12.05 3.67Z"/></svg>
+                    <span id="convDetailChannelBadge"
+                      class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/60 font-semibold">
+                      <svg class="w-3 h-3 fill-current" viewBox="0 0 24 24">
+                        <path
+                          d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.16 12.04 20.16C10.56 20.16 9.12 19.76 7.85 19L7.55 18.82L4.43 19.64L5.26 16.6L5.07 16.29C4.24 14.97 3.8 13.46 3.8 11.91C3.8 7.37 7.5 3.67 12.05 3.67Z" />
+                      </svg>
                       <span>WhatsApp</span>
                     </span>
                     <span class="text-slate-300">•</span>
@@ -844,34 +989,44 @@
 
                 <!-- Detail Tabs Navigation -->
                 <div class="flex border-b border-slate-100 bg-slate-50/40 px-4 text-xs">
-                  <button id="tabBtnConversation" class="py-2.5 px-3 font-bold border-b-2 border-emerald-600 text-emerald-800 transition-colors">
+                  <button id="tabBtnConversation"
+                    class="py-2.5 px-3 font-bold border-b-2 border-emerald-600 text-emerald-800 transition-colors">
                     Conversation
                   </button>
-                  <button id="tabBtnCustomerInfo" class="py-2.5 px-3 font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition-colors">
+                  <button id="tabBtnCustomerInfo"
+                    class="py-2.5 px-3 font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition-colors">
                     Customer Info
                   </button>
-                  <button id="tabBtnNotes" class="py-2.5 px-3 font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition-colors">
+                  <button id="tabBtnNotes"
+                    class="py-2.5 px-3 font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition-colors">
                     Notes
                   </button>
                 </div>
 
                 <!-- Tab 1: Conversation Messages Area -->
                 <div id="tabPanelConversation" class="flex-1 flex flex-col min-h-0">
-                  <div id="convMessagesContainer" class="flex-1 p-4 space-y-3.5 overflow-y-auto custom-scroll bg-slate-50/30">
+                  <div id="convMessagesContainer"
+                    class="flex-1 p-4 space-y-3.5 overflow-y-auto custom-scroll bg-slate-50/30">
                     <!-- Populated dynamically with message bubbles -->
                   </div>
 
                   <!-- Reply Input Bar -->
                   <div class="p-3 border-t border-slate-100 bg-white">
                     <form id="convReplyForm" class="flex items-center gap-2">
-                      <button type="button" class="p-2 text-slate-400 hover:text-slate-600 transition-colors" title="Attach file">
+                      <button type="button" class="p-2 text-slate-400 hover:text-slate-600 transition-colors"
+                        title="Attach file">
                         <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/>
+                          <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
                         </svg>
                       </button>
-                      <input type="text" id="convReplyInput" placeholder="Type your message..." autocomplete="off" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-500 transition-colors">
-                      <button type="submit" id="convBtnSend" class="w-8 h-8 rounded-full bg-brand-900 hover:bg-brand-800 text-white flex items-center justify-center flex-shrink-0 transition-all active:scale-95 shadow-xs" title="Send message">
-                        <svg class="w-3.5 h-3.5 stroke-current translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2.5">
+                      <input type="text" id="convReplyInput" placeholder="Type your message..." autocomplete="off"
+                        class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-500 transition-colors">
+                      <button type="submit" id="convBtnSend"
+                        class="w-8 h-8 rounded-full bg-brand-900 hover:bg-brand-800 text-white flex items-center justify-center flex-shrink-0 transition-all active:scale-95 shadow-xs"
+                        title="Send message">
+                        <svg class="w-3.5 h-3.5 stroke-current translate-x-0.5" fill="none" viewBox="0 0 24 24"
+                          stroke-width="2.5">
                           <line x1="22" y1="2" x2="11" y2="13"></line>
                           <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                         </svg>
@@ -881,29 +1036,82 @@
                 </div>
 
                 <!-- Tab 2: Customer Info -->
-                <div id="tabPanelCustomerInfo" class="hidden flex-1 p-5 space-y-4 overflow-y-auto custom-scroll bg-white text-xs">
-                  <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-4 space-y-3">
-                    <h4 class="font-bold text-xs uppercase tracking-wider text-slate-500">Profil Pelanggan</h4>
+                <div id="tabPanelCustomerInfo"
+                  class="hidden flex-1 p-5 space-y-4 overflow-y-auto custom-scroll bg-white text-xs">
+                  <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-4 space-y-3.5">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <h4 class="font-bold text-xs uppercase tracking-wider text-slate-700">Profil Pelanggan</h4>
+                      </div>
+                      <button id="btnEditCustomerName"
+                        class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white hover:bg-slate-100 border border-slate-200/90 rounded-lg text-[11px] font-semibold text-slate-700 shadow-2xs transition-all active:scale-95"
+                        title="Ubah Nama">
+                        <svg class="w-3 h-3 stroke-current text-slate-500" fill="none" viewBox="0 0 24 24"
+                          stroke-width="2">
+                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                        <span>Ubah Nama</span>
+                      </button>
+                    </div>
+
+                    <!-- Edit Form (Toggled) -->
+                    <div id="customerNameEditBox"
+                      class="hidden p-3 bg-white border border-emerald-300 rounded-xl space-y-2 shadow-2xs animate-fadeIn">
+                      <label class="block text-[11px] font-semibold text-slate-700">Nama Pelanggan (Agar Mudah
+                        Dikenali):</label>
+                      <div class="flex items-center gap-2">
+                        <input type="text" id="inputEditCustomerName" placeholder="Contoh: Ruski"
+                          class="flex-1 px-3 py-1.5 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-slate-900 focus:outline-none focus:border-emerald-500">
+                        <button id="btnSaveCustomerName"
+                          class="px-3 py-1.5 bg-brand-900 hover:bg-brand-800 text-white rounded-lg text-xs font-bold transition-all shadow-2xs active:scale-95">Simpan</button>
+                        <button id="btnCancelCustomerName"
+                          class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-xs font-medium transition-all">Batal</button>
+                      </div>
+                    </div>
+
                     <div class="grid grid-cols-2 gap-3 text-xs">
-                      <div>
-                        <span class="text-slate-400 block text-[11px]">Nama Lengkap</span>
-                        <span class="font-semibold text-slate-800" id="infoCustomerName">Sarah Johnson</span>
+                      <div class="bg-white p-3 rounded-xl border border-slate-200/60 shadow-2xs">
+                        <span class="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">Nama
+                          Lengkap</span>
+                        <div class="flex items-center justify-between mt-1">
+                          <span class="font-bold text-slate-900 text-sm truncate" id="infoCustomerName">Ruski</span>
+                        </div>
                       </div>
-                      <div>
-                        <span class="text-slate-400 block text-[11px]">Nomor Telepon</span>
-                        <span class="font-semibold text-slate-800 font-mono" id="infoCustomerPhone">+62 812 3456 7890</span>
+                      <div class="bg-white p-3 rounded-xl border border-slate-200/60 shadow-2xs">
+                        <span class="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">Nomor
+                          Kontak</span>
+                        <div class="flex items-center justify-between mt-1">
+                          <span class="font-semibold text-slate-800 font-mono text-xs"
+                            id="infoCustomerPhone">+246626266443955</span>
+                          <a id="linkWaDirect" href="https://wa.me/246626266443955" target="_blank"
+                            class="text-[11px] text-emerald-600 hover:text-emerald-700 font-semibold inline-flex items-center gap-0.5 ml-1"
+                            title="Buka WhatsApp">
+                            <span>Chat WA</span>
+                            <svg class="w-3 h-3 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
+                              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                              <polyline points="15 3 21 3 21 9"></polyline>
+                              <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                          </a>
+                        </div>
                       </div>
-                      <div>
-                        <span class="text-slate-400 block text-[11px]">Kanal Kontak</span>
-                        <span class="font-semibold text-slate-800" id="infoCustomerChannel">WhatsApp</span>
+                      <div class="bg-white p-3 rounded-xl border border-slate-200/60 shadow-2xs">
+                        <span class="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">Kanal
+                          Komunikasi</span>
+                        <span class="font-semibold text-slate-800 block mt-1" id="infoCustomerChannel">WhatsApp</span>
                       </div>
-                      <div>
-                        <span class="text-slate-400 block text-[11px]">Cabang Diminati</span>
-                        <span class="font-semibold text-slate-800" id="infoCustomerBranch">Canggu Bali</span>
+                      <div class="bg-white p-3 rounded-xl border border-slate-200/60 shadow-2xs">
+                        <span class="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">Lokasi /
+                          Cabang Minat</span>
+                        <span class="font-semibold text-slate-800 block mt-1" id="infoCustomerBranch">Canggu Bali</span>
                       </div>
-                      <div class="col-span-2">
-                        <span class="text-slate-400 block text-[11px]">Topik Minat</span>
-                        <span class="font-semibold text-emerald-700" id="infoCustomerInterest">Membership Options & Pricing</span>
+                      <div class="col-span-2 bg-white p-3 rounded-xl border border-slate-200/60 shadow-2xs">
+                        <span class="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">Topik Minat
+                          Utama</span>
+                        <span class="font-semibold text-emerald-700 block mt-1" id="infoCustomerInterest">Membership
+                          Options & Pricing</span>
                       </div>
                     </div>
                   </div>
@@ -911,21 +1119,28 @@
                   <div class="bg-emerald-50/50 border border-emerald-200/60 rounded-xl p-4 space-y-2">
                     <h4 class="font-bold text-emerald-900 text-xs">AI Assistant Grounding Insight</h4>
                     <p class="text-[11px] text-emerald-800 leading-relaxed" id="infoAiInsight">
-                      Customer menunjukkan minat tinggi pada membership jangka menengah/panjang dan menanyakan promosi cabang Canggu. Disarankan follow up via WhatsApp dengan penawaran Free Trial atau voucher joining discount.
+                      Customer menunjukkan minat tinggi pada membership jangka menengah/panjang dan menanyakan promosi
+                      cabang Canggu. Disarankan follow up via WhatsApp dengan penawaran Free Trial atau voucher joining
+                      discount.
                     </p>
                   </div>
                 </div>
 
                 <!-- Tab 3: Notes -->
-                <div id="tabPanelNotes" class="hidden flex-1 p-5 space-y-4 overflow-y-auto custom-scroll bg-white text-xs flex flex-col">
+                <div id="tabPanelNotes"
+                  class="hidden flex-1 p-5 space-y-4 overflow-y-auto custom-scroll bg-white text-xs flex flex-col">
                   <div>
                     <h4 class="font-bold text-slate-900 mb-1">Catatan Internal CRM</h4>
-                    <p class="text-[11px] text-slate-400">Catatan ini hanya terlihat oleh tim admin/konsultan dan tidak ditampilkan ke customer.</p>
+                    <p class="text-[11px] text-slate-400">Catatan ini hanya terlihat oleh tim admin/konsultan dan tidak
+                      ditampilkan ke customer.</p>
                   </div>
-                  <textarea id="convNotesInput" rows="8" placeholder="Tulis catatan mengenai interaksi, preferensi, atau instruksi tindak lanjut prospek ini..." class="w-full flex-1 p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-500 leading-relaxed"></textarea>
+                  <textarea id="convNotesInput" rows="8"
+                    placeholder="Tulis catatan mengenai interaksi, preferensi, atau instruksi tindak lanjut prospek ini..."
+                    class="w-full flex-1 p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-500 leading-relaxed"></textarea>
                   <div class="flex items-center justify-between pt-2">
                     <span id="notesSaveStatus" class="text-[11px] text-emerald-600 font-medium"></span>
-                    <button id="btnSaveNotes" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs shadow-xs transition-all active:scale-95">
+                    <button id="btnSaveNotes"
+                      class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs shadow-xs transition-all active:scale-95">
                       Simpan Catatan
                     </button>
                   </div>
@@ -941,18 +1156,21 @@
         <!-- SUB-VIEW 3: KNOWLEDGE BASE (100% FULLY FUNCTIONAL)       -->
         <!-- ======================================================== -->
         <div id="viewKnowledge" class="space-y-6 hidden">
-          
+
           <!-- TOP 4 DYNAMIC KPI CARDS -->
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            
+
             <div class="bg-white border border-slate-200/80 rounded-2xl p-5 stat-card-shadow">
-              <div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center text-emerald-600 mb-3">
+              <div
+                class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center text-emerald-600 mb-3">
                 <svg class="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               </div>
               <div class="text-xs font-semibold text-slate-500">Total Articles</div>
-              <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1" id="kbTotalArticles">124</div>
+              <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1" id="kbTotalArticles">
+                124</div>
               <div class="text-xs font-semibold text-emerald-600 mt-2 flex items-center gap-1">
                 <span>↑ 12%</span>
                 <span class="text-slate-400 font-normal">vs. last month</span>
@@ -960,13 +1178,16 @@
             </div>
 
             <div class="bg-white border border-slate-200/80 rounded-2xl p-5 stat-card-shadow">
-              <div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center text-emerald-600 mb-3">
+              <div
+                class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center text-emerald-600 mb-3">
                 <svg class="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
                 </svg>
               </div>
               <div class="text-xs font-semibold text-slate-500">Categories</div>
-              <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1" id="kbTotalCategories">8</div>
+              <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1"
+                id="kbTotalCategories">8</div>
               <div class="text-xs font-semibold text-emerald-600 mt-2 flex items-center gap-1">
                 <span>↑ 1 new</span>
                 <span class="text-slate-400 font-normal">vs. last month</span>
@@ -974,26 +1195,32 @@
             </div>
 
             <div class="bg-white border border-slate-200/80 rounded-2xl p-5 stat-card-shadow">
-              <div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center text-emerald-600 mb-3">
+              <div
+                class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center text-emerald-600 mb-3">
                 <svg class="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
                 </svg>
               </div>
               <div class="text-xs font-semibold text-slate-500">Most Used</div>
-              <div class="text-base font-bold text-slate-900 tracking-tight mt-1 truncate" id="kbMostUsedCategory">Membership & Pricing</div>
+              <div class="text-base font-bold text-slate-900 tracking-tight mt-1 truncate" id="kbMostUsedCategory">
+                Membership & Pricing</div>
               <div class="text-xs font-semibold text-slate-600 mt-1">
                 32% <span class="text-slate-400 font-normal">of total queries</span>
               </div>
             </div>
 
             <div class="bg-white border border-slate-200/80 rounded-2xl p-5 stat-card-shadow">
-              <div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center text-emerald-600 mb-3">
+              <div
+                class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center text-emerald-600 mb-3">
                 <svg class="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <div class="text-xs font-semibold text-slate-500">Last Updated</div>
-              <div class="text-lg font-extrabold text-slate-900 tracking-tight mt-1" id="kbLastUpdated">Oct 16, 2025</div>
+              <div class="text-lg font-extrabold text-slate-900 tracking-tight mt-1" id="kbLastUpdated">Oct 16, 2025
+              </div>
               <div class="text-xs text-slate-400 mt-1 font-medium">by Fifi Team</div>
             </div>
 
@@ -1004,18 +1231,21 @@
 
             <!-- LEFT 8 COLS: ARTICLES TABLE & CONTROLS -->
             <div class="lg:col-span-8 space-y-4">
-              
+
               <!-- Search, Category Select, & Add Article Button -->
               <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                 <div class="relative flex-1">
-                  <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-3 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
+                  <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-3 stroke-current" fill="none"
+                    viewBox="0 0 24 24" stroke-width="2">
                     <circle cx="11" cy="11" r="8"></circle>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                   </svg>
-                  <input type="text" id="faqSearchInput" placeholder="Search articles, keywords, or categories..." class="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-500 transition-colors shadow-xs">
+                  <input type="text" id="faqSearchInput" placeholder="Search articles, keywords, or categories..."
+                    class="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-500 transition-colors shadow-xs">
                 </div>
 
-                <select id="faqCategoryFilter" class="bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-emerald-500 shadow-xs cursor-pointer">
+                <select id="faqCategoryFilter"
+                  class="bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-emerald-500 shadow-xs cursor-pointer">
                   <option value="ALL">All Categories</option>
                   <option value="Membership">Membership & Pricing</option>
                   <option value="Promotion">Promotion & Offers</option>
@@ -1026,18 +1256,21 @@
                   <option value="General">General FAQ</option>
                 </select>
 
-                <button id="btnOpenAddFaq" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-brand-900 hover:bg-brand-800 text-white shadow-xs transition-all active:scale-95 flex-shrink-0">
+                <button id="btnOpenAddFaq"
+                  class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-brand-900 hover:bg-brand-800 text-white shadow-xs transition-all active:scale-95 flex-shrink-0">
                   <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                   </svg>
                   <span>+ Add Article</span>
                 </button>
               </div>
 
               <!-- Contextual Bulk Actions Bar -->
-              <div id="bulkFaqActions" class="hidden bg-emerald-50 border border-emerald-200 rounded-xl p-3 flex items-center justify-between text-xs text-emerald-900 font-medium">
+              <div id="bulkFaqActions"
+                class="hidden bg-emerald-50 border border-emerald-200 rounded-xl p-3 flex items-center justify-between text-xs text-emerald-900 font-medium">
                 <span id="bulkFaqCountText">0 items selected</span>
-                <button id="btnBulkDeleteFaqs" class="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs transition-all shadow-xs">
+                <button id="btnBulkDeleteFaqs"
+                  class="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs transition-all shadow-xs">
                   Hapus Item Terpilih
                 </button>
               </div>
@@ -1048,7 +1281,8 @@
                   <table class="w-full text-left text-xs">
                     <thead>
                       <tr class="bg-slate-50/70 border-b border-slate-100 text-[11px] font-semibold text-slate-400">
-                        <th class="py-3 px-4 w-8 text-center"><input type="checkbox" id="selectAllFaqs" class="rounded border-slate-300"></th>
+                        <th class="py-3 px-4 w-8 text-center"><input type="checkbox" id="selectAllFaqs"
+                            class="rounded border-slate-300"></th>
                         <th class="py-3 px-4">Title</th>
                         <th class="py-3 px-4">Category</th>
                         <th class="py-3 px-4">Status</th>
@@ -1067,7 +1301,8 @@
                 </div>
 
                 <!-- Table Pagination Footer (100% Dynamic) -->
-                <div class="p-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+                <div
+                  class="p-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
                   <span id="kbPaginationText">Showing 1-10 of 124 articles</span>
                   <div id="kbPaginationControls" class="flex items-center gap-1 font-semibold"></div>
                 </div>
@@ -1083,84 +1318,134 @@
               <div class="bg-white border border-slate-200/80 rounded-2xl p-5 stat-card-shadow">
                 <div class="flex items-center justify-between mb-3">
                   <h3 class="text-sm font-bold text-slate-900">Article Categories</h3>
-                  <button id="btnResetKbCategory" class="text-xs font-semibold text-emerald-600 hover:text-emerald-700">All</button>
+                  <button id="btnResetKbCategory"
+                    class="text-xs font-semibold text-emerald-600 hover:text-emerald-700">All</button>
                 </div>
 
                 <div class="space-y-1.5 text-xs">
-                  <div class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors text-slate-700" onclick="filterKbCategory('Membership')">
+                  <div
+                    class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors text-slate-700"
+                    onclick="filterKbCategory('Membership')">
                     <div class="flex items-center gap-2.5">
-                      <svg class="w-4 h-4 text-slate-400 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+                      <svg class="w-4 h-4 text-slate-400 stroke-current" fill="none" viewBox="0 0 24 24"
+                        stroke-width="2">
+                        <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                      </svg>
                       <span class="font-semibold text-slate-800">Membership & Pricing</span>
                     </div>
                     <div class="flex items-center gap-1 text-slate-400 text-[11px] font-semibold">
                       <span id="catCountMembership">18</span>
-                      <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+                      <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
+                        <path d="M9 5l7 7-7 7" />
+                      </svg>
                     </div>
                   </div>
 
-                  <div class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors text-slate-700" onclick="filterKbCategory('Promotion')">
+                  <div
+                    class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors text-slate-700"
+                    onclick="filterKbCategory('Promotion')">
                     <div class="flex items-center gap-2.5">
-                      <svg class="w-4 h-4 text-slate-400 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+                      <svg class="w-4 h-4 text-slate-400 stroke-current" fill="none" viewBox="0 0 24 24"
+                        stroke-width="2">
+                        <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                      </svg>
                       <span class="font-semibold text-slate-800">Promotion & Offers</span>
                     </div>
                     <div class="flex items-center gap-1 text-slate-400 text-[11px] font-semibold">
                       <span id="catCountPromotion">12</span>
-                      <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+                      <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
+                        <path d="M9 5l7 7-7 7" />
+                      </svg>
                     </div>
                   </div>
 
-                  <div class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors text-slate-700" onclick="filterKbCategory('Classes')">
+                  <div
+                    class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors text-slate-700"
+                    onclick="filterKbCategory('Classes')">
                     <div class="flex items-center gap-2.5">
-                      <svg class="w-4 h-4 text-slate-400 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+                      <svg class="w-4 h-4 text-slate-400 stroke-current" fill="none" viewBox="0 0 24 24"
+                        stroke-width="2">
+                        <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                      </svg>
                       <span class="font-semibold text-slate-800">Classes & Schedule</span>
                     </div>
                     <div class="flex items-center gap-1 text-slate-400 text-[11px] font-semibold">
                       <span id="catCountClasses">18</span>
-                      <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+                      <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
+                        <path d="M9 5l7 7-7 7" />
+                      </svg>
                     </div>
                   </div>
 
-                  <div class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors text-slate-700" onclick="filterKbCategory('Facilities')">
+                  <div
+                    class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors text-slate-700"
+                    onclick="filterKbCategory('Facilities')">
                     <div class="flex items-center gap-2.5">
-                      <svg class="w-4 h-4 text-slate-400 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+                      <svg class="w-4 h-4 text-slate-400 stroke-current" fill="none" viewBox="0 0 24 24"
+                        stroke-width="2">
+                        <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                      </svg>
                       <span class="font-semibold text-slate-800">Facilities & Amenities</span>
                     </div>
                     <div class="flex items-center gap-1 text-slate-400 text-[11px] font-semibold">
                       <span id="catCountFacilities">15</span>
-                      <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+                      <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
+                        <path d="M9 5l7 7-7 7" />
+                      </svg>
                     </div>
                   </div>
 
-                  <div class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors text-slate-700" onclick="filterKbCategory('Services')">
+                  <div
+                    class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors text-slate-700"
+                    onclick="filterKbCategory('Services')">
                     <div class="flex items-center gap-2.5">
-                      <svg class="w-4 h-4 text-slate-400 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+                      <svg class="w-4 h-4 text-slate-400 stroke-current" fill="none" viewBox="0 0 24 24"
+                        stroke-width="2">
+                        <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                      </svg>
                       <span class="font-semibold text-slate-800">Services</span>
                     </div>
                     <div class="flex items-center gap-1 text-slate-400 text-[11px] font-semibold">
                       <span id="catCountServices">14</span>
-                      <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+                      <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
+                        <path d="M9 5l7 7-7 7" />
+                      </svg>
                     </div>
                   </div>
 
-                  <div class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors text-slate-700" onclick="filterKbCategory('App & Support')">
+                  <div
+                    class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors text-slate-700"
+                    onclick="filterKbCategory('App & Support')">
                     <div class="flex items-center gap-2.5">
-                      <svg class="w-4 h-4 text-slate-400 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+                      <svg class="w-4 h-4 text-slate-400 stroke-current" fill="none" viewBox="0 0 24 24"
+                        stroke-width="2">
+                        <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                      </svg>
                       <span class="font-semibold text-slate-800">App & Support</span>
                     </div>
                     <div class="flex items-center gap-1 text-slate-400 text-[11px] font-semibold">
                       <span id="catCountApp">10</span>
-                      <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+                      <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
+                        <path d="M9 5l7 7-7 7" />
+                      </svg>
                     </div>
                   </div>
 
-                  <div class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors text-slate-700" onclick="filterKbCategory('Policy')">
+                  <div
+                    class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors text-slate-700"
+                    onclick="filterKbCategory('Policy')">
                     <div class="flex items-center gap-2.5">
-                      <svg class="w-4 h-4 text-slate-400 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+                      <svg class="w-4 h-4 text-slate-400 stroke-current" fill="none" viewBox="0 0 24 24"
+                        stroke-width="2">
+                        <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                      </svg>
                       <span class="font-semibold text-slate-800">Policy & Terms</span>
                     </div>
                     <div class="flex items-center gap-1 text-slate-400 text-[11px] font-semibold">
                       <span id="catCountPolicy">9</span>
-                      <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+                      <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
+                        <path d="M9 5l7 7-7 7" />
+                      </svg>
                     </div>
                   </div>
                 </div>
@@ -1172,48 +1457,84 @@
                   <h3 class="text-sm font-bold text-slate-900 flex items-center gap-1.5">
                     <span>🔥</span> Popular Articles
                   </h3>
-                  <button class="text-xs font-semibold text-emerald-600 hover:text-emerald-700" onclick="filterKbCategory('ALL')">View all</button>
+                  <button class="text-xs font-semibold text-emerald-600 hover:text-emerald-700"
+                    onclick="filterKbCategory('ALL')">View all</button>
                 </div>
 
                 <div class="space-y-2.5 text-xs">
-                  <div class="flex items-center justify-between text-slate-700 hover:text-emerald-600 cursor-pointer transition-colors" onclick="filterKbCategory('Membership')">
+                  <div
+                    class="flex items-center justify-between text-slate-700 hover:text-emerald-600 cursor-pointer transition-colors"
+                    onclick="filterKbCategory('Membership')">
                     <div class="flex items-center gap-2 truncate">
-                      <svg class="w-3.5 h-3.5 text-slate-400 stroke-current flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                      <svg class="w-3.5 h-3.5 text-slate-400 stroke-current flex-shrink-0" fill="none"
+                        viewBox="0 0 24 24" stroke-width="2">
+                        <path
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
                       <span class="font-semibold truncate">Membership Options & Pricing</span>
                     </div>
-                    <span class="text-[11px] text-slate-400 font-medium flex items-center gap-1 flex-shrink-0">👁️ 2.4k</span>
+                    <span class="text-[11px] text-slate-400 font-medium flex items-center gap-1 flex-shrink-0">👁️
+                      2.4k</span>
                   </div>
 
-                  <div class="flex items-center justify-between text-slate-700 hover:text-emerald-600 cursor-pointer transition-colors" onclick="filterKbCategory('Promotion')">
+                  <div
+                    class="flex items-center justify-between text-slate-700 hover:text-emerald-600 cursor-pointer transition-colors"
+                    onclick="filterKbCategory('Promotion')">
                     <div class="flex items-center gap-2 truncate">
-                      <svg class="w-3.5 h-3.5 text-slate-400 stroke-current flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                      <svg class="w-3.5 h-3.5 text-slate-400 stroke-current flex-shrink-0" fill="none"
+                        viewBox="0 0 24 24" stroke-width="2">
+                        <path
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
                       <span class="font-semibold truncate">Promo & Special Offers</span>
                     </div>
-                    <span class="text-[11px] text-slate-400 font-medium flex items-center gap-1 flex-shrink-0">👁️ 1.8k</span>
+                    <span class="text-[11px] text-slate-400 font-medium flex items-center gap-1 flex-shrink-0">👁️
+                      1.8k</span>
                   </div>
 
-                  <div class="flex items-center justify-between text-slate-700 hover:text-emerald-600 cursor-pointer transition-colors" onclick="filterKbCategory('Classes')">
+                  <div
+                    class="flex items-center justify-between text-slate-700 hover:text-emerald-600 cursor-pointer transition-colors"
+                    onclick="filterKbCategory('Classes')">
                     <div class="flex items-center gap-2 truncate">
-                      <svg class="w-3.5 h-3.5 text-slate-400 stroke-current flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                      <svg class="w-3.5 h-3.5 text-slate-400 stroke-current flex-shrink-0" fill="none"
+                        viewBox="0 0 24 24" stroke-width="2">
+                        <path
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
                       <span class="font-semibold truncate">Class Schedule</span>
                     </div>
-                    <span class="text-[11px] text-slate-400 font-medium flex items-center gap-1 flex-shrink-0">👁️ 1.6k</span>
+                    <span class="text-[11px] text-slate-400 font-medium flex items-center gap-1 flex-shrink-0">👁️
+                      1.6k</span>
                   </div>
 
-                  <div class="flex items-center justify-between text-slate-700 hover:text-emerald-600 cursor-pointer transition-colors" onclick="filterKbCategory('Facilities')">
+                  <div
+                    class="flex items-center justify-between text-slate-700 hover:text-emerald-600 cursor-pointer transition-colors"
+                    onclick="filterKbCategory('Facilities')">
                     <div class="flex items-center gap-2 truncate">
-                      <svg class="w-3.5 h-3.5 text-slate-400 stroke-current flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 01-2 2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                      <svg class="w-3.5 h-3.5 text-slate-400 stroke-current flex-shrink-0" fill="none"
+                        viewBox="0 0 24 24" stroke-width="2">
+                        <path
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 01-2 2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
                       <span class="font-semibold truncate">Branch Information</span>
                     </div>
-                    <span class="text-[11px] text-slate-400 font-medium flex items-center gap-1 flex-shrink-0">👁️ 1.2k</span>
+                    <span class="text-[11px] text-slate-400 font-medium flex items-center gap-1 flex-shrink-0">👁️
+                      1.2k</span>
                   </div>
 
-                  <div class="flex items-center justify-between text-slate-700 hover:text-emerald-600 cursor-pointer transition-colors" onclick="filterKbCategory('App & Support')">
+                  <div
+                    class="flex items-center justify-between text-slate-700 hover:text-emerald-600 cursor-pointer transition-colors"
+                    onclick="filterKbCategory('App & Support')">
                     <div class="flex items-center gap-2 truncate">
-                      <svg class="w-3.5 h-3.5 text-slate-400 stroke-current flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 01-2 2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                      <svg class="w-3.5 h-3.5 text-slate-400 stroke-current flex-shrink-0" fill="none"
+                        viewBox="0 0 24 24" stroke-width="2">
+                        <path
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 01-2 2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
                       <span class="font-semibold truncate">How to Use MyFRARl App</span>
                     </div>
-                    <span class="text-[11px] text-slate-400 font-medium flex items-center gap-1 flex-shrink-0">👁️ 980</span>
+                    <span class="text-[11px] text-slate-400 font-medium flex items-center gap-1 flex-shrink-0">👁️
+                      980</span>
                   </div>
                 </div>
               </div>
@@ -1227,7 +1548,8 @@
                 <p class="text-xs text-emerald-900/80 leading-relaxed">
                   The more complete and up-to-date your knowledge base, the better Fifi can answer customer questions.
                 </p>
-                <a href="#" class="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 hover:text-emerald-800 pt-1">
+                <a href="#"
+                  class="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 hover:text-emerald-800 pt-1">
                   <span>Learn more</span>
                   <span>→</span>
                 </a>
@@ -1249,7 +1571,9 @@
                 <h3 class="text-lg font-bold text-slate-900">Konfigurasi & Prompt Fifi AI</h3>
                 <p class="text-xs text-slate-500 mt-1">Status kecerdasan buatan & aturan tanggapan otomatis.</p>
               </div>
-              <span class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 text-xs font-bold border border-emerald-200">Google Gemini 2.0 Flash / 1.5</span>
+              <span
+                class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 text-xs font-bold border border-emerald-200">Google
+                Gemini 2.0 Flash / 1.5</span>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
@@ -1282,9 +1606,13 @@
             <h3 class="text-lg font-bold text-slate-900 mb-2">Analytics & Performance Reports</h3>
             <p class="text-xs text-slate-500">Laporan konversi prospek dan analisis tren pertanyaan anggota.</p>
             <div class="mt-6 p-8 text-center border-2 border-dashed border-slate-200 rounded-xl">
-              <svg class="w-10 h-10 text-slate-300 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+              <svg class="w-10 h-10 text-slate-300 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
               <p class="text-xs text-slate-600 font-semibold">Laporan Analitik Lengkap Berfungsi</p>
-              <p class="text-[11px] text-slate-400 mt-1">Ringkasan performa utama Fifi dapat dipantau langsung pada grafik di halaman Dashboard Utama.</p>
+              <p class="text-[11px] text-slate-400 mt-1">Ringkasan performa utama Fifi dapat dipantau langsung pada
+                grafik di halaman Dashboard Utama.</p>
             </div>
           </div>
         </div>
@@ -1295,22 +1623,26 @@
         <div id="viewSettings" class="space-y-6 hidden">
           <div class="bg-white border border-slate-200 rounded-2xl p-6 stat-card-shadow space-y-4">
             <h3 class="text-lg font-bold text-slate-900">System & Database Settings</h3>
-            
+
             <div class="space-y-3 pt-2">
-              <div class="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+              <div
+                class="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs">
                 <div>
                   <div class="font-bold text-slate-800">Status Database Engine</div>
                   <div class="text-slate-500 text-[11px]" id="settingsDbEngine">MySQL / SQLite Active</div>
                 </div>
-                <span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 font-bold text-[10px]">CONNECTED</span>
+                <span
+                  class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 font-bold text-[10px]">CONNECTED</span>
               </div>
 
-              <div class="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+              <div
+                class="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs">
                 <div>
                   <div class="font-bold text-slate-800">Super Admin Token</div>
                   <div class="text-slate-500 text-[11px]">Sesi aktif di browser</div>
                 </div>
-                <button id="btnRefresh" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-brand-900 text-white hover:bg-brand-800 transition-colors">
+                <button id="btnRefresh"
+                  class="px-3 py-1.5 rounded-lg text-xs font-bold bg-brand-900 text-white hover:bg-brand-800 transition-colors">
                   Refresh Data
                 </button>
               </div>
@@ -1324,14 +1656,17 @@
   </div>
 
   <!-- Modal Transcript Detail -->
-  <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden items-center justify-center p-4" id="transcriptModal">
-    <div class="bg-white border border-slate-200 rounded-2xl w-full max-w-2xl max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+  <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden items-center justify-center p-4"
+    id="transcriptModal">
+    <div
+      class="bg-white border border-slate-200 rounded-2xl w-full max-w-2xl max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
       <div class="px-6 py-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
         <div>
           <h3 id="modalTitle" class="text-base font-bold text-slate-900">Transkrip Percakapan</h3>
           <p id="modalSub" class="text-xs text-slate-500 mt-0.5"></p>
         </div>
-        <button id="btnCloseModal" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-200 hover:bg-slate-300 text-slate-700 transition-all">
+        <button id="btnCloseModal"
+          class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-200 hover:bg-slate-300 text-slate-700 transition-all">
           Tutup
         </button>
       </div>
@@ -1344,33 +1679,42 @@
     <div class="bg-white border border-slate-200 rounded-2xl w-full max-w-xl shadow-2xl overflow-hidden">
       <div class="px-6 py-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
         <h3 id="faqModalTitle" class="text-base font-bold text-slate-900">Tambah FAQ Baru</h3>
-        <button id="btnCloseFaqModal" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-200 hover:bg-slate-300 text-slate-700 transition-all">
+        <button id="btnCloseFaqModal"
+          class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-200 hover:bg-slate-300 text-slate-700 transition-all">
           Batal
         </button>
       </div>
       <form id="faqForm" class="p-6 space-y-4">
         <input type="hidden" id="faqFormId" value="">
-        
+
         <div>
           <label class="block text-xs font-semibold text-slate-700 mb-1.5">Kategori</label>
-          <input type="text" id="faqFormCategory" required placeholder="Contoh: Membership, Facilities, Classes, General, Policy" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-500 transition-colors">
+          <input type="text" id="faqFormCategory" required
+            placeholder="Contoh: Membership, Facilities, Classes, General, Policy"
+            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-500 transition-colors">
         </div>
 
         <div>
           <label class="block text-xs font-semibold text-slate-700 mb-1.5">Pertanyaan</label>
-          <textarea id="faqFormQuestion" required rows="2" placeholder="Tuliskan pertanyaan yang sering ditanyakan calon anggota..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-500 transition-colors"></textarea>
+          <textarea id="faqFormQuestion" required rows="2"
+            placeholder="Tuliskan pertanyaan yang sering ditanyakan calon anggota..."
+            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-500 transition-colors"></textarea>
         </div>
 
         <div>
           <label class="block text-xs font-semibold text-slate-700 mb-1.5">Jawaban Resmi Fifi</label>
-          <textarea id="faqFormAnswer" required rows="4" placeholder="Tuliskan fakta dan jawaban resmi yang akan disampaikan oleh Fifi..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-500 transition-colors"></textarea>
+          <textarea id="faqFormAnswer" required rows="4"
+            placeholder="Tuliskan fakta dan jawaban resmi yang akan disampaikan oleh Fifi..."
+            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-500 transition-colors"></textarea>
         </div>
 
         <div class="pt-2 flex items-center justify-end gap-3">
-          <button type="button" id="btnCancelFaqModal" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition-all">
+          <button type="button" id="btnCancelFaqModal"
+            class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition-all">
             Batal
           </button>
-          <button type="submit" id="btnSaveFaq" class="px-5 py-2 rounded-xl text-xs font-bold bg-brand-900 hover:bg-brand-800 text-white shadow-sm transition-all">
+          <button type="submit" id="btnSaveFaq"
+            class="px-5 py-2 rounded-xl text-xs font-bold bg-brand-900 hover:bg-brand-800 text-white shadow-sm transition-all">
             Simpan FAQ
           </button>
         </div>
@@ -1547,7 +1891,7 @@
       btnLogout.addEventListener('click', async () => {
         try {
           await fetch('/api/auth/logout', { method: 'POST' });
-        } catch {}
+        } catch { }
         setAuthToken(null);
         currentUser = null;
         showLoginGate();
@@ -1555,47 +1899,47 @@
 
       // --- SIDEBAR NAVIGATION SWITCHER WITH DYNAMIC HEADERS ---
       const navButtons = [
-        { 
-          btn: navDashboard, 
-          view: viewDashboard, 
-          greeting: 'Good Morning,', 
-          title: "Here's what's happening with Fifi", 
-          sub: 'Your AI assistant is actively helping members and prospects 24/7.' 
+        {
+          btn: navDashboard,
+          view: viewDashboard,
+          greeting: 'Good Morning,',
+          title: "Here's what's happening with Fifi",
+          sub: 'Your AI assistant is actively helping members and prospects 24/7.'
         },
-        { 
-          btn: navChatbot, 
-          view: viewChatbot, 
-          greeting: 'Assistant Engine,', 
-          title: 'Chatbot Configuration', 
-          sub: 'Manage Fifi parameters, Gemini prompt grounding, and fallback behavior.' 
+        {
+          btn: navChatbot,
+          view: viewChatbot,
+          greeting: 'Assistant Engine,',
+          title: 'Chatbot Configuration',
+          sub: 'Manage Fifi parameters, Gemini prompt grounding, and fallback behavior.'
         },
-        { 
-          btn: navConversations, 
-          view: viewConversations, 
-          greeting: '', 
-          title: 'Conversations', 
-          sub: 'Monitor and manage all customer conversations with Fifi, your AI assistant.' 
+        {
+          btn: navConversations,
+          view: viewConversations,
+          greeting: '',
+          title: 'Conversations',
+          sub: 'Monitor and manage all customer conversations with Fifi, your AI assistant.'
         },
-        { 
-          btn: navKnowledge, 
-          view: viewKnowledge, 
-          greeting: '', 
-          title: 'Knowledge Base', 
-          sub: 'Manage and organize information sources for Fifi to give accurate and helpful responses.' 
+        {
+          btn: navKnowledge,
+          view: viewKnowledge,
+          greeting: '',
+          title: 'Knowledge Base',
+          sub: 'Manage and organize information sources for Fifi to give accurate and helpful responses.'
         },
-        { 
-          btn: navAnalytics, 
-          view: viewAnalytics, 
-          greeting: 'Performance Metric,', 
-          title: 'Analytics & Reports', 
-          sub: 'Detailed analysis of conversation channels, resolution rate, and response times.' 
+        {
+          btn: navAnalytics,
+          view: viewAnalytics,
+          greeting: 'Performance Metric,',
+          title: 'Analytics & Reports',
+          sub: 'Detailed analysis of conversation channels, resolution rate, and response times.'
         },
-        { 
-          btn: navSettings, 
-          view: viewSettings, 
-          greeting: 'System Admin,', 
-          title: 'Settings & Database', 
-          sub: 'Manage system parameters, database engine connection, and superadmin session.' 
+        {
+          btn: navSettings,
+          view: viewSettings,
+          greeting: 'System Admin,',
+          title: 'Settings & Database',
+          sub: 'Manage system parameters, database engine connection, and superadmin session.'
         },
       ];
 
@@ -1761,21 +2105,19 @@
 
       function cleanCustomerName(name, phone, channel) {
         if (!name) {
-          if (phone && phone !== '-' && phone !== 'null' && phone !== 'Sesi Web') {
-            return `Pelanggan WA (${phone})`;
-          }
-          return (channel === 'whatsapp' ? 'Pelanggan WhatsApp' : 'Customer');
+          if (phone && phone.includes('246626266443955')) return 'Ruski';
+          return (channel === 'whatsapp' ? 'Pelanggan WhatsApp' : (channel === 'web' ? 'Web Visitor' : 'Customer'));
         }
 
         // Hapus seluruh karakter emoji / pictographic / smileys / surrogate pairs
         let clean = name.replace(/[\p{Extended_Pictographic}\u200d\uFE0F\uD800-\uDBFF\uDC00-\uDFFF]/gu, '').trim();
 
-        // Jika setelah dihapus emoji namanya kosong atau tidak memuat huruf/angka
-        if (!clean || !/[a-zA-Z0-9]/.test(clean)) {
-          if (phone && phone !== '-' && phone !== 'null' && phone !== 'Sesi Web') {
-            return `Pelanggan WA (${phone})`;
+        // Jika setelah dihapus emoji namanya kosong atau tidak memuat huruf/angka atau diawali format lama Pelanggan WA (+
+        if (!clean || !/[a-zA-Z0-9]/.test(clean) || clean.startsWith('Pelanggan WA (+')) {
+          if (phone && phone.includes('246626266443955')) {
+            return 'Ruski';
           }
-          return (channel === 'whatsapp' ? 'Pelanggan WhatsApp' : 'Customer');
+          return (channel === 'whatsapp' ? 'Pelanggan WhatsApp' : (channel === 'web' ? 'Web Visitor' : 'Customer'));
         }
 
         return clean;
@@ -1783,8 +2125,9 @@
 
       function getInitials(name, phone, channel) {
         const clean = cleanCustomerName(name, phone, channel);
-        if (clean.startsWith('Pelanggan WA') || clean.startsWith('Pelanggan WhatsApp')) return 'WA';
+        if (clean === 'Pelanggan WhatsApp' || clean === 'Pelanggan WA') return 'WA';
         if (clean === 'Customer') return (channel === 'whatsapp' ? 'WA' : 'CS');
+        if (clean === 'Web Visitor') return 'WV';
 
         const alphaWords = clean.replace(/[^a-zA-Z\s]/g, '').trim().split(/\s+/).filter(Boolean);
         if (alphaWords.length === 0) {
@@ -2060,7 +2403,7 @@
         convPaginationButtons.innerHTML = buttonsHtml;
       }
 
-      window.changeConvPage = function(p) {
+      window.changeConvPage = function (p) {
         const totalPages = Math.ceil(convFilteredLeads.length / convPageSize) || 1;
         if (p < 1 || p > totalPages) return;
         convCurrentPage = p;
@@ -2068,7 +2411,7 @@
         renderConversationsPagination();
       };
 
-      window.selectConversation = async function(sessionId) {
+      window.selectConversation = async function (sessionId) {
         activeSelectedSessionId = sessionId;
         const lead = convAllLeads.find(l => l.session_id === sessionId);
 
@@ -2088,7 +2431,7 @@
           convDetailAvatar.textContent = getInitials(lead.name, lead.phone_or_handle, lead.channel);
           convDetailChannelBadge.innerHTML = formatChannelBadge(lead.channel);
           convDetailTimestamp.textContent = formatDisplayTime(lead.last_contact) + ' • Today';
-          
+
           let branchName = 'Canggu Branch';
           if ((lead.interest || '').toLowerCase().includes('senopati')) branchName = 'Senopati Branch';
           else if ((lead.interest || '').toLowerCase().includes('ubud')) branchName = 'Ubud Branch';
@@ -2103,6 +2446,21 @@
           infoCustomerChannel.textContent = (lead.channel || 'web').toUpperCase();
           infoCustomerBranch.textContent = branchName;
           infoCustomerInterest.textContent = lead.interest || 'Membership General Inquiry';
+
+          if (document.getElementById('customerNameEditBox')) {
+            document.getElementById('customerNameEditBox').classList.add('hidden');
+          }
+
+          const linkWaDirect = document.getElementById('linkWaDirect');
+          if (linkWaDirect) {
+            const cleanPhone = (lead.phone_or_handle || '').replace(/[^0-9]/g, '');
+            if (cleanPhone && (lead.channel || '').toLowerCase() === 'whatsapp') {
+              linkWaDirect.href = `https://wa.me/${cleanPhone}`;
+              linkWaDirect.style.display = 'inline-flex';
+            } else {
+              linkWaDirect.style.display = 'none';
+            }
+          }
 
           // Populate Notes tab
           convNotesInput.value = lead.notes || '';
@@ -2293,6 +2651,104 @@
           tabPanelNotes.classList.remove('hidden');
           tabPanelConversation.classList.add('hidden');
           tabPanelCustomerInfo.classList.add('hidden');
+        });
+      }
+
+      // Customer Name Editing Interaction
+      const btnEditCustomerName = document.getElementById('btnEditCustomerName');
+      const btnHeaderEditName = document.getElementById('btnHeaderEditName');
+      const customerNameEditBox = document.getElementById('customerNameEditBox');
+      const inputEditCustomerName = document.getElementById('inputEditCustomerName');
+      const btnSaveCustomerName = document.getElementById('btnSaveCustomerName');
+      const btnCancelCustomerName = document.getElementById('btnCancelCustomerName');
+
+      function openCustomerNameEditor() {
+        if (!activeSelectedSessionId) return;
+        const lead = convAllLeads.find(l => l.session_id === activeSelectedSessionId);
+        if (!lead) return;
+        inputEditCustomerName.value = lead.name || '';
+        customerNameEditBox.classList.remove('hidden');
+        inputEditCustomerName.focus();
+        inputEditCustomerName.select();
+      }
+
+      function closeCustomerNameEditor() {
+        if (customerNameEditBox) customerNameEditBox.classList.add('hidden');
+      }
+
+      if (btnEditCustomerName) {
+        btnEditCustomerName.addEventListener('click', openCustomerNameEditor);
+      }
+      if (btnHeaderEditName) {
+        btnHeaderEditName.addEventListener('click', () => {
+          if (tabBtnCustomerInfo) tabBtnCustomerInfo.click();
+          openCustomerNameEditor();
+        });
+      }
+      if (btnCancelCustomerName) {
+        btnCancelCustomerName.addEventListener('click', closeCustomerNameEditor);
+      }
+
+      if (btnSaveCustomerName) {
+        btnSaveCustomerName.addEventListener('click', async () => {
+          const newName = inputEditCustomerName.value.trim();
+          if (!newName) {
+            alert('Nama pelanggan tidak boleh kosong.');
+            return;
+          }
+          if (!activeSelectedSessionId) return;
+
+          btnSaveCustomerName.disabled = true;
+          btnSaveCustomerName.textContent = 'Menyimpan...';
+
+          try {
+            const token = getAuthToken();
+            const res = await fetch(`/api/leads/${activeSelectedSessionId}`, {
+              method: 'PATCH',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+              },
+              body: JSON.stringify({ name: newName })
+            });
+
+            if (!res.ok) {
+              const errData = await res.json();
+              throw new Error(errData.error || 'Gagal menyimpan nama');
+            }
+
+            // Update local state
+            const lead = convAllLeads.find(l => l.session_id === activeSelectedSessionId);
+            if (lead) lead.name = newName;
+            if (convFilteredLeads) {
+              const fLead = convFilteredLeads.find(l => l.session_id === activeSelectedSessionId);
+              if (fLead) fLead.name = newName;
+            }
+
+            // Update UI elements
+            convDetailName.textContent = newName;
+            infoCustomerName.textContent = newName;
+            convDetailAvatar.textContent = getInitials(newName, lead ? lead.phone_or_handle : '', lead ? lead.channel : '');
+
+            renderConversationsTable();
+            closeCustomerNameEditor();
+          } catch (err) {
+            alert('Gagal memperbarui nama: ' + err.message);
+          } finally {
+            btnSaveCustomerName.disabled = false;
+            btnSaveCustomerName.textContent = 'Simpan';
+          }
+        });
+      }
+
+      if (inputEditCustomerName) {
+        inputEditCustomerName.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            btnSaveCustomerName.click();
+          } else if (e.key === 'Escape') {
+            closeCustomerNameEditor();
+          }
         });
       }
 
@@ -2540,7 +2996,7 @@
         }
 
         if (query) {
-          filteredFaqs = filteredFaqs.filter(f => 
+          filteredFaqs = filteredFaqs.filter(f =>
             (f.question || '').toLowerCase().includes(query) ||
             (f.answer || '').toLowerCase().includes(query) ||
             (f.category || '').toLowerCase().includes(query)
@@ -2571,7 +3027,7 @@
         });
       }
 
-      window.filterKbCategory = function(catName) {
+      window.filterKbCategory = function (catName) {
         if (faqCategoryFilter) {
           faqCategoryFilter.value = catName;
           currentPage = 1;
@@ -2699,7 +3155,7 @@
                 method: 'DELETE',
                 headers: { Authorization: `Bearer ${token}` }
               });
-            } catch {}
+            } catch { }
           }
           selectedFaqIds.clear();
           updateBulkActionsBar();
@@ -2751,7 +3207,7 @@
         kbPaginationControls.innerHTML = btnsHtml;
       }
 
-      window.changeKbPage = function(p) {
+      window.changeKbPage = function (p) {
         currentPage = p;
         renderFaqsTable();
         renderPagination();
@@ -2827,7 +3283,7 @@
         }
       });
 
-      window.editFaq = function(id) {
+      window.editFaq = function (id) {
         const item = allFaqs.find(f => f.id === id);
         if (!item) return;
 
@@ -2840,7 +3296,7 @@
         faqModal.classList.add('flex');
       };
 
-      window.deleteFaq = async function(id) {
+      window.deleteFaq = async function (id) {
         const token = getAuthToken();
         if (!token) {
           showLoginGate();
@@ -2878,4 +3334,5 @@
     });
   </script>
 </body>
+
 </html>

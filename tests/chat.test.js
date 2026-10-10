@@ -83,7 +83,7 @@ describe('FitBot AI Test Suite', () => {
       assert.equal(res.status, 200);
 
       const json = await res.json();
-      assert.equal(json.gymName, 'Fitness Plus Indonesia');
+      assert.equal(json.gymName, 'Fitness Plus Gym');
       assert.ok(json.branches.length >= 3);
     });
 

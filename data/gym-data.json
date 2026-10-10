@@ -1,6 +1,6 @@
 {
   "gymInfo": {
-    "name": "Fitness Plus Indonesia",
+    "name": "Fitness Plus Gym",
     "tagline": "Your Ultimate Athletic & Wellness Club",
     "contact": {
       "phone": "+62 812-3456-7890",
@@ -8,7 +8,7 @@
       "instagram": "@fitnessplus.indonesia",
       "customerServiceHours": "Senin - Minggu: 08:00 - 20:00 WIB"
     },
-    "note": "Pusat Kebugaran & Wellness Concierge Resmi Fitness Plus Indonesia."
+    "note": "Pusat Kebugaran & Wellness Concierge Resmi Fitness Plus Gym."
   },
   "branches": [
     {
@@ -16,21 +16,37 @@
       "name": "Fitness Plus Canggu Bali",
       "address": "Jl. Pantai Batu Bolong No. 88, Canggu, Badung, Bali",
       "phone": "+62 361-555-0101",
-      "facilitiesHighlight": ["Dry Sauna", "Studio Yoga Outdoor", "Olympic Free Weights", "Recovery Bar", "Shower Air Panas"]
+      "facilitiesHighlight": [
+        "Dry Sauna",
+        "Studio Yoga Outdoor",
+        "Olympic Free Weights",
+        "Recovery Bar",
+        "Shower Air Panas"
+      ]
     },
     {
       "id": "cabang-senopati",
       "name": "Fitness Plus Senopati Jakarta",
       "address": "Jl. Senopati No. 88, Kebayoran Baru, Jakarta Selatan",
       "phone": "+62 21-555-0102",
-      "facilitiesHighlight": ["Cardio Theatre", "Studio Spinning", "Functional Training Area", "Sauna Premium"]
+      "facilitiesHighlight": [
+        "Cardio Theatre",
+        "Studio Spinning",
+        "Functional Training Area",
+        "Sauna Premium"
+      ]
     },
     {
       "id": "cabang-puri",
       "name": "Fitness Plus Puri Indah Jakarta",
       "address": "Jl. Puri Indah Raya No. 12, Kembangan, Jakarta Barat",
       "phone": "+62 21-555-0103",
-      "facilitiesHighlight": ["Kolam Renang Semi-Olympic", "Lifting Platform", "Locker Digital", "Juice & Protein Bar"]
+      "facilitiesHighlight": [
+        "Kolam Renang Semi-Olympic",
+        "Lifting Platform",
+        "Locker Digital",
+        "Juice & Protein Bar"
+      ]
     }
   ],
   "operatingHours": {
@@ -80,9 +96,9 @@
     },
     {
       "name": "All Club Passport",
-      "description": "Akses fleksibel ke seluruh cabang Fitness Plus Indonesia.",
+      "description": "Akses fleksibel ke seluruh cabang Fitness Plus Gym.",
       "benefits": [
-        "Akses tanpa batas ke seluruh cabang Fitness Plus Indonesia",
+        "Akses tanpa batas ke seluruh cabang Fitness Plus Gym",
         "Termasuk akses kolam renang di cabang Puri Indah",
         "Hak mengundang 1 tamu per bulan (Guest Pass)",
         "Diskon merchandise & Protein Bar"
@@ -101,7 +117,13 @@
   ],
   "classSchedules": {
     "status": "Jadwal kelas mingguan dipublikasikan via papan pengumuman cabang, aplikasi mobile, atau Instagram resmi.",
-    "popularClasses": ["Vinyasa Yoga", "Les Mills Body Combat", "Spinning Rush", "Core & HIIT Blast", "Zumba Dance"],
+    "popularClasses": [
+      "Vinyasa Yoga",
+      "Les Mills Body Combat",
+      "Spinning Rush",
+      "Core & HIIT Blast",
+      "Zumba Dance"
+    ],
     "scheduleNote": "Untuk jadwal jam kelas harian yang terperinci dan booking sesi, silakan gunakan aplikasi mobile atau hubungi resepsionis."
   },
   "faqs": [

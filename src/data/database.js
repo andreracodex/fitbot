@@ -197,7 +197,7 @@ const SAMPLE_LEADS = [
     time: '10:24 AM',
     conversations: [
       { sender: 'user', message: 'Hi, can you tell me about the membership options?' },
-      { sender: 'bot', message: "Hi! I'm Fifi, your AI assistant from Fitness Plus Indonesia. I'd be happy to help you with our membership options.\n\nWe offer 1 Month, 3 Months, 6 Months, and 1 Year memberships.\n\nFor the latest pricing and promotions, I'll be happy to connect you with our branch consultant. Which branch are you interested in?" },
+      { sender: 'bot', message: "Hi! I'm Fifi, your AI assistant from Fitness Plus Gym. I'd be happy to help you with our membership options.\n\nWe offer 1 Month, 3 Months, 6 Months, and 1 Year memberships.\n\nFor the latest pricing and promotions, I'll be happy to connect you with our branch consultant. Which branch are you interested in?" },
       { sender: 'user', message: "I'm interested in the Canggu branch. Is there a current promotion?" },
       { sender: 'bot', message: "Great! The Canggu branch has a special promotion right now. I'll forward your inquiry to our branch consultant so you can get the most up-to-date pricing and details.\n\nWould you like to choose a membership duration: 1 Month, 3 Months, 6 Months, or 1 Year?" }
     ]
@@ -476,12 +476,12 @@ function initSqlite() {
 
   try {
     db.exec(`ALTER TABLE leads ADD COLUMN notes TEXT;`);
-  } catch (_) {}
+  } catch (_) { }
 
   try {
     db.exec(`UPDATE leads SET name = 'Ruski' WHERE session_id = 'wa_246626266443955' AND (name LIKE '%😊%' OR name LIKE 'Pelanggan WA%')`);
     db.exec(`UPDATE leads SET name = 'Pelanggan WhatsApp' WHERE name = '😊' OR name LIKE '%😊%'`);
-  } catch (_) {}
+  } catch (_) { }
 
   sqliteDb = db;
   activeEngine = 'sqlite';
@@ -624,12 +624,12 @@ async function initMysql() {
 
     try {
       await pool.query(`ALTER TABLE leads ADD COLUMN notes TEXT;`);
-    } catch (_) {}
+    } catch (_) { }
 
     try {
       await pool.query(`UPDATE leads SET name = 'Ruski' WHERE session_id = 'wa_246626266443955' AND (name LIKE '%😊%' OR name LIKE 'Pelanggan WA%')`);
       await pool.query(`UPDATE leads SET name = 'Pelanggan WhatsApp' WHERE name = '😊' OR name LIKE '%😊%'`);
-    } catch (_) {}
+    } catch (_) { }
 
     mysqlPool = pool;
     activeEngine = 'mysql';
@@ -1098,7 +1098,7 @@ export async function closeDatabase() {
   if (mysqlPool) {
     try {
       await mysqlPool.end();
-    } catch {}
+    } catch { }
     mysqlPool = null;
   }
 }
@@ -1326,13 +1326,13 @@ export async function updateAdminLastLogin(id) {
     try {
       await mysqlPool.query('UPDATE admin_users SET last_login = NOW() WHERE id = ?', [id]);
       return;
-    } catch {}
+    } catch { }
   }
 
   try {
     const db = initSqlite();
     db.prepare("UPDATE admin_users SET last_login = datetime('now', 'localtime') WHERE id = ?").run(id);
-  } catch {}
+  } catch { }
 }
 
 
