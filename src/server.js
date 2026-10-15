@@ -9,6 +9,7 @@ import leadsRouter from './routes/leads.js';
 import knowledgeRouter from './routes/knowledge.js';
 import webhooksRouter from './routes/webhooks.js';
 import authRouter from './routes/auth.js';
+import whatsappRouter from './routes/whatsapp.js';
 import { startTelegramBot } from './channels/telegram.js';
 import { startWhatsAppBot } from './channels/whatsapp.js';
 
@@ -47,6 +48,7 @@ app.use(express.static(publicDir));
 app.use('/api/auth', limiter, authRouter);
 app.use('/api/leads', limiter, leadsRouter);
 app.use('/api/knowledge', limiter, knowledgeRouter);
+app.use('/api/whatsapp', limiter, whatsappRouter);
 app.use('/api/webhooks', webhooksRouter);
 app.use('/api', limiter, chatRouter);
 

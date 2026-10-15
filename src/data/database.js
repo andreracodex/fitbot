@@ -798,8 +798,9 @@ async function seedLeadsMysql(pool) {
 }
 
 // Inisialisasi awal saat modul dimuat
+let initDbPromise = null;
 if (DB_TYPE === 'mysql' && process.env.NODE_ENV !== 'test') {
-  initMysql().catch(() => initSqlite());
+  initDbPromise = initMysql().catch(() => initSqlite());
 } else {
   initSqlite();
 }
@@ -1095,11 +1096,22 @@ export function getActiveEngine() {
  * Menutup koneksi database (untuk testing teardown)
  */
 export async function closeDatabase() {
+  if (initDbPromise) {
+    try {
+      await initDbPromise;
+    } catch { }
+  }
   if (mysqlPool) {
     try {
       await mysqlPool.end();
     } catch { }
     mysqlPool = null;
+  }
+  if (sqliteDb) {
+    try {
+      sqliteDb.close();
+    } catch { }
+    sqliteDb = null;
   }
 }
 
@@ -1334,5 +1346,3 @@ export async function updateAdminLastLogin(id) {
     db.prepare("UPDATE admin_users SET last_login = datetime('now', 'localtime') WHERE id = ?").run(id);
   } catch { }
 }
-
-
